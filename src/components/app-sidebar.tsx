@@ -23,10 +23,14 @@ import { Button } from "./ui/button"
 
 const navMain = [
   {
+    title: "Manage Projects",
+    url: "/dashboard/projects",
+    icon: SquareTerminal,
+  },
+  {
     title: "Playground",
     url: "#",
     icon: SquareTerminal,
-    isActive: true,
     items: [
       {
         title: "History",
