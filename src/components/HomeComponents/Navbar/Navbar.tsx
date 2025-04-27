@@ -1,10 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, MouseEvent } from 'react'
 import { Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import Link from 'next/link'
+import Image from 'next/image'
+import { DialogTitle } from '@/components/ui/dialog'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -27,21 +30,30 @@ export default function Navbar() {
     <>
       {/* Main Navbar */}
       <nav className={`
-        fixed w-full z-50 transition-all duration-300 border-none text-white 
-        ${isScrolled ? 'bg-black/40 backdrop-blur-sm shadow-sm py-2' : 'bg-transparent  py-4'}
+        fixed w-full z-50 transition-all duration-300 border-none text-white flex justify-center items-center 
+        ${isScrolled ? 'bg-black/40 backdrop-blur-sm shadow-sm py-2' : 'bg-transparent py-4'}
         border-b
       `}>
         <div className="container flex justify-between items-center px-4">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="text-2xl font-bold">
-              Portfolio
+              <div className='flex flex-col items-center gap-2'>
+                <Image
+                  src="/logo_white.png"
+                  alt="Logo"
+                  width={30}
+                  height={30}
+                  priority
+                />
+                <p className='text-xs tracking-widest font-light text-slate-300'>DEVELOPER</p>
+              </div>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
-            <NavLink href="#home">Home</NavLink>
+            <NavLink href="#header">Home</NavLink>
             <NavLink href="#about">About</NavLink>
             <NavLink href="#projects">Projects</NavLink>
             <NavLink href="#skills">Skills</NavLink>
@@ -59,19 +71,27 @@ export default function Navbar() {
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px] p-5">
+              <SheetContent
+                side="right"
+                className="w-[300px] sm:w-[400px] p-5 backdrop-blur-md bg-slate-200/60 border-none" // 🧠 Added blur and semi-white
+              >
+                <DialogTitle>
+                  <VisuallyHidden>Mobile Navigation Menu</VisuallyHidden> {/* Hidden title for screen readers */}
+                </DialogTitle>
+
                 <div className="flex flex-col gap-6 pt-6">
-                  <MobileNavLink href="#home">Home</MobileNavLink>
-                  <MobileNavLink href="#about">About</MobileNavLink>
-                  <MobileNavLink href="#projects">Projects</MobileNavLink>
-                  <MobileNavLink href="#skills">Skills</MobileNavLink>
-                  <Button asChild variant="outline" className="w-full">
+                  <MobileNavLink href="#header" >Home</MobileNavLink>
+                  <MobileNavLink href="#about" >About</MobileNavLink>
+                  <MobileNavLink href="#projects" >Projects</MobileNavLink>
+                  <MobileNavLink href="#skills" >Skills</MobileNavLink>
+                  <Button asChild variant="outline" className="w-full border-red-600 text-red-600 hover:text-white hover:bg-red-700 transition-colors">
                     <MobileNavLink href="#contact">Contact</MobileNavLink>
                   </Button>
                 </div>
               </SheetContent>
             </Sheet>
           </div>
+
         </div>
       </nav>
     </>
@@ -80,14 +100,26 @@ export default function Navbar() {
 
 // Reusable NavLink component for desktop
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.replace('#', '');
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <a
       href={href}
-      className="text-sm font-medium transition-colors hover:text-primary hover:underline underline-offset-4"
+      onClick={handleClick}
+      className="text-sm font-medium tracking-wider transition-colors hover:text-red-600"
     >
       {children}
     </a>
-  )
+  );
 }
 
 // Reusable NavLink component for mobile
@@ -95,7 +127,7 @@ function MobileNavLink({ href, children }: { href: string; children: React.React
   return (
     <a
       href={href}
-      className="text-sm font-medium transition-colors hover:text-primary hover:underline underline-offset-4"
+      className="text-sm font-medium tracking-wider transition-colors hover:text-red-600 "
     >
       {children}
     </a>

@@ -1,18 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/Providers/Theme-Provider";
 import { ParallaxProviders } from "@/Providers/Parallax-Provider";
+import { Saira } from 'next/font/google';
 
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const saira = Saira({
+  subsets: ['latin'],
+  weight: ['100', '300', '400', '500', '700', '900'], // choose the weights you need
+  style: ['normal', 'italic'], // for italics
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -28,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${saira.className} antialiased`}
       >
         <ThemeProvider
           attribute="class"

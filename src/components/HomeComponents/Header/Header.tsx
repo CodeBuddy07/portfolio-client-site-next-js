@@ -1,12 +1,9 @@
 'use client'
 
-
-
 import { ParallaxBanner } from "react-scroll-parallax";
 import { TsParticles } from "./components/TS-Particle";
 import Typewriter from 'typewriter-effect';
 
-// Custom shadcn-style jarallax component
 
 export const Header = () => {
     const data = {
@@ -27,7 +24,7 @@ export const Header = () => {
         <header id="header" className="relative h-screen w-full overflow-hidden" >
             {/* Background image with Parallax */}
             <ParallaxBanner
-                layers={[{ image: "/4.jpg", speed: -20 }]}
+                layers={[{ image: "/HeaderBG.jpg", speed: -20 }]}
                 className="absolute inset-0 z-0 w-full h-full" // Push this far back
             >
 
@@ -40,15 +37,15 @@ export const Header = () => {
                 </div>
 
                 {/* Foreground content */}
-                <div className="relative z-20 flex h-full items-center">
+                <div className="relative z-20 flex h-full items-center container mx-auto">
                     <div className="container px-4 sm:px-6 lg:px-8">
-                        <div className="max-w-3xl space-y-6 text-white">
+                        <div className="max-w-3xl space-y-10 text-white">
                             {data?.title && (
-                                <span className="inline-block rounded bg-red-600/90 px-3 py-1 text-sm font-semibold backdrop-blur-sm">
+                                <span className="inline-block rounded bg-red-600/90 px-3 py-1 text-sm font-medium tracking-widest backdrop-blur-sm">
                                     {data.title}
                                 </span>
                             )}
-                            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+                            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
                                 <Typewriter
                                     options={{
                                         strings: [data.designation1, data.designation2],
@@ -57,10 +54,10 @@ export const Header = () => {
                                     }}
                                 />
                             </h1>
-                            <div className="space-y-1 border-l-2 border-gray-400/50 pl-4">
-                                {data?.country && <h2 className="font-medium">{data.country}</h2>}
+                            <div className="space-y-1 border-l-2 border-gray-400/50 pl-4 text-sm py-2">
+                                {data?.country && <h2 className="font-semibold">{data.country}</h2>}
                                 {data?.address && (
-                                    <p className="text-gray-300/90">{data.address}</p>
+                                    <p className="text-gray-200/90">{data.address}</p>
                                 )}
                             </div>
                         </div>

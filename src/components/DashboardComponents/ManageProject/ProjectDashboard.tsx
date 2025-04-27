@@ -155,7 +155,7 @@ export default function ProjectDashboard() {
     };
     
     loadProjects();
-  }, []); // Empty dependency array ensures this runs only once
+  }, [fetchProjects]); // Include fetchProjects in the dependency array
   
   // Filter projects based on search query
   const filteredProjects = projects.filter(project => 
