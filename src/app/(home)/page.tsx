@@ -5,7 +5,11 @@ import Quote from '@/components/HomeComponents/Quote/Quote';
 
 import React from 'react';
 import Reviews from '@/components/HomeComponents/Reviews/Reviews';
-import Stats from '@/components/HomeComponents/Satats/Stats';
+import Stats from '@/components/HomeComponents/Stats/Stats';
+import Services from '@/components/HomeComponents/Services/Services';
+import Projects from '@/components/HomeComponents/Projects/Project';
+import OnGoing from '@/components/HomeComponents/OnGoingProject/OnGoingProject';
+import Contact from '@/components/HomeComponents/ContactMe/ContactMe';
 
 
 const page = () => {
@@ -18,6 +22,10 @@ const page = () => {
             <FloatingSkills/>
             <Reviews/>
             <Stats/>
+            <Services/>
+            <Projects/>
+            <OnGoing/>
+            <Contact/>
         </div>
     );
 };

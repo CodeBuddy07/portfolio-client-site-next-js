@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: '*.com',
       },
+      {
+        protocol: 'https',
+        hostname: '*.ibb.co',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.example.com', // Replace with your actual domain
+      }
     ], // Add the external image domain here
   },
 };
