@@ -151,3 +151,11 @@ html, body {
 ::-webkit-scrollbar-thumb:hover {
   background: #fc0707; 
 }
+
+.swiper-pagination-bullet {
+  background: #ef4444 !important; /* Tailwind's red-500 */
+}
+
+.swiper-pagination-bullet-active {
+  background: #dc2626 !important; /* Tailwind's red-600 when active */
+}

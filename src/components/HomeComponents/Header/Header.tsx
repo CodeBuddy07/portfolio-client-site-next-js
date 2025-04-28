@@ -24,7 +24,14 @@ export const Header = () => {
         <header id="header" className="relative h-screen w-full overflow-hidden" >
             {/* Background image with Parallax */}
             <ParallaxBanner
-                layers={[{ image: "/HeaderBG.jpg", speed: -20 }]}
+                layers={[{
+                    image: "/HeaderBG.jpg",
+                    speed: -20,
+                    style: {
+                        objectFit: "cover",  // Ensures image covers the whole container
+                        objectPosition: "center", // Keeps the image centered
+                    }
+                }]}
                 className="absolute inset-0 z-0 w-full h-full" // Push this far back
             >
 
