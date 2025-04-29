@@ -1,12 +1,16 @@
 "use client";
 
+import { useRef } from "react";
 import Title from "@/components/Shared/Title";
 import { Button } from "@/components/ui/button";
-import { ArrowBigDownDash } from "lucide-react";
+import { ArrowDownToLine, Send } from "lucide-react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
 const About = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  
   const data = {
     _id: "65b7abb3ed5527627f4f6fa2",
     placeholder: "about",
@@ -16,70 +20,107 @@ const About = () => {
   };
 
   return (
-    <div
+    <section
       id="about"
-      className="bg-[#131313] shadow-[0px_0px_105px_105px_#131313] relative z-10 w-full py-20"
+      className="bg-[#0c0a09] shadow-[0px_0px_65px_65px_#0c0a09] z-10 relative py-24 w-full overflow-hidden"
+      ref={ref}
     >
-      <Title title={"ABOUT"} />
-
-      <div className="xl:px-80 lg:px-32 flex justify-center items-center gap-5 px-5 mt-12">
-        <div className="flex flex-col lg:flex-row justify-center gap-5 items-center">
-
+      {/* Background subtle elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/3 right-1/4 w-64 h-64 rounded-full bg-red-600/5 filter blur-3xl"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full bg-red-600/5 filter blur-3xl"></div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <Title title="ABOUT ME" description="Get to know more about my skills and experience" />
+        
+        <div className="mt-16 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           {/* Profile Image */}
           <motion.div
-            initial={{ y: 100, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 80, damping: 10 }}
-            className="w-80 lg:w-96 h-96 bg-red-600 overflow-hidden rounded-t-full rounded-b-full"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-full max-w-96"
           >
-            <Image
-              src={data.selfImgDisplayURL}
-              alt="Ruhul Amin Profile Image"
-              width={500}
-              height={900}
-              className="w-80 lg:w-96 -mb-10 object-cover"
-            />
+            
+            <div className="relative bg-gradient-to-br from-gray-900 to-black overflow-hidden rounded-2xl border border-gray-800">
+              
+              <div className=" overflow-hidden">
+                <Image
+                  src={data.selfImgDisplayURL}
+                  alt="Ruhul Amin Profile Image"
+                  width={500}
+                  height={900}
+                  className="w-full h-auto rounded-t-xl object-cover"
+                />
+              </div>
+            </div>
           </motion.div>
-
+          
           {/* About Text and Action Buttons */}
           <motion.div
-            initial={{ x: 100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="2xl:w-full xl:w-[700px] lg:w-[500px] w-full"
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full max-w-2xl"
           >
-            <p className="text-gray-400 mb-5 whitespace-pre-line">
-              {data?.about}
-            </p>
-
-            {/* Buttons */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="flex flex-col lg:flex-row gap-4 mt-5"
-            >
-              <Button className="bg-red-500 hover:bg-red-600">
-                Contact Me
-              </Button>
-
-              <Button
-                variant={"outline"}
-                className="bg-transparent text-white hover:border-red-600 hover:bg-red-600 ml-4"
-                onClick={() => window.open(data.resumeURL, "_blank")}
-              >
-                <ArrowBigDownDash fill="red" />
-                Download CV
-              </Button>
-            </motion.div>
+            <div className="space-y-6">
+              {/* Section indicators */}
+              <div className="flex items-center gap-2">
+                <div className="h-px w-6 bg-red-500"></div>
+                <span className="text-red-500 font-medium">Web Developer</span>
+              </div>
+              
+              {/* About text */}
+              <div className="text-gray-300 text-sm space-y-4">
+                {data.about.split('\n\n').map((paragraph, index) => (
+                  <p key={index} className="leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+              
+              {/* Stats */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 py-4 border-t border-b border-gray-800">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-white">3+</div>
+                  <div className="text-gray-400 text-sm">Years Experience</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-white">50+</div>
+                  <div className="text-gray-400 text-sm">Projects Completed</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-white">12+</div>
+                  <div className="text-gray-400 text-sm">Happy Clients</div>
+                </div>
+              </div>
+              
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 mt-6">
+                <Button className="relative overflow-hidden group bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 transition-all duration-300">
+                  <span className="relative z-10 flex items-center gap-2">
+                    <Send size={16} /> Contact Me
+                  </span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  className="group border-gray-700 hover:border-red-500 hover:bg-transparent transition-all duration-300"
+                  onClick={() => window.open(data.resumeURL, "_blank")}
+                >
+                  <span className="flex items-center gap-2">
+                    <ArrowDownToLine size={16} className="group-hover:text-red-500 transition-colors duration-300" />
+                    <span className="group-hover:text-red-500 transition-colors duration-300">Download CV</span>
+                  </span>
+                </Button>
+              </div>
+            </div>
           </motion.div>
-
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

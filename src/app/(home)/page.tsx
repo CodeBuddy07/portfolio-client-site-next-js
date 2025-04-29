@@ -10,6 +10,7 @@ import Services from '@/components/HomeComponents/Services/Services';
 import Projects from '@/components/HomeComponents/Projects/Project';
 import OnGoing from '@/components/HomeComponents/OnGoingProject/OnGoingProject';
 import Contact from '@/components/HomeComponents/ContactMe/ContactMe';
+import Footer from '@/components/Shared/Footer';
 
 
 const page = () => {
@@ -26,6 +27,7 @@ const page = () => {
             <Projects/>
             <OnGoing/>
             <Contact/>
+            <Footer/>
         </div>
     );
 };

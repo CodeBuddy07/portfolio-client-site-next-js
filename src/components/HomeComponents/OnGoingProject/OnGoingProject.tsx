@@ -1,29 +1,46 @@
 "use client";
 
+import * as React from "react";
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 import Title from "@/components/Shared/Title";
 import { DotLottiePlayer } from "@dotlottie/react-player";
+import { Calendar, Clock, ExternalLink } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 
-
-import { motion } from "framer-motion";
-import Image from "next/image";
 
 const OnGoing = () => {
     const data = {
-        "_id": "65bf295a8a8f308c18f6e889",
-        "placeholder": "onGoing",
-        "category": "MERN",
-        "deadline": "2024-11-22",
-        "description": "Developed a file upload and sharing system where users receive custom domain URLs for their files, redirecting seamlessly to Google Drive. Utilized React for the frontend, Node.js and Express.js for the backend, and the Google Drive API for storage. This project enhances file-sharing with branded, user-friendly URLs.",
-        "imgDeleteURL": "https://ibb.co/RNwQPW5/293d2999878bd85affd1e3e32952d2fa",
-        "imgDisplayURL": "https://i.ibb.co/dtYk6yh/screencapture-barauthenup-digitelunionsoft-2024-10-21-22-44-36.png",
-        "name": "File Uploading Sytem",
-        "starDate": "2024-10-20",
-        "visible": false
+        _id: "65bf295a8a8f308c18f6e889",
+        placeholder: "onGoing",
+        category: "MERN",
+        deadline: "2025-05-01",
+        description:
+            "Developed a file upload and sharing system where users receive custom domain URLs for their files, redirecting seamlessly to Google Drive. Utilized React for the frontend, Node.js and Express.js for the backend, and the Google Drive API for storage. This project enhances file-sharing with branded, user-friendly URLs.",
+        imgDeleteURL:
+            "https://ibb.co/RNwQPW5/293d2999878bd85affd1e3e32952d2fa",
+        imgDisplayURL:
+            "https://i.ibb.co/dtYk6yh/screencapture-barauthenup-digitelunionsoft-2024-10-21-22-44-36.png",
+        name: "File Uploading System",
+        starDate: "2025-04-20",
+        visible: true,
     };
 
     const months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
     ];
 
     const formatDate = (dateStr: string | undefined) => {
@@ -32,93 +49,207 @@ const OnGoing = () => {
         return {
             day,
             month: months[parseInt(month) - 1],
-            year
+            year,
         };
     };
 
     const startDate = formatDate(data?.starDate);
     const endDate = formatDate(data?.deadline);
 
+    const calculateProgress = () => {
+        if (!data?.starDate || !data?.deadline) return 0;
+        const start = new Date(data.starDate);
+        const end = new Date(data.deadline);
+        const today = new Date();
+        if (today < start) return 0;
+        if (today > end) return 100;
+        const totalDays =
+            (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+        const daysElapsed =
+            (today.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+        return Math.round((daysElapsed / totalDays) * 100);
+    };
+
+    const progress = calculateProgress();
+
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.3
+              }
+        },
+    };
+
+    const itemVariants = {
+        hidden: { y: 20, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+            transition: {
+                type: "spring",
+                stiffness: 100,
+            },
+        },
+    };
+
+    const imageVariants = {
+        hidden: { opacity: 0, scale: 0.85 },
+        visible: {
+          opacity: 1,
+          scale: 1,
+          transition: { duration: 0.6, ease: "easeOut" },
+        },
+      };
+      
+
+    const containerRef = React.useRef(null);
+    const isInView = useInView(containerRef, { once: false, amount: 0.2 });
+
     return (
-        <section id="on-going" className="bg-[#131313] shadow-[0px_0px_65px_65px_#131313] relative w-full py-20">
-            <Title title="ON GOING" />
+        <section
+            id="on-going"
+            className="bg-[#0c0a09] shadow-[0px_0px_65px_65px_#0c0a09] relative w-full py-16"
+
+        >
+
+            <Title title="On Going Project" description="Follow my progress on the latest project I'm working on" />
 
             {data?.visible ? (
-                <div className="xl:px-80 lg:px-32 px-5 mt-20 flex flex-col items-center">
-                    <div className="flex flex-wrap justify-center gap-10 w-full">
-                        {/* Image Card */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5 }}
-                            className="rounded-lg overflow-hidden shadow-md hover:shadow-red-600 bg-gradient-to-br from-[#1c1c1c] to-[#111] w-64 h-64 relative group"
-                        >
-                            <div className="w-full h-3 backdrop-blur-md bg-gray-200/30 flex gap-1 items-center px-2">
-                                <div className="w-1 h-1 bg-white rounded-full"></div>
-                                <div className="w-1 h-1 bg-white rounded-full"></div>
-                                <div className="w-1 h-1 bg-white rounded-full"></div>
-                            </div>
-                            <div className="relative w-full h-[15.5rem] overflow-hidden">
-                                <Image
-                                    src={data?.imgDisplayURL || "/placeholder.png"} // fallback in case `imgDisplayURL` is missing
-                                    alt="Ongoing Project"
-                                    fill // fill the parent div
-                                    className="object-cover transform transition-transform duration-1000 ease-linear group-hover:-translate-y-[calc(100%-16rem)]"
-                                    sizes="(max-width: 768px) 100vw, 400px" // Responsive
-                                    priority // Faster loading for important images
-                                />
-                            </div>
-                        </motion.div>
+                <motion.div
+                    ref={containerRef}
+                    className="container mx-auto px-4 mt-12"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                >
 
-                        {/* Text Details */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                            className="max-w-md flex flex-col justify-center text-white"
-                        >
-                            <h2 className="text-lg font-semibold">Title: <span className="font-medium">{data?.name}</span></h2>
-                            <p className="text-gray-400 text-sm mt-5">{data?.description}</p>
-                        </motion.div>
 
-                        {/* Dates */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.7 }}
-                            className="flex gap-8 flex-wrap justify-center items-center"
-                        >
-                            {/* Start Date */}
-                            <div className="text-center">
-                                <h3 className="font-bold text-lg text-red-600 mb-2">Start Date</h3>
-                                <div className="bg-white/10 backdrop-blur-md px-5 py-6 rounded-lg border-t-4 border-red-600">
-                                    <h1 className="text-3xl font-bold text-white">{typeof startDate === "object" ? startDate.day : ""}</h1>
-                                    <p className="text-gray-400 text-xs">{typeof startDate === "object" ? `${startDate.month}, ${startDate.year}` : ""}</p>
-                                </div>
-                            </div>
+                    <Card className="bg-black/40 backdrop-blur-md border-gray-800 overflow-hidden h-full p-0">
+                        <CardContent className="p-0 h-full">
+                            <div className="grid md:grid-cols-5 gap-0 h-full">
+                                {/* Image Section */}
+                                <motion.div
+                                    className="md:col-span-2 h-full relative group overflow-hidden"
+                                    variants={imageVariants}
+                                >
+                                    <div className="relative w-full h-full">
+                                        <Image
+                                            src={data.imgDisplayURL}
+                                            alt={data.name}
+                                            fill
+                                            className="object-cover transition-transform duration-1000 ease-linear group-hover:scale-110"
+                                            sizes="(max-width: 768px) 100vw, 40vw"
+                                            priority
+                                        />
 
-                            {/* Deadline */}
-                            <div className="text-center">
-                                <h3 className="font-bold text-lg text-red-600 mb-2">Deadline</h3>
-                                <div className="bg-white/10 backdrop-blur-md px-5 py-6 rounded-lg border-t-4 border-red-600">
-                                    <h1 className="text-3xl font-bold text-white">{typeof endDate === "object" ? endDate.day : ""}</h1>
-                                    <p className="text-gray-400 text-xs">{typeof endDate === "object" ? `${endDate.month}, ${endDate.year}` : ""}</p>
-                                </div>
+                                        {/* Preview Button: Opens an external link (e.g., GitHub repo) */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-start p-4 cursor-pointer">
+                                            <a
+                                                href={"https://github.com/CodeBuddy07/portfolio-client-site-next-js"} // Replace with your repo URL
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                <Badge
+                                                    variant="outline"
+                                                    className="bg-black/50 text-xs font-normal border-red-500/20 text-white"
+                                                >
+                                                    <ExternalLink className="h-3 w-3 mr-1" />
+                                                    Preview Project
+                                                </Badge>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </motion.div>
+
+
+
+
+                                {/* Details Section */}
+                                <motion.div
+                                    className="md:col-span-3 p-10 flex flex-col"
+                                    variants={itemVariants}
+                                >
+                                    <div className="flex items-center justify-between mb-3">
+                                        <Badge className="bg-red-600/20 text-red-400 hover:bg-red-600/30 border-none text-xs">
+                                            {data.category}
+                                        </Badge>
+                                        <div className="flex items-center text-xs text-gray-400">
+                                            <Clock className="h-3 w-3 mr-1" />
+                                            <span>{progress}% Complete</span>
+                                        </div>
+                                    </div>
+
+                                    <h2 className="text-xl font-medium text-white mb-2">{data.name}</h2>
+
+                                    <Progress
+                                        className="h-1.5 bg-gray-800"
+                                        barClassName="bg-red-500"
+                                        value={progress}
+                                    />
+
+                                    <p className="text-gray-400 text-sm mt-4 mb-6 line-clamp-3">
+                                        {data.description}
+                                    </p>
+
+                                    <div className="mt-auto grid grid-cols-2 gap-4">
+                                        <div className="flex flex-col">
+                                            <div className="flex items-center gap-2 mb-1 text-xs text-gray-400">
+                                                <Calendar className="h-3 w-3 text-red-500" />
+                                                <span>Start Date</span>
+                                            </div>
+                                            <div className="bg-gray-900/50 rounded p-2 text-center">
+                                                <div className="text-lg font-medium text-white">
+                                                    {typeof startDate === "object" ? startDate.day : ""}
+                                                </div>
+                                                <div className="text-xs text-gray-400">
+                                                    {typeof startDate === "object"
+                                                        ? `${startDate.month}, ${startDate.year}`
+                                                        : ""}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex flex-col">
+                                            <div className="flex items-center gap-2 mb-1 text-xs text-gray-400">
+                                                <Calendar className="h-3 w-3 text-red-500" />
+                                                <span>Deadline</span>
+                                            </div>
+                                            <div className="bg-gray-900/50 rounded p-2 text-center">
+                                                <div className="text-lg font-medium text-white">
+                                                    {typeof endDate === "object" ? endDate.day : ""}
+                                                </div>
+                                                <div className="text-xs text-gray-400">
+                                                    {typeof endDate === "object"
+                                                        ? `${endDate.month}, ${endDate.year}`
+                                                        : ""}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-wrap gap-2 mt-4">
+                                        <Badge variant="outline" className="text-xs bg-transparent border-gray-700 text-gray-400">React</Badge>
+                                        <Badge variant="outline" className="text-xs bg-transparent border-gray-700 text-gray-400">Node.js</Badge>
+                                        <Badge variant="outline" className="text-xs bg-transparent border-gray-700 text-gray-400">Express</Badge>
+                                        <Badge variant="outline" className="text-xs bg-transparent border-gray-700 text-gray-400">Google Drive API</Badge>
+                                    </div>
+                                </motion.div>
                             </div>
-                        </motion.div>
-                    </div>
-                </div>
+                        </CardContent>
+                    </Card>
+                </motion.div>
             ) : (
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="flex flex-col items-center gap-8 mt-20 px-5"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex flex-col items-center gap-6 mt-12 px-4"
                 >
-                    <h1 className="text-2xl text-red-600 ">No Ongoing Project!</h1>
-                    <div className="max-w-sm">
+                    <h1 className="text-xl text-red-500 font-medium">No Ongoing Project!</h1>
+                    <div className="max-w-xs">
                         <DotLottiePlayer
                             src="https://lottie.host/1d4b606d-504e-4c60-9ea1-1171190bef32/gJ27BUO4zN.json"
                             autoplay

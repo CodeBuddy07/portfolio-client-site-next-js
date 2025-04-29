@@ -159,3 +159,8 @@ html, body {
 .swiper-pagination-bullet-active {
   background: #dc2626 !important; /* Tailwind's red-600 when active */
 }
+
+.swiper-wrapper {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

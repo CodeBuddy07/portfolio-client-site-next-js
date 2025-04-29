@@ -1,8 +1,9 @@
 "use client";
 
+import { useRef } from "react";
 import Title from "@/components/Shared/Title";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { motion, useInView } from "framer-motion";
 import {
   Code2,
   Database,
@@ -45,47 +46,103 @@ const services = [
   }
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.3
+    }
+  }
+};
+
 const cardVariants = {
-  hidden: { opacity: 0, y: 50, scale: 0.95 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.6, 
+      ease: [0.25, 0.1, 0.25, 1.0]
+    } 
+  }
+};
+
+const glowVariants = {
+  initial: { opacity: 0.3, scale: 1 },
+  hover: { 
+    opacity: 0.6, 
+    scale: 1.05,
+    transition: { duration: 0.8, ease: "easeInOut" }
+  }
 };
 
 const Services = () => {
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: false, amount: 0.2 });
+
+
   return (
-    <section id="services" className="bg-[#131313] shadow-[0px_0px_65px_65px_#131313] relative py-20 w-full">
+    <section id="services" className="bg-[#0c0a09] shadow-[0px_0px_65px_65px_#0c0a09] relative py-24 w-full overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/3 w-96 h-96 rounded-full bg-red-600/10 filter blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-72 h-72 rounded-full bg-blue-600/10 filter blur-3xl animate-pulse" style={{ animationDelay: "2s" }}></div>
+      </div>
 
-      <Title title="SERVICES" />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <Title title="What I Do" description="Crafting fast, scalable, and modern web solutions with clean code and a user-first approach." />
 
-      <motion.div
-        className="grid md:grid-cols-2 gap-10 xl:px-60 lg:px-32 px-5 mt-20"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        {services.map((service, index) => {
-          const Icon = service.icon;
-          return (
-            <motion.div key={index} variants={cardVariants}>
-              <Card
-                className="group min-h-52 bg-gradient-to-br from-[#1c1c1c] to-[#111111] border border-red-600 hover:border-red-400 transition-all duration-500 text-white shadow-md hover:shadow-red-500/30"
+        <motion.div
+          ref={containerRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            return (
+              <motion.div
+                key={index}
+                variants={cardVariants}
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                className="h-full"
               >
-                <CardHeader className="flex justify-start items-center gap-3   space-y-4">
-                  <div className="bg-red-600 p-3 rounded-full group-hover:bg-red-500 transition-colors duration-300">
-                    <Icon className="h-8 w-8 text-white" />
-                  </div>
-                  <CardTitle className="text-2xl font-semibold group-hover:text-red-500 transition-colors duration-300 mb-4">
-                    {service.name}
-                  </CardTitle>
-                </CardHeader>
-
-                <CardContent>
-                  <p className="text-gray-400  px-4">{service.description}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          );
-        })}
-      </motion.div>
+                <Card className="relative h-full overflow-hidden bg-black/80 border border-gray-800 hover:border-red-500/50 transition-all duration-300">
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-tr from-red-600/20 to-blue-600/5 rounded-2xl"
+                    variants={glowVariants}
+                    initial="initial"
+                    whileHover="hover"
+                  />
+                  
+                  <CardContent className="p-6 space-y-6 h-full flex flex-col">
+                    <div className="flex items-center gap-4">
+                      <div className="bg-gradient-to-br from-red-500 to-red-700 p-3 rounded-xl shadow-lg shadow-red-500/20">
+                        <Icon className="h-6 w-6 text-white" />
+                      </div>
+                      <h3 className="text-xl font-bold text-white tracking-tight">{service.name}</h3>
+                    </div>
+                    
+                    <p className="text-gray-400 flex-grow">
+                      {service.description}
+                    </p>
+                    
+                    <div className="pt-4">
+                      <motion.div 
+                        className="h-1 w-12 bg-gradient-to-r from-red-500 to-red-700 rounded-full"
+                        whileHover={{ width: "100%", transition: { duration: 0.5 } }}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </div>
     </section>
   );
 };

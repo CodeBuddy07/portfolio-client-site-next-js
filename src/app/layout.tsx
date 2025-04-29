@@ -3,6 +3,10 @@ import "./globals.css";
 import { ThemeProvider } from "@/Providers/Theme-Provider";
 import { ParallaxProviders } from "@/Providers/Parallax-Provider";
 import { Saira } from 'next/font/google';
+import { Toaster } from "@/components/ui/sonner";
+
+
+
 
 const saira = Saira({
   subsets: ['latin'],
@@ -21,6 +25,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -35,7 +42,7 @@ export default function RootLayout({
           <ParallaxProviders>
             
               {children}
-            
+              <Toaster richColors position="top-center" />
           </ParallaxProviders>
         </ThemeProvider>
       </body>
