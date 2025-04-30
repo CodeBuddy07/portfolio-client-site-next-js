@@ -99,10 +99,10 @@ const Skill = () => {
           animate={isInView ? "visible" : "hidden"}
         >
           {/* Left Fade */}
-          <div className="absolute top-0 left-0 w-16 h-full bg-gradient-to-r from-[#0c0a09] to-transparent z-10 pointer-events-none" />
+          <div className="absolute hidden md:block top-0 left-0 w-16 h-full bg-gradient-to-r from-[#0c0a09] to-transparent z-10 pointer-events-none" />
 
           {/* Right Fade */}
-          <div className="absolute top-0 right-0 w-16 h-full bg-gradient-to-l from-[#0c0a09] to-transparent z-10 pointer-events-none" />
+          <div className="absolute hidden md:block top-0 right-0 w-16 h-full bg-gradient-to-l from-[#0c0a09] to-transparent z-10 pointer-events-none" />
 
           <Swiper
             modules={[Autoplay]}

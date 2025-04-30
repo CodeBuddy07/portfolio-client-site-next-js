@@ -4,6 +4,7 @@ import {
     Linkedin,
     Facebook,
   } from 'lucide-react';
+import Image from 'next/image';
   
   const socialLinks = [
     {
@@ -37,6 +38,16 @@ import {
     return (
       <footer className="w-full bg-stone-950 text-gray-400 py-5 px-6 md:px-20 flex flex-col md:flex-row justify-between items-center gap-5 shadow-[0_0_80px_20px_#131313]">
         <p className="text-sm text-center md:text-left">
+          <span>
+            <Image
+              src="/logo_white.png"
+              alt="Logo"
+              width={20}
+              height={20}
+              priority
+              className="inline-block mr-2"
+            />
+          </span>
           © 2024 - Ruhul by Codever
         </p>
   

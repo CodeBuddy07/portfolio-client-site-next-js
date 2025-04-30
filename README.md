@@ -1,8 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal Portfolio Website
 
-## Getting Started
+![Portfolio Banner](./public/preview.png)
 
-First, run the development server:
+## 🚀 Overview
+
+A modern, responsive portfolio website built with Next.js 15, featuring smooth animations, interactive elements, and a clean design. This portfolio showcases my projects, skills, and professional experience in an engaging way.
+
+## ✨ Features
+
+- **Modern UI/UX**: Clean, responsive design with dark/light mode(only in Dashboard) 
+- **Interactive Elements**: Animations, particle effects, and smooth scrolling
+- **Performance Optimized**: Fast loading and rendering
+- **Fully Responsive**: Works on all devices and screen sizes
+- **Contact Form**: Built-in form handling with validation
+- **Authentication**: User authentication with Clerk
+- **SEO Friendly**: Optimized for search engines
+
+## 🛠️ Technologies Used
+
+- **Framework**: [Next.js 15](https://nextjs.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **UI Components**: [Radix UI](https://www.radix-ui.com/)
+- **Authentication**: [Clerk](https://clerk.dev/)
+- **Animations**: 
+  - [Framer Motion](https://www.framer.com/motion/)
+  - [Lenis](https://lenis.studiofreight.com/)
+  - [React Scroll Parallax](https://www.npmjs.com/package/react-scroll-parallax)
+  - [tsParticles](https://particles.js.org/)
+- **Form Handling**: [React Hook Form](https://react-hook-form.com/) with [Zod](https://zod.dev/) validation
+- **State Management**: [Zustand](https://zustand-demo.pmnd.rs/)
+- **Icons**: [Lucide React](https://lucide.dev/) and [React Icons](https://react-icons.github.io/react-icons/)
+- **Notifications**: [Sonner](https://sonner.emilkowal.ski/)
+- **Effects**: 
+  - [TypeWriter Effect](https://www.npmjs.com/package/typewriter-effect)
+  - [CountUp](https://www.npmjs.com/package/react-countup)
+  - [DotLottie Player](https://dotlottie.io/)
+  - [Animated Cursor](https://www.npmjs.com/package/react-animated-cursor)
+
+## 📋 Prerequisites
+
+- Node.js 18.x or later
+- npm or yarn or pnpm
+
+## 🚀 Getting Started
+
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/CodeBuddy07/portfolio-client-site-next-js.git
+cd portfolio-client-site-next-js
+```
+
+2. **Install dependencies**
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. **Environment Setup**
+
+Create a `.env.local` file in the root directory and add your environment variables:
+
+```
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+# Add any other environment variables here
+```
+
+4. **Run the development server**
 
 ```bash
 npm run dev
@@ -10,27 +79,72 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. **Open your browser**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Navigate to [http://localhost:3000](http://localhost:3000) to see your portfolio website.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## 📱 Responsive Design
 
-To learn more about Next.js, take a look at the following resources:
+The portfolio is fully responsive and works well on:
+- Mobile devices
+- Tablets
+- Laptops/Desktops
+- Large screens
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔒 Authentication
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project uses Clerk for authentication. To customize the authentication flow:
 
-## Deploy on Vercel
+1. Create an account on [Clerk](https://clerk.dev/)
+2. Set up your application and get your API keys
+3. Update the `.env` file with your keys
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚀 Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Deploy to Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com).
+
+```bash
+npm install -g vercel
+vercel
+```
+
+### Deploy to Netlify
+
+You can also deploy to [Netlify](https://netlify.com):
+
+1. Push your code to GitHub
+2. Sign up for Netlify
+3. Create a new site from Git
+4. Select your repository
+5. Configure build settings:
+   - Build command: `npm run build`
+   - Publish directory: `.next`
+
+## 🧩 Future Improvements
+
+- [ ] Add blog functionality
+- [ ] Implement i18n for multiple languages
+- [ ] Add analytics
+- [ ] Improve accessibility
+- [ ] Add more interactive elements
+- [ ] Create a CMS integration
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📞 Contact
+
+- Website: [your-website.com](https://your-website.com)
+- Email: rjruhul05@gmail.com
+- LinkedIn: [linkedin.com/in/ruhul-amin-b39a69249](https://www.linkedin.com/in/ruhul-amin-b39a69249/)
+- GitHub: [github.com/CodeBuddy07](https://github.com/CodeBuddy07)
+
+---
+
+⭐️ If you found this project helpful, please consider giving it a star on GitHub! ⭐️

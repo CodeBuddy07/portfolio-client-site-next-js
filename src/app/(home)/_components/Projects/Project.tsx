@@ -56,7 +56,7 @@ const projects = [
     },
     {
         name: "File Uploading System",
-        description: "React + Node based system to generate custom domain file links via Google Drive.",
+        description: "Developed a file upload and sharing system where users receive custom domain URLs for their files, redirecting seamlessly to Google Drive. Utilized React for the frontend, Node.js and Express.js for the backend, and the Google Drive API for storage. This project enhances file-sharing with branded, user-friendly URLs.",
         liveLink: "https://ruhulcodes.netlify.app/",
         repoLink: "https://ruhulcodes.netlify.app/",
         category: "MERN",
@@ -69,16 +69,16 @@ const projects = [
 const categories = ["ALL", ...new Set(projects.map((p) => p.category))];
 
 const projectAnimation = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { 
-      delay: i * 0.1,
-      duration: 0.5,
-      ease: "easeOut"
-    }
-  })
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({
+        opacity: 1,
+        y: 0,
+        transition: {
+            delay: i * 0.1,
+            duration: 0.5,
+            ease: "easeOut"
+        }
+    })
 };
 
 
@@ -86,9 +86,9 @@ const Projects = () => {
     const [selectedProject, setSelectedProject] = useState<null | typeof projects[number]>(null);
     const [activeCategory, setActiveCategory] = useState("ALL");
     const containerRef = useRef<HTMLDivElement>(null);
-    
-    const filteredProjects = activeCategory === "ALL" 
-        ? projects 
+
+    const filteredProjects = activeCategory === "ALL"
+        ? projects
         : projects.filter(p => p.category === activeCategory);
 
     const scrollLeft = () => {
@@ -96,7 +96,7 @@ const Projects = () => {
             containerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
         }
     };
-    
+
     const scrollRight = () => {
         if (containerRef.current) {
             containerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
@@ -110,7 +110,7 @@ const Projects = () => {
                 <div className="absolute top-10 left-10 w-64 h-64 rounded-full bg-red-500 filter blur-3xl"></div>
                 <div className="absolute bottom-40 right-20 w-96 h-96 rounded-full bg-blue-500 filter blur-3xl"></div>
             </div>
-            
+
             <div className="container mx-auto px-4 relative z-10">
                 {/* Section header */}
                 <div className="text-center mb-16">
@@ -129,11 +129,10 @@ const Projects = () => {
                         <button
                             key={category}
                             onClick={() => setActiveCategory(category)}
-                            className={`px-6 py-2 text-sm rounded-full transition-all duration-300 ${
-                                activeCategory === category
-                                    ? "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/20"
-                                    : " text-gray-400 hover:text-white bg-stone-900 hover:bg-gray-800"
-                            }`}
+                            className={`px-6 py-2 text-sm rounded-full transition-all duration-300 ${activeCategory === category
+                                ? "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/20"
+                                : " text-gray-400 hover:text-white bg-stone-900 hover:bg-gray-800"
+                                }`}
                         >
                             {category}
                         </button>
@@ -142,14 +141,14 @@ const Projects = () => {
 
                 {/* Projects carousel */}
                 <div className="relative">
-                    <button 
+                    <button
                         onClick={scrollLeft}
                         className="absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-gray-800/80 hover:bg-gray-700 text-white p-2 rounded-full shadow-lg hidden md:flex"
                     >
                         <ChevronLeft size={24} />
                     </button>
-                    
-                    <div 
+
+                    <div
                         ref={containerRef}
                         className="flex gap-6 overflow-x-auto py-8 px-2 scrollbar-hide snap-x scroll-smooth"
                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -221,8 +220,8 @@ const Projects = () => {
                             </motion.div>
                         ))}
                     </div>
-                    
-                    <button 
+
+                    <button
                         onClick={scrollRight}
                         className="absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-stone-900 hover:bg-gray-800 text-white p-2 rounded-full shadow-lg hidden md:flex"
                     >
@@ -233,7 +232,9 @@ const Projects = () => {
 
             {/* Detail Modal */}
             <Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
-                <DialogContent className="bg-stone-950 border border-stone-950 text-gray-200 max-w-4xl p-0 overflow-hidden rounded-xl">
+
+
+                <DialogContent className=" bg-stone-950 border border-stone-950 text-gray-200 max-w-4xl p-0 overflow-hidden rounded-xl">
                     {selectedProject && (
                         <>
                             <div className="relative h-64 md:h-80 w-full overflow-hidden">
@@ -246,7 +247,7 @@ const Projects = () => {
                                     style={{ objectFit: 'cover' }}
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-                                
+
                                 <div className="absolute bottom-0 left-0 p-6">
                                     <Badge className="mb-3 bg-red-500 text-white border-none">
                                         {selectedProject.category}
@@ -256,7 +257,7 @@ const Projects = () => {
                                     </DialogTitle>
                                 </div>
                             </div>
-                            
+
                             <div className="p-6">
                                 <div className="flex items-center gap-4 mb-6 text-sm">
                                     <div className="flex items-center gap-1 text-gray-400">
@@ -264,11 +265,11 @@ const Projects = () => {
                                         <span>{selectedProject.duration} weeks development</span>
                                     </div>
                                 </div>
-                                
+
                                 <DialogDescription className="text-gray-300 mb-8 text-base">
                                     {selectedProject.description}
                                 </DialogDescription>
-                                
+
                                 <div className="flex flex-wrap gap-4">
                                     <a
                                         href={selectedProject.liveLink}

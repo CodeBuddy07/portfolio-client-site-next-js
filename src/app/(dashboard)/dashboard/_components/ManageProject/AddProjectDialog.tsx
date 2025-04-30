@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// app/dashboard/projects/edit-project-dialog.tsx
+// app/dashboard/projects/add-project-dialog.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import {
   Dialog,
   DialogContent,
@@ -22,7 +22,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { X } from "lucide-react";
+import { X, Image as ImageIcon } from "lucide-react";
+import Image from "next/image";
 
 type Project = {
   id: string;
@@ -36,58 +37,93 @@ type Project = {
   repoLink?: string;
   techStacks: string[];
   budget?: number;
-  extraInfo?: string;
+  previewImage?: string;
 };
 
-type EditProjectDialogProps = {
+type AddProjectDialogProps = {
   isOpen: boolean;
   onClose: () => void;
-  project: Project;
-  onEdit: (project: Project) => void;
+  onAdd: (project: Omit<Project, "id">) => void;
 };
 
-export function EditProjectDialog({ isOpen, onClose, project, onEdit }: EditProjectDialogProps) {
-  const [editedProject, setEditedProject] = useState<Project>(project);
-  const [techStackInput, setTechStackInput] = useState("");
+export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogProps) {
+  const [newProject, setNewProject] = useState<Omit<Project, "id">>({
+    title: "",
+    description: "",
+    status: "planned",
+    category: "next-js",
+    startDate: new Date().toISOString().split("T")[0],
+    techStacks: [],
+  });
   
-  // Reset form when project changes
-  useEffect(() => {
-    setEditedProject(project);
-  }, [project]);
+  const [techStackInput, setTechStackInput] = useState("");
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (field: keyof Project, value: any) => {
-    setEditedProject({ ...editedProject, [field]: value });
+  const handleChange = (field: keyof Omit<Project, "id">, value: any) => {
+    setNewProject({ ...newProject, [field]: value });
   };
 
   const addTechStack = () => {
-    if (techStackInput.trim() && !editedProject.techStacks.includes(techStackInput.trim())) {
-      setEditedProject({
-        ...editedProject,
-        techStacks: [...editedProject.techStacks, techStackInput.trim()],
+    if (techStackInput.trim() && !newProject.techStacks.includes(techStackInput.trim())) {
+      setNewProject({
+        ...newProject,
+        techStacks: [...newProject.techStacks, techStackInput.trim()],
       });
       setTechStackInput("");
     }
   };
 
   const removeTechStack = (stack: string) => {
-    setEditedProject({
-      ...editedProject,
-      techStacks: editedProject.techStacks.filter(s => s !== stack),
+    setNewProject({
+      ...newProject,
+      techStacks: newProject.techStacks.filter(s => s !== stack),
     });
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Create a URL for preview
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+      
+      // Convert image to base64 string for storage
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        handleChange("previewImage", reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const triggerFileInput = () => {
+    fileInputRef.current?.click();
+  };
+
+  const removeImage = () => {
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
+    setPreviewUrl(null);
+    handleChange("previewImage", undefined);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onEdit(editedProject);
+    onAdd(newProject);
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-xl">
+    <Dialog open={isOpen} onOpenChange={onClose} >
+      <DialogContent className="min-w-3xl overflow-y-auto max-h-[90vh] scroll-smooth">
         <DialogHeader>
-          <DialogTitle>Edit Project</DialogTitle>
+          <DialogTitle>Add New Project</DialogTitle>
           <DialogDescription>
-            Update the project details below.
+            Fill in the details below to add a new project to your portfolio.
           </DialogDescription>
         </DialogHeader>
         
@@ -97,22 +133,29 @@ export function EditProjectDialog({ isOpen, onClose, project, onEdit }: EditProj
               <Label htmlFor="title">Project Title *</Label>
               <Input 
                 id="title"
-                value={editedProject.title}
+                value={newProject.title}
                 onChange={(e) => handleChange("title", e.target.value)}
                 placeholder="Enter project title"
+                className="w-full"
                 required
               />
             </div>
             
             <div className="space-y-2">
               <Label htmlFor="category">Category *</Label>
-              <Input 
-                id="category"
-                value={editedProject.category}
-                onChange={(e) => handleChange("category", e.target.value)}
-                placeholder="E.g., Web Development, Mobile App"
-                required
-              />
+              <Select 
+                onValueChange={(value: "react" | "next-js" | "vite") => handleChange("category", value)}
+                defaultValue={newProject.category}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="react">React</SelectItem>
+                  <SelectItem value="next-js">Next JS</SelectItem>
+                  <SelectItem value="vite">Vite</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           
@@ -120,10 +163,10 @@ export function EditProjectDialog({ isOpen, onClose, project, onEdit }: EditProj
             <Label htmlFor="description">Description *</Label>
             <Textarea 
               id="description"
-              value={editedProject.description}
+              value={newProject.description}
               onChange={(e) => handleChange("description", e.target.value)}
               placeholder="Describe your project"
-              rows={3}
+              rows={6}
               required
             />
           </div>
@@ -132,10 +175,8 @@ export function EditProjectDialog({ isOpen, onClose, project, onEdit }: EditProj
             <div className="space-y-2">
               <Label htmlFor="status">Status *</Label>
               <Select 
-                onValueChange={(value: "completed" | "in-progress" | "planned") => 
-                  handleChange("status", value)
-                }
-                value={editedProject.status}
+                onValueChange={(value: "completed" | "in-progress" | "planned") => handleChange("status", value)}
+                defaultValue={newProject.status}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select status" />
@@ -153,7 +194,7 @@ export function EditProjectDialog({ isOpen, onClose, project, onEdit }: EditProj
               <Input 
                 id="budget"
                 type="number"
-                value={editedProject.budget || ""}
+                value={newProject.budget || ""}
                 onChange={(e) => handleChange("budget", e.target.value ? Number(e.target.value) : undefined)}
                 placeholder="Project budget"
               />
@@ -166,7 +207,7 @@ export function EditProjectDialog({ isOpen, onClose, project, onEdit }: EditProj
               <Input 
                 id="startDate"
                 type="date"
-                value={editedProject.startDate}
+                value={newProject.startDate}
                 onChange={(e) => handleChange("startDate", e.target.value)}
                 required
               />
@@ -177,7 +218,7 @@ export function EditProjectDialog({ isOpen, onClose, project, onEdit }: EditProj
               <Input 
                 id="finishDate"
                 type="date"
-                value={editedProject.finishDate || ""}
+                value={newProject.finishDate || ""}
                 onChange={(e) => handleChange("finishDate", e.target.value || undefined)}
               />
             </div>
@@ -188,7 +229,7 @@ export function EditProjectDialog({ isOpen, onClose, project, onEdit }: EditProj
               <Label htmlFor="liveLink">Live Link</Label>
               <Input 
                 id="liveLink"
-                value={editedProject.liveLink || ""}
+                value={newProject.liveLink || ""}
                 onChange={(e) => handleChange("liveLink", e.target.value || undefined)}
                 placeholder="https://example.com"
               />
@@ -198,11 +239,50 @@ export function EditProjectDialog({ isOpen, onClose, project, onEdit }: EditProj
               <Label htmlFor="repoLink">Repository Link</Label>
               <Input 
                 id="repoLink"
-                value={editedProject.repoLink || ""}
+                value={newProject.repoLink || ""}
                 onChange={(e) => handleChange("repoLink", e.target.value || undefined)}
                 placeholder="https://github.com/username/repo"
               />
             </div>
+          </div>
+          
+          <div className="space-y-4">
+            <Label>Project Preview Image</Label>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageUpload}
+              accept="image/*"
+              className="hidden"
+            />
+            
+            {previewUrl ? (
+              <div className="relative w-full h-48 border rounded-md overflow-hidden">
+                <Image 
+                  src={previewUrl} 
+                  alt="Project preview" 
+                  className="w-full h-full object-cover"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <button
+                  type="button"
+                  onClick={removeImage}
+                  className="absolute top-2 right-2 bg-black bg-opacity-50 text-white rounded-full p-1"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            ) : (
+              <div 
+                onClick={triggerFileInput}
+                className="w-full h-40 border-2 border-dashed rounded-md flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 dark:hover:bg-stone-800"
+              >
+                <ImageIcon size={40} className="text-gray-400 mb-2" />
+                <p className="text-sm text-gray-500">Click to upload project image</p>
+                <p className="text-xs text-gray-400 mt-1">PNG, JPG, GIF up to 5MB</p>
+              </div>
+            )}
           </div>
           
           <div className="space-y-4">
@@ -219,7 +299,7 @@ export function EditProjectDialog({ isOpen, onClose, project, onEdit }: EditProj
             </div>
             
             <div className="flex flex-wrap gap-2">
-              {editedProject.techStacks.map((tech) => (
+              {newProject.techStacks.map((tech) => (
                 <div key={tech} className="flex items-center bg-gray-100 dark:bg-stone-800 rounded px-2 py-1">
                   <span className="text-sm">{tech}</span>
                   <button
@@ -231,29 +311,18 @@ export function EditProjectDialog({ isOpen, onClose, project, onEdit }: EditProj
                   </button>
                 </div>
               ))}
-              {editedProject.techStacks.length === 0 && (
+              {newProject.techStacks.length === 0 && (
                 <span className="text-sm text-gray-500">No technologies added yet</span>
               )}
             </div>
-          </div>
-          
-          <div className="space-y-2"  >
-          <Label htmlFor="extraInfo">Additional Information</Label>
-            <Textarea 
-              id="extraInfo"
-              value={editedProject.extraInfo || ""}
-              onChange={(e) => handleChange("extraInfo", e.target.value || undefined)}
-              placeholder="Any additional details about the project"
-              rows={2}
-            />
           </div>
           
           <DialogFooter>
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" disabled={!editedProject.title || !editedProject.description || !editedProject.category}>
-              Update Project
+            <Button type="submit" disabled={!newProject.title || !newProject.description || !newProject.category}>
+              Add Project
             </Button>
           </DialogFooter>
         </form>

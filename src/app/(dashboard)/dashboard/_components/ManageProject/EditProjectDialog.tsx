@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// app/dashboard/projects/add-project-dialog.tsx
+// app/dashboard/projects/edit-project-dialog.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -39,57 +39,55 @@ type Project = {
   extraInfo?: string;
 };
 
-type AddProjectDialogProps = {
+type EditProjectDialogProps = {
   isOpen: boolean;
   onClose: () => void;
-  onAdd: (project: Omit<Project, "id">) => void;
+  project: Project;
+  onEdit: (project: Project) => void;
 };
 
-export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogProps) {
-  const [newProject, setNewProject] = useState<Omit<Project, "id">>({
-    title: "",
-    description: "",
-    status: "planned",
-    category: "next-js",
-    startDate: new Date().toISOString().split("T")[0],
-    techStacks: [],
-  });
-  
+export function EditProjectDialog({ isOpen, onClose, project, onEdit }: EditProjectDialogProps) {
+  const [editedProject, setEditedProject] = useState<Project>(project);
   const [techStackInput, setTechStackInput] = useState("");
+  
+  // Reset form when project changes
+  useEffect(() => {
+    setEditedProject(project);
+  }, [project]);
 
-  const handleChange = (field: keyof Omit<Project, "id">, value: any) => {
-    setNewProject({ ...newProject, [field]: value });
+  const handleChange = (field: keyof Project, value: any) => {
+    setEditedProject({ ...editedProject, [field]: value });
   };
 
   const addTechStack = () => {
-    if (techStackInput.trim() && !newProject.techStacks.includes(techStackInput.trim())) {
-      setNewProject({
-        ...newProject,
-        techStacks: [...newProject.techStacks, techStackInput.trim()],
+    if (techStackInput.trim() && !editedProject.techStacks.includes(techStackInput.trim())) {
+      setEditedProject({
+        ...editedProject,
+        techStacks: [...editedProject.techStacks, techStackInput.trim()],
       });
       setTechStackInput("");
     }
   };
 
   const removeTechStack = (stack: string) => {
-    setNewProject({
-      ...newProject,
-      techStacks: newProject.techStacks.filter(s => s !== stack),
+    setEditedProject({
+      ...editedProject,
+      techStacks: editedProject.techStacks.filter(s => s !== stack),
     });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onAdd(newProject);
+    onEdit(editedProject);
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="min-w-3xl">
+      <DialogContent className="min-w-3xl overflow-y-auto max-h-[90vh] scroll-smooth">
         <DialogHeader>
-          <DialogTitle>Add New Project</DialogTitle>
+          <DialogTitle>Edit Project</DialogTitle>
           <DialogDescription>
-            Fill in the details below to add a new project to your portfolio.
+            Update the project details below.
           </DialogDescription>
         </DialogHeader>
         
@@ -99,7 +97,7 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
               <Label htmlFor="title">Project Title *</Label>
               <Input 
                 id="title"
-                value={newProject.title}
+                value={editedProject.title}
                 onChange={(e) => handleChange("title", e.target.value)}
                 placeholder="Enter project title"
                 required
@@ -108,19 +106,13 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
             
             <div className="space-y-2">
               <Label htmlFor="category">Category *</Label>
-              <Select 
-                onValueChange={(value: "react" | "next-js" | "vite") => handleChange("category", value)}
-                defaultValue={newProject.category}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="react">React</SelectItem>
-                  <SelectItem value="next-js">Next JS</SelectItem>
-                  <SelectItem value="vite">Vite</SelectItem>
-                </SelectContent>
-              </Select>
+              <Input 
+                id="category"
+                value={editedProject.category}
+                onChange={(e) => handleChange("category", e.target.value)}
+                placeholder="E.g., Web Development, Mobile App"
+                required
+              />
             </div>
           </div>
           
@@ -128,7 +120,7 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
             <Label htmlFor="description">Description *</Label>
             <Textarea 
               id="description"
-              value={newProject.description}
+              value={editedProject.description}
               onChange={(e) => handleChange("description", e.target.value)}
               placeholder="Describe your project"
               rows={3}
@@ -140,8 +132,10 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
             <div className="space-y-2">
               <Label htmlFor="status">Status *</Label>
               <Select 
-                onValueChange={(value: "completed" | "in-progress" | "planned") => handleChange("status", value)}
-                defaultValue={newProject.status}
+                onValueChange={(value: "completed" | "in-progress" | "planned") => 
+                  handleChange("status", value)
+                }
+                value={editedProject.status}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select status" />
@@ -159,7 +153,7 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
               <Input 
                 id="budget"
                 type="number"
-                value={newProject.budget || ""}
+                value={editedProject.budget || ""}
                 onChange={(e) => handleChange("budget", e.target.value ? Number(e.target.value) : undefined)}
                 placeholder="Project budget"
               />
@@ -172,7 +166,7 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
               <Input 
                 id="startDate"
                 type="date"
-                value={newProject.startDate}
+                value={editedProject.startDate}
                 onChange={(e) => handleChange("startDate", e.target.value)}
                 required
               />
@@ -183,7 +177,7 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
               <Input 
                 id="finishDate"
                 type="date"
-                value={newProject.finishDate || ""}
+                value={editedProject.finishDate || ""}
                 onChange={(e) => handleChange("finishDate", e.target.value || undefined)}
               />
             </div>
@@ -194,7 +188,7 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
               <Label htmlFor="liveLink">Live Link</Label>
               <Input 
                 id="liveLink"
-                value={newProject.liveLink || ""}
+                value={editedProject.liveLink || ""}
                 onChange={(e) => handleChange("liveLink", e.target.value || undefined)}
                 placeholder="https://example.com"
               />
@@ -204,7 +198,7 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
               <Label htmlFor="repoLink">Repository Link</Label>
               <Input 
                 id="repoLink"
-                value={newProject.repoLink || ""}
+                value={editedProject.repoLink || ""}
                 onChange={(e) => handleChange("repoLink", e.target.value || undefined)}
                 placeholder="https://github.com/username/repo"
               />
@@ -225,7 +219,7 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
             </div>
             
             <div className="flex flex-wrap gap-2">
-              {newProject.techStacks.map((tech) => (
+              {editedProject.techStacks.map((tech) => (
                 <div key={tech} className="flex items-center bg-gray-100 dark:bg-stone-800 rounded px-2 py-1">
                   <span className="text-sm">{tech}</span>
                   <button
@@ -237,17 +231,17 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
                   </button>
                 </div>
               ))}
-              {newProject.techStacks.length === 0 && (
+              {editedProject.techStacks.length === 0 && (
                 <span className="text-sm text-gray-500">No technologies added yet</span>
               )}
             </div>
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="extraInfo">Additional Information</Label>
+          <div className="space-y-2"  >
+          <Label htmlFor="extraInfo">Additional Information</Label>
             <Textarea 
               id="extraInfo"
-              value={newProject.extraInfo || ""}
+              value={editedProject.extraInfo || ""}
               onChange={(e) => handleChange("extraInfo", e.target.value || undefined)}
               placeholder="Any additional details about the project"
               rows={2}
@@ -258,8 +252,8 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" disabled={!newProject.title || !newProject.description || !newProject.category}>
-              Add Project
+            <Button type="submit" disabled={!editedProject.title || !editedProject.description || !editedProject.category}>
+              Update Project
             </Button>
           </DialogFooter>
         </form>
@@ -267,4 +261,3 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
     </Dialog>
   );
 }
-

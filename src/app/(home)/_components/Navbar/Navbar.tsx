@@ -10,7 +10,8 @@ import { DialogTitle } from '@/components/ui/dialog'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Track scroll position for navbar styling
   useEffect(() => {
@@ -64,7 +65,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <Sheet>
+            <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen} >
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <Menu className="h-6 w-6" />
@@ -73,19 +74,19 @@ export default function Navbar() {
               </SheetTrigger>
               <SheetContent
                 side="right"
-                className="w-[300px] sm:w-[400px] p-5 backdrop-blur-md bg-slate-200/60 border-none" // 🧠 Added blur and semi-white
+                className="w-[300px] sm:w-[400px] p-5 backdrop-blur-md bg-stone-950/80 border-none" // 🧠 Added blur and semi-white
               >
                 <DialogTitle>
                   <VisuallyHidden>Mobile Navigation Menu</VisuallyHidden> {/* Hidden title for screen readers */}
                 </DialogTitle>
 
                 <div className="flex flex-col gap-6 pt-6">
-                  <MobileNavLink href="#header" >Home</MobileNavLink>
-                  <MobileNavLink href="#about" >About</MobileNavLink>
-                  <MobileNavLink href="#projects" >Projects</MobileNavLink>
-                  <MobileNavLink href="#skills" >Skills</MobileNavLink>
+                  <MobileNavLink href="#header" onClick={() => setIsMenuOpen(false)}>Home</MobileNavLink>
+                  <MobileNavLink href="#about" onClick={() => setIsMenuOpen(false)}>About</MobileNavLink>
+                  <MobileNavLink href="#projects" onClick={() => setIsMenuOpen(false)}>Projects</MobileNavLink>
+                  <MobileNavLink href="#skills" onClick={() => setIsMenuOpen(false)}>Skills</MobileNavLink>
                   <Button asChild variant="outline" className="w-full border-red-600 text-red-600 hover:text-white hover:bg-red-700 transition-colors">
-                    <MobileNavLink href="#contact">Contact</MobileNavLink>
+                    <MobileNavLink href="#contact" onClick={() => setIsMenuOpen(false)}>Contact</MobileNavLink>
                   </Button>
                 </div>
               </SheetContent>
@@ -123,11 +124,33 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
 }
 
 // Reusable NavLink component for mobile
-function MobileNavLink({ href, children }: { href: string; children: React.ReactNode }) {
+function MobileNavLink({
+  href,
+  children,
+  onClick,
+}: {
+  href: string
+  children: React.ReactNode
+  onClick?: () => void
+}) {
+  const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.replace('#', '');
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    if (onClick) onClick();
+  };
+
   return (
     <a
       href={href}
-      className="text-sm font-medium tracking-wider transition-colors hover:text-red-600 "
+      onClick={handleClick}
+      className="text-sm font-medium tracking-wider transition-colors text-white hover:text-red-600 "
     >
       {children}
     </a>

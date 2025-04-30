@@ -1,8 +1,9 @@
 import React from 'react';
 import { Metadata } from 'next';
-import Navbar from '@/components/HomeComponents/Navbar/Navbar';
+import Navbar from '@/app/(home)/_components/Navbar/Navbar';
 import { LenisProvider } from '@/Providers/LenisProvider';
 import AnimatedCursor from "react-animated-cursor"
+import StickySideBar from '@/components/Shared/StickySideSocial';
 
 
 export const metadata: Metadata = {
@@ -35,6 +36,7 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
             />
             <Navbar />
+            <StickySideBar/>
             <main > {/* Add padding to account for fixed navbar */}
                 {children}
             </main>

@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/Providers/Theme-Provider";
 import { ParallaxProviders } from "@/Providers/Parallax-Provider";
 import { Saira } from 'next/font/google';
 import { Toaster } from "@/components/ui/sonner";
+import { ClerkProvider } from "@clerk/nextjs";
 
 
 
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body
         className={`${saira.className} antialiased`}
       >
+        <ClerkProvider>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -45,6 +47,7 @@ export default function RootLayout({
               <Toaster richColors position="top-center" />
           </ParallaxProviders>
         </ThemeProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

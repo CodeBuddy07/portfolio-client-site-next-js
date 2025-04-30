@@ -2,12 +2,14 @@
 
 import * as React from "react"
 import {
-  BookOpen,
-  Bot,
-  LogOut,
+  MessageCircle,
+  FolderKanban,
+  Mail,
   Settings2,
-  SquareTerminal,
-} from "lucide-react"
+  Network,
+  BadgeCheck,
+} from "lucide-react";
+
 
 import { NavMain } from "@/components/nav-main"
 import { TeamSwitcher } from "@/components/team-switcher"
@@ -18,100 +20,49 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { Button } from "./ui/button"
+
 
 
 const navMain = [
   {
     title: "Manage Projects",
-    url: "/dashboard/projects",
-    icon: SquareTerminal,
+    url: "/dashboard",
+    icon: FolderKanban, // 🗂️ Project/task visual
   },
   {
-    title: "Playground",
+    title: "Manage Testimonials",
+    url: "/dashboard/testimonials",
+    icon: MessageCircle, // 💬 Conversations/testimonials
+  },
+  {
+    title: "Emails",
+    url: "/dashboard/emails",
+    icon: Mail, // 📧
+  },
+  {
+    title: "General",
     url: "#",
-    icon: SquareTerminal,
+    icon: Settings2, // 👤 Settings-like
     items: [
       {
-        title: "History",
+        title: "Skills",
         url: "#",
+        icon: BadgeCheck, // ✅ Validated skills
       },
       {
-        title: "Starred",
+        title: "Socials",
         url: "#",
+        icon: Network, // 🌐 For social links/networks
       },
       {
         title: "Settings",
         url: "#",
-      },
-    ],
-  },
-  {
-    title: "Models",
-    url: "#",
-    icon: Bot,
-    items: [
-      {
-        title: "Genesis",
-        url: "#",
-      },
-      {
-        title: "Explorer",
-        url: "#",
-      },
-      {
-        title: "Quantum",
-        url: "#",
-      },
-    ],
-  },
-  {
-    title: "Documentation",
-    url: "#",
-    icon: BookOpen,
-    items: [
-      {
-        title: "Introduction",
-        url: "#",
-      },
-      {
-        title: "Get Started",
-        url: "#",
-      },
-      {
-        title: "Tutorials",
-        url: "#",
-      },
-      {
-        title: "Changelog",
-        url: "#",
-      },
-    ],
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings2,
-    items: [
-      {
-        title: "General",
-        url: "#",
-      },
-      {
-        title: "Team",
-        url: "#",
-      },
-      {
-        title: "Billing",
-        url: "#",
-      },
-      {
-        title: "Limits",
-        url: "#",
+        icon: Settings2, // ⚙️ Again for nested settings
       },
     ],
   },
 ]
+
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -124,10 +75,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <Button className="bg-red-600 text-white hover:bg-red-500">
-          <LogOut />
-          Log out
-        </Button>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

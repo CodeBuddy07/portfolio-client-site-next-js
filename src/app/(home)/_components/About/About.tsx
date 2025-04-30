@@ -62,7 +62,7 @@ const About = () => {
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
             transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full max-w-2xl"
+            className="w-full "
           >
             <div className="space-y-6">
               {/* Section indicators */}

@@ -8,6 +8,8 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { ModeToggle } from '@/components/Shared/ThemeToggler';
+import { SignedIn, UserButton } from '@clerk/nextjs';
+
 
 export const metadata: Metadata = {
     title: 'Dashboard',
@@ -16,6 +18,7 @@ export const metadata: Metadata = {
 
 const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
+
         <SidebarProvider suppressHydrationWarning>
             <AppSidebar />
             <SidebarInset>
@@ -28,13 +31,19 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
                         />
 
                     </div>
-                    <ModeToggle />
+                    <div className='flex justify-center items-center gap-3'>
+                        <SignedIn>
+                            <UserButton />
+                        </SignedIn>
+                        <ModeToggle />
+                    </div>
                 </header>
                 <div className=" p-5">
                     {children}
                 </div>
             </SidebarInset>
         </SidebarProvider>
+
     );
 };
 

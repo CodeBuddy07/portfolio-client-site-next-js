@@ -1,7 +1,7 @@
 'use client'
 
 import { ParallaxBanner } from "react-scroll-parallax";
-import { TsParticles } from "./components/TS-Particle";
+import { TsParticles } from "./TS-Particle";
 import Typewriter from 'typewriter-effect';
 
 
