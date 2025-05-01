@@ -41,7 +41,7 @@ export async function GET(
 // UPDATE a project by ID
 export async function PATCH(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    context: { params: { id: string } }
   ) {
     try {
       const isAdmin = await checkRole("admin");
@@ -49,7 +49,7 @@ export async function PATCH(
         return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   
       await dbConnect();
-      const { id } = await params;
+      const { id } =  context.params;
   
       const formData = await req.formData();
   
@@ -109,7 +109,7 @@ export async function PATCH(
 // DELETE a project by ID
 export async function DELETE(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    context: { params: { id: string } }
   ) {
     try {
       const isAdmin = await checkRole("admin");
@@ -117,7 +117,7 @@ export async function DELETE(
         return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   
       await dbConnect();
-      const { id } = params;
+      const { id } = context.params;
   
       const project = await Project.findById(id);
       if (!project)
