@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// app/dashboard/projects/add-project-dialog.tsx
 "use client";
 
 import { useState, useRef } from "react";
@@ -22,45 +21,61 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { X, Image as ImageIcon } from "lucide-react";
+import { X, Image as ImageIcon, Loader2 } from "lucide-react";
 import Image from "next/image";
+import { format } from "date-fns";
+import { useCreateProject } from "@/Tanstack/Project/useCreateProject";
+import { toast } from "sonner";
 
-type Project = {
-  id: string;
-  title: string;
-  description: string;
-  status: "completed" | "in-progress" | "planned";
-  category: string;
-  startDate: string;
-  finishDate?: string;
-  liveLink?: string;
-  repoLink?: string;
-  techStacks: string[];
-  budget?: number;
-  previewImage?: string;
-};
+
+
+
 
 type AddProjectDialogProps = {
   isOpen: boolean;
   onClose: () => void;
-  onAdd: (project: Omit<Project, "id">) => void;
 };
 
-export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogProps) {
-  const [newProject, setNewProject] = useState<Omit<Project, "id">>({
+export function AddProjectDialog({ isOpen, onClose }: AddProjectDialogProps) {
+
+  type NewProjectState = {
+    title: string;
+    description: string;
+    status: string;
+    category: string;
+    startDate: string;
+    deadline: string;
+    budget: number;
+    techStacks: string[];
+    liveURL: string;
+    gitHubURL: string;
+    clientName: string;
+    clientContact: string;
+    visible: boolean;
+  };
+  
+  const [newProject, setNewProject] = useState<NewProjectState>({
     title: "",
     description: "",
-    status: "planned",
+    status: "pending",
     category: "next-js",
-    startDate: new Date().toISOString().split("T")[0],
+    startDate: format(new Date(), "yyyy-MM-dd"),
+    deadline: "",
+    budget: 0,
     techStacks: [],
+    liveURL: "",
+    gitHubURL: "",
+    clientName: "",
+    clientContact: "",
+    visible: true,
   });
-  
+
   const [techStackInput, setTechStackInput] = useState("");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [file, setFile] = useState<File>();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (field: keyof Omit<Project, "id">, value: any) => {
+  const handleChange = (field: keyof Omit<NewProjectState, "_id">, value: any) => {
     setNewProject({ ...newProject, [field]: value });
   };
 
@@ -81,57 +96,148 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
     });
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Create a URL for preview
+
       const url = URL.createObjectURL(file);
+      setFile(file);
       setPreviewUrl(url);
-      
-      // Convert image to base64 string for storage
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        handleChange("previewImage", reader.result as string);
-      };
-      reader.readAsDataURL(file);
+
     }
   };
+
+  
 
   const triggerFileInput = () => {
     fileInputRef.current?.click();
   };
 
-  const removeImage = () => {
-    if (previewUrl) {
-      URL.revokeObjectURL(previewUrl);
+  const removeImage = async () => {
+    if ( previewUrl){
+      URL.revokeObjectURL(previewUrl); 
     }
     setPreviewUrl(null);
-    handleChange("previewImage", undefined);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { mutate: createProject, isPending: isSubmitting } = useCreateProject();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onAdd(newProject);
+  
+    if (!isFormValid() || !file) return;
+  
+    const formData = new FormData();
+
+    if (file) formData.append("file", file);
+    
+    Object.entries(newProject).forEach(([key, value]) => {
+      if (
+        value !== undefined &&
+        value !== null &&
+        key !== "techStacks" // handle separately
+      ) {
+        formData.append(key, String(value));
+      }
+    });
+    
+    if (Array.isArray(newProject.techStacks)) {
+      newProject.techStacks.forEach((stack) => {
+        if (stack) formData.append(`techStacks[]`, stack); // send as array (no index needed)
+      });
+    }
+    
+
+      createProject(formData, {
+        onSuccess: (data) => {
+          console.log("Project created successfully:", data);
+          resetForm(); // Reset the form after successful submission
+        },
+        onError: (err) => {
+          console.error("Project creation failed:", err);
+          const errorMessage = (err as any)?.response?.data?.error || "Project creation failed. Please try again.";
+          toast.error(errorMessage);
+        },
+      });
+
+      
+
+      
+  };
+  
+
+  const isFormValid = () => {
+    return (
+      newProject.title.trim() !== "" &&
+      newProject.description.trim() !== "" &&
+      newProject.category.trim() !== "" &&
+      newProject.startDate.trim() !== "" &&
+      newProject.deadline.trim() !== "" &&
+      previewUrl !== null &&
+      newProject.techStacks.length !== 0
+    );
+  };
+
+  const resetForm = async () => {
+
+    if (previewUrl) {
+
+      setPreviewUrl(null);
+    }
+
+    setNewProject({
+          title: "",
+          description: "",
+          status: "pending",
+          category: "next-js",
+          startDate: format(new Date(), "yyyy-MM-dd"),
+          deadline: "",
+          budget: 0,
+          techStacks: [],
+          liveURL: "",
+          gitHubURL: "",
+          clientName: "",
+          clientContact: "",
+          visible: true,
+        });
+
+
+
+    setTechStackInput("");
+  };
+
+  const handleTechStackKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addTechStack();
+    }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose} >
-      <DialogContent className="min-w-3xl overflow-y-auto max-h-[90vh] scroll-smooth">
+    <Dialog open={isOpen} onOpenChange={(open) => {
+      if (!open) {
+        resetForm();
+        onClose();
+      }
+    }}>
+      <DialogContent className=" overflow-y-auto max-h-[90vh] scroll-smooth">
         <DialogHeader>
-          <DialogTitle>Add New Project</DialogTitle>
+          <DialogTitle className="text-xl font-semibold">Add New Project</DialogTitle>
           <DialogDescription>
             Fill in the details below to add a new project to your portfolio.
           </DialogDescription>
         </DialogHeader>
-        
+
         <form onSubmit={handleSubmit} className="space-y-6 py-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
+          {/* Project Basics */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="space-y-2 md:col-span-2">
               <Label htmlFor="title">Project Title *</Label>
-              <Input 
+              <Input
                 id="title"
                 value={newProject.title}
                 onChange={(e) => handleChange("title", e.target.value)}
@@ -140,71 +246,95 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
                 required
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="category">Category *</Label>
-              <Select 
-                onValueChange={(value: "react" | "next-js" | "vite") => handleChange("category", value)}
+              <Select
+                onValueChange={(value) => handleChange("category", value)}
                 defaultValue={newProject.category}
               >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select status" />
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="react">React</SelectItem>
                   <SelectItem value="next-js">Next JS</SelectItem>
                   <SelectItem value="vite">Vite</SelectItem>
+                  <SelectItem value="vue">Vue</SelectItem>
+                  <SelectItem value="angular">Angular</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
-          
+
+          {/* Description */}
           <div className="space-y-2">
             <Label htmlFor="description">Description *</Label>
-            <Textarea 
+            <Textarea
               id="description"
               value={newProject.description}
               onChange={(e) => handleChange("description", e.target.value)}
-              placeholder="Describe your project"
-              rows={6}
+              placeholder="Describe your project in detail"
+              rows={5}
               required
             />
           </div>
-          
-          <div className="grid grid-cols-2 gap-4">
+
+          {/* Status & Budget */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="status">Status *</Label>
-              <Select 
-                onValueChange={(value: "completed" | "in-progress" | "planned") => handleChange("status", value)}
+              <Select
+                onValueChange={(value: "completed" | "in-progress" | "pending") => handleChange("status", value)}
                 defaultValue={newProject.status}
               >
-                <SelectTrigger>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="planned">Planned</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
                   <SelectItem value="in-progress">In Progress</SelectItem>
                   <SelectItem value="completed">Completed</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div className="space-y-2">
-              <Label htmlFor="budget">Budget</Label>
-              <Input 
+              <Label htmlFor="budget">Budget ($) *</Label>
+              <Input
                 id="budget"
                 type="number"
                 value={newProject.budget || ""}
                 onChange={(e) => handleChange("budget", e.target.value ? Number(e.target.value) : undefined)}
                 placeholder="Project budget"
+                required
+                className="w-full"
               />
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="visible">Visibility</Label>
+              <Select
+                onValueChange={(value) => handleChange("visible", value === "true")}
+                defaultValue={newProject.visible ? "true" : "false"}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select visibility" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="true">Visible</SelectItem>
+                  <SelectItem value="false">Hidden</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-          
-          <div className="grid grid-cols-2 gap-4">
+
+          {/* Dates */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="startDate">Start Date *</Label>
-              <Input 
+              <Input
                 id="startDate"
                 type="date"
                 value={newProject.startDate}
@@ -212,71 +342,100 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
                 required
               />
             </div>
-            
+
             <div className="space-y-2">
-              <Label htmlFor="finishDate">Finish Date</Label>
-              <Input 
-                id="finishDate"
+              <Label htmlFor="deadline">Deadline *</Label>
+              <Input
+                id="deadline"
                 type="date"
-                value={newProject.finishDate || ""}
-                onChange={(e) => handleChange("finishDate", e.target.value || undefined)}
+                value={newProject.deadline || ""}
+                onChange={(e) => handleChange("deadline", e.target.value)}
+                required
               />
             </div>
           </div>
-          
-          <div className="grid grid-cols-2 gap-4">
+
+          {/* Client Information */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="liveLink">Live Link</Label>
-              <Input 
-                id="liveLink"
-                value={newProject.liveLink || ""}
-                onChange={(e) => handleChange("liveLink", e.target.value || undefined)}
+              <Label htmlFor="clientName">Client Name *</Label>
+              <Input
+                id="clientName"
+                value={newProject.clientName || ""}
+                onChange={(e) => handleChange("clientName", e.target.value)}
+                placeholder="Client name"
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="clientContact">Client Contact *</Label>
+              <Input
+                id="clientContact"
+                value={newProject.clientContact || ""}
+                onChange={(e) => handleChange("clientContact", e.target.value)}
+                placeholder="Email or phone number"
+                required
+              />
+            </div>
+          </div>
+
+          {/* URLs */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="liveURL">Live URL</Label>
+              <Input
+                id="liveURL"
+                value={newProject.liveURL || ""}
+                onChange={(e) => handleChange("liveURL", e.target.value || undefined)}
                 placeholder="https://example.com"
               />
             </div>
-            
+
             <div className="space-y-2">
-              <Label htmlFor="repoLink">Repository Link</Label>
-              <Input 
-                id="repoLink"
-                value={newProject.repoLink || ""}
-                onChange={(e) => handleChange("repoLink", e.target.value || undefined)}
+              <Label htmlFor="gitHubURL">GitHub URL</Label>
+              <Input
+                id="gitHubURL"
+                value={newProject.gitHubURL || ""}
+                onChange={(e) => handleChange("gitHubURL", e.target.value || undefined)}
                 placeholder="https://github.com/username/repo"
               />
             </div>
           </div>
-          
+
+          {/* Project Preview Image */}
           <div className="space-y-4">
-            <Label>Project Preview Image</Label>
+            <Label>Project Preview Image *</Label>
             <input
+              name="image"
               type="file"
               ref={fileInputRef}
               onChange={handleImageUpload}
               accept="image/*"
               className="hidden"
+              required={!previewUrl} // Make it required if no preview URL
             />
-            
+
             {previewUrl ? (
-              <div className="relative w-full h-48 border rounded-md overflow-hidden">
-                <Image 
-                  src={previewUrl} 
-                  alt="Project preview" 
-                  className="w-full h-full object-cover"
-                  layout="fill"
-                  objectFit="cover"
+              <div className="relative w-full h-56 md:h-64 border rounded-md overflow-hidden">
+                <Image
+                  src={previewUrl}
+                  alt="Project preview"
+                  fill
+                  className="object-cover"
                 />
                 <button
                   type="button"
                   onClick={removeImage}
-                  className="absolute top-2 right-2 bg-black bg-opacity-50 text-white rounded-full p-1"
+                  className="absolute top-2 right-2 bg-black bg-opacity-50 text-white rounded-full p-1.5 hover:bg-opacity-70 transition-opacity"
                 >
                   <X size={16} />
                 </button>
               </div>
             ) : (
-              <div 
+              <div
                 onClick={triggerFileInput}
-                className="w-full h-40 border-2 border-dashed rounded-md flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 dark:hover:bg-stone-800"
+                className="w-full h-44 md:h-56 border-2 border-dashed rounded-md flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 dark:hover:bg-stone-800 transition-colors"
               >
                 <ImageIcon size={40} className="text-gray-400 mb-2" />
                 <p className="text-sm text-gray-500">Click to upload project image</p>
@@ -284,28 +443,35 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
               </div>
             )}
           </div>
-          
+
+          {/* Tech Stack */}
           <div className="space-y-4">
-            <Label>Tech Stack</Label>
+            <Label>Tech Stack *</Label>
             <div className="flex items-center space-x-2">
               <Input
                 value={techStackInput}
                 onChange={(e) => setTechStackInput(e.target.value)}
+                onKeyDown={handleTechStackKeyDown}
                 placeholder="Add technology"
               />
-              <Button type="button" onClick={addTechStack} variant="outline">
+              <Button
+                type="button"
+                onClick={addTechStack}
+                variant="outline"
+                className="whitespace-nowrap"
+              >
                 Add
               </Button>
             </div>
-            
-            <div className="flex flex-wrap gap-2">
+
+            <div className="flex flex-wrap gap-2 min-h-8">
               {newProject.techStacks.map((tech) => (
-                <div key={tech} className="flex items-center bg-gray-100 dark:bg-stone-800 rounded px-2 py-1">
+                <div key={tech} className="flex items-center bg-gray-100 dark:bg-stone-800 rounded px-2 py-1 animate-fadeIn">
                   <span className="text-sm">{tech}</span>
                   <button
                     type="button"
                     onClick={() => removeTechStack(tech)}
-                    className="ml-2 text-gray-500 hover:text-gray-700"
+                    className="ml-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
                   >
                     <X size={14} />
                   </button>
@@ -316,13 +482,24 @@ export function AddProjectDialog({ isOpen, onClose, onAdd }: AddProjectDialogPro
               )}
             </div>
           </div>
-          
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={onClose}>
+
+          <DialogFooter className="pt-4 flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
+            <Button type="button" variant="outline" onClick={onClose} className="w-full sm:w-auto">
               Cancel
             </Button>
-            <Button type="submit" disabled={!newProject.title || !newProject.description || !newProject.category}>
-              Add Project
+            <Button
+              type="submit"
+              disabled={isSubmitting || !isFormValid()}
+              className="w-full sm:w-auto"
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Adding...
+                </>
+              ) : (
+                "Add Project"
+              )}
             </Button>
           </DialogFooter>
         </form>

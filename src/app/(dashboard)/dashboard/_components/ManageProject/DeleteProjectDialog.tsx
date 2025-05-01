@@ -10,30 +10,40 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useDeleteProject } from "@/Tanstack/Project/useDeleteProject";
+import { toast } from "sonner";
 
-type Project = {
-  id: string;
-  title: string;
-  description: string;
-  status: "completed" | "in-progress" | "planned";
-  category: string;
-  startDate: string;
-  finishDate?: string;
-  liveLink?: string;
-  repoLink?: string;
-  techStacks: string[];
-  budget?: number;
-  extraInfo?: string;
-};
 
 type DeleteProjectDialogProps = {
   isOpen: boolean;
   onClose: () => void;
-  project: Project;
-  onDelete: () => void;
+  project: {
+    id: string;
+    title: string;
+  };
 };
 
-export function DeleteProjectDialog({ isOpen, onClose, project, onDelete }: DeleteProjectDialogProps) {
+
+
+
+export function DeleteProjectDialog({ isOpen, onClose, project  }: DeleteProjectDialogProps) {
+
+  const { mutate: deleteProject, isPending } = useDeleteProject();
+
+  const onDelete = async () => {
+    deleteProject(project.id, {
+      onSuccess: () => {
+        toast.success("Project deleted successfully.");
+        onClose();
+      },
+      onError: (error) => {
+        console.error("Error deleting project:", error);
+        toast.error("Failed to delete project. Please try again.");
+      },
+    });
+    
+  };
+
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent>
@@ -47,7 +57,7 @@ export function DeleteProjectDialog({ isOpen, onClose, project, onDelete }: Dele
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={onDelete} className="bg-red-600 hover:bg-red-700">
-            Delete
+            {isPending ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

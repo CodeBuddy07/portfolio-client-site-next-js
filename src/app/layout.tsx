@@ -2,19 +2,20 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/Providers/Theme-Provider";
 import { ParallaxProviders } from "@/Providers/Parallax-Provider";
-import { Saira } from 'next/font/google';
+import { Saira } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
-
-
+import { TanstackQueryProvider } from "@/Providers/TanstackQueryProvider";
 
 
 const saira = Saira({
-  subsets: ['latin'],
-  weight: ['100', '300', '400', '500', '700', '900'], // choose the weights you need
-  style: ['normal', 'italic'], // for italics
-  display: 'swap',
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"],
+  style: ["normal", "italic"],
+  display: "swap",
 });
+
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,27 +27,25 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
-
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${saira.className} antialiased`}
-      >
+      <body suppressHydrationWarning className={`${saira.className} antialiased`}>
         <ClerkProvider>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ParallaxProviders>
-            
-              {children}
-              <Toaster richColors position="top-center" />
-          </ParallaxProviders>
-        </ThemeProvider>
+          <TanstackQueryProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <ParallaxProviders>
+                {children}
+                <Toaster richColors position="top-center" />
+              </ParallaxProviders>
+            </ThemeProvider>
+            {/* Optional: enable React Query Devtools in dev */}
+            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+          </TanstackQueryProvider>
         </ClerkProvider>
       </body>
     </html>
