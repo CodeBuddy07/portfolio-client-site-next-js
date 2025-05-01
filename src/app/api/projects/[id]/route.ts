@@ -99,7 +99,7 @@ export async function PATCH(
     } catch (error) {
         console.error("Error updating project:", error);
         return NextResponse.json(
-            { error: "Failed to update project" },
+            { error: "Failed to update project." },
             { status: 500 }
         );
     }
