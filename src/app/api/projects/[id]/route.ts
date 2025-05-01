@@ -21,7 +21,7 @@ export async function GET(
     // Connect to the database
     await dbConnect();
 
-    const { id } = params;
+    const { id } = await params;
     const project = await Project.findById(id);
 
     if (!project) {
@@ -49,7 +49,7 @@ export async function PATCH(
         return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   
       await dbConnect();
-      const { id } = params;
+      const { id } = await params;
   
       const formData = await req.formData();
   
