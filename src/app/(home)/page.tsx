@@ -11,6 +11,7 @@ import Projects from '@/app/(home)/_components/Projects/Project';
 import OnGoing from '@/app/(home)/_components/OnGoingProject/OnGoingProject';
 import Contact from '@/app/(home)/_components/ContactMe/ContactMe';
 import Footer from '@/components/Shared/Footer';
+import EducationSection from './_components/Education/Education';
 
 
 const page = () => {
@@ -19,6 +20,7 @@ const page = () => {
         <div className=' bg-black'>
             <Header />
             <About />
+            <EducationSection/>
             <Quote />
             <FloatingSkills />
             <Reviews />

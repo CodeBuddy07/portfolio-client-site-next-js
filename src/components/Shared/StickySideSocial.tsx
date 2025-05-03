@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from 'react';
 import { DotLottiePlayer } from "@dotlottie/react-player";
 import { motion } from 'framer-motion';
 import { 
@@ -13,44 +12,16 @@ import {
   Mail
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useSocialLinks } from '@/Tanstack/SocialLinks/useSocialLinks';
 
 const StickySideBar = () => {
   interface SocialLink {
-    name: string;
-    link: string;
-    icon: string;
+    _id: string;
+    platform: string;
+    url: string;
   }
   
-  const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]);
-
-  useEffect(() => {
-    // In Next.js, we would typically fetch this data server-side
-    // This is a fallback for client-side rendering
-    const fetchData = async () => {
-      try {
-        // Replace this with your actual data fetching logic
-        // For example, using Next.js API routes:
-        // const res = await fetch('/api/social-links');
-        // const data = await res.json();
-        
-        // Example mock data
-        const mockData = [
-          { name: "GitHub", link: "https://github.com", icon: "github" },
-          { name: "LinkedIn", link: "https://linkedin.com", icon: "linkedin" },
-          { name: "Twitter", link: "https://twitter.com", icon: "twitter" },
-          { name: "Instagram", link: "https://instagram.com", icon: "instagram" },
-          { name: "Facebook", link: "https://facebook.com", icon: "facebook" },
-          { name: "Email", link: "mailto:contact@example.com", icon: "mail" }
-        ];
-        
-        setSocialLinks(mockData);
-      } catch (error) {
-        console.error("Failed to fetch social links:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const  { data: socialLinks } = useSocialLinks();
 
   // Map icon names to Lucide components
   const icons = {
@@ -74,26 +45,26 @@ const StickySideBar = () => {
         
         
         <div className="flex flex-col gap-4">
-          {socialLinks.map((link, index) => (
+          {socialLinks?.map((link:SocialLink ) => (
             <motion.div
-              key={index}
+              key={link._id}
               whileHover={{ scale: 1.2 }}
               className="transition-all"
             >
               <Tooltip>
                 <TooltipTrigger asChild>
                 <a 
-                    href={link.link} 
+                    href={link.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="flex items-center justify-center w-8 h-8 rounded-full  backdrop-blur-sm text-white hover:text-red-200 hover:bg-red-800 hover:shadow-md hover:shadow-red-900/40 transition-colors"
-                    aria-label={link.name}
+                    aria-label={link.platform}
                   >
-                    {getIconComponent(link.icon as keyof typeof icons)}
+                    {getIconComponent(link.platform as keyof typeof icons)}
                   </a>
                 </TooltipTrigger>
                 <TooltipContent side="right">
-                  <p>{link.name}</p>
+                  <p>{link.platform}</p>
                 </TooltipContent>
               </Tooltip>
             </motion.div>

@@ -189,7 +189,7 @@ export default function SkillsDashboard() {
       {selectedSkill && (
         <EditSkillDialog
           isOpen={isEditDialogOpen}
-          onClose={() => setIsEditDialogOpen(false)}
+          onClose={() => {setIsEditDialogOpen(false); setSelectedSkill(null)}}
           skill={selectedSkill}
         />
       )}

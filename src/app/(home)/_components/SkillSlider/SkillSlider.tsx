@@ -8,35 +8,21 @@ import "swiper/css/pagination";
 import Title from "@/components/Shared/Title";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
+import { useSkills } from "@/Tanstack/Skills/useSkills";
+import { ISkill } from "@/app/api/_models/SkillModel";
 
 
-const skillIcons = {
-  REACT: "https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/react/react-original.svg",
-  TYPESCRIPT: "https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/typescript/typescript-original.svg",
-  TAILWIND: "https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/tailwindcss/tailwindcss-original.svg",
-  "NEXT JS": "https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/nextjs/nextjs-original.svg",
-  "EXPRESS JS": "https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/express/express-original.svg",
-  BOOTSTRAP: "https://raw.githubusercontent.com/devicons/devicon/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/bootstrap/bootstrap-original.svg",
-  "JAVA SCRIPT": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-  NODE: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-  "MONGO DB": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
-};
+
 
 const Skill = () => {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: false, amount: 0.2 });
   
-  const data: { name: keyof typeof skillIcons; percentage: string }[] = [
-      { name: "REACT", percentage: "92" },
-      { name: "TYPESCRIPT", percentage: "92" },
-      { name: "TAILWIND", percentage: "96" },
-      { name: "NEXT JS", percentage: "80" },
-      { name: "EXPRESS JS", percentage: "87" },
-      { name: "BOOTSTRAP", percentage: "74" },
-      { name: "JAVA SCRIPT", percentage: "94" },
-      { name: "NODE", percentage: "82" },
-      { name: "MONGO DB", percentage: "87" },
-    ];
+
+
+  const { data } = useSkills();
+
+  
 
 
 
@@ -132,8 +118,8 @@ const Skill = () => {
             }}
             className="py-8"
           >
-            {data.map((skill, index) => (
-              <SwiperSlide key={index}>
+            {data?.map((skill: ISkill, index: number) => (
+              <SwiperSlide key={skill.id}>
                 <motion.div
                   className="backdrop-blur-sm bg-black/80 group p-8 flex flex-col items-center rounded-2xl border border-gray-800 hover:border-red-500 duration-300 shadow-lg text-center h-full"
                   whileHover={{ 
@@ -162,10 +148,10 @@ const Skill = () => {
                         strokeWidth="3"
                         fill="transparent"
                         strokeDasharray="339.292"
-                        strokeDashoffset={339.292 * (1 - parseInt(skill.percentage) / 100)}
+                        strokeDashoffset={339.292 * (1 - skill.percentage / 100)}
                         className="text-red-600 group-hover:text-red-500 transition-colors duration-300"
                         initial={{ strokeDashoffset: 339.292 }}
-                        animate={{ strokeDashoffset: 339.292 * (1 - parseInt(skill.percentage) / 100) }}
+                        animate={{ strokeDashoffset: 339.292 * (1 - skill.percentage / 100) }}
                         transition={{ duration: 1, delay: index * 0.1 }}
                       />
                     </svg>
@@ -176,7 +162,7 @@ const Skill = () => {
                     {/* Skill icon */}
                     <div className="absolute flex items-center justify-center w-full h-full">
                       <Image
-                        src={skillIcons[skill.name]}
+                        src={skill.iconURL}
                         height={55}
                         width={55}
                         alt={skill.name}

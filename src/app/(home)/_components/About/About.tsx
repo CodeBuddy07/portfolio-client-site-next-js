@@ -14,7 +14,7 @@ const About = () => {
   const data = {
     _id: "65b7abb3ed5527627f4f6fa2",
     placeholder: "about",
-    about: "Hey there! I'm Ruhul Amin, a passionate web developer with a knack for crafting immersive and user-friendly digital experiences. My journey into the world of programming began with a deep dive into technologies like React, Node.js, and JavaScript.\n\nI have expertise in HTML and CSS. My toolbox includes Tailwind CSS and Bootstrap for responsive and visually appealing designs.\n\nSpecializing in MERN (MongoDB, Express.js, React, Node.js) stack development, I seamlessly integrate front-end and back-end technologies to deliver robust and scalable solutions. My proficiency extends to database management with MongoDB, ensuring data is not just stored but optimized for efficient retrieval.\n\nLet's collaborate and turn your ideas into reality! Whether you're looking to enhance user experiences, streamline workflows, or create a dynamic web presence, I'm here to bring your vision to life.",
+    about: "Hey there! I'm Ruhul Amin, a passionate web developer with a knack for building fast, modern, and user-friendly web experiences. My journey began with core web technologies like HTML, CSS, and JavaScript, and has evolved into full-stack expertise.\n\nI'm skilled in using React and Next.js with TypeScript, and I style UIs using Tailwind CSS, ShadCN UI, and Ant Design. My backend toolkit includes Node.js, Express.js, and database solutions like MongoDB and PostgreSQL with Prisma or Mongoose.\n\nI also work with tools like Firebase, Clerk, and Docker to bring scalability and secure functionality to every project.\n\nLet’s collaborate and turn your ideas into reality! Whether you’re looking to build modern apps, streamline development, or create powerful digital experiences — I’m here to make it happen.",
     resumeURL: "https://docs.google.com/document/d/1HNn6EsjwJ9kXSgB8iMhfaqcZCl_4LB9BKt8KY7L5zB4/edit?usp=sharing",
     selfImgDisplayURL: "/ProfileImage.jpg"
   };
@@ -87,7 +87,7 @@ const About = () => {
                   <div className="text-gray-400 text-sm">Years Experience</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-white">50+</div>
+                  <div className="text-2xl font-bold text-white">20+</div>
                   <div className="text-gray-400 text-sm">Projects Completed</div>
                 </div>
                 <div className="text-center">

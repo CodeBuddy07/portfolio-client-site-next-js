@@ -55,7 +55,7 @@ const TestimonialSchema: Schema = new Schema(
       required: [true, 'Testimonial content is required'],
       trim: true,
       minlength: [10, 'Testimonial must be at least 10 characters long'],
-      maxlength: [1000, 'Testimonial cannot exceed 1000 characters']
+      maxlength: [277, 'Testimonial cannot exceed 277 characters']
     },
     imgDeleteURL: {
       type: String,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
 import Title from "@/components/Shared/Title";
@@ -14,38 +14,10 @@ import { DotLottiePlayer } from "@dotlottie/react-player";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
+import { useTestimonials } from "@/Tanstack/Testimonials/useTestimonials";
 
 // Demo reviews - you can replace this with your actual data
-const demoReviews = [
-  {
-    name: "Alex Johnson",
-    address: "Tech Innovations Inc.",
-    review: "Exceptional web development work. The application delivered exceeded our expectations in both performance and design.",
-    imgURL: "/api/placeholder/100/100",
-    rating: 5
-  },
-  {
-    name: "Sarah Williams",
-    address: "Digital Solutions Ltd.",
-    review: "Incredibly responsive and professional. Our database integration was completed ahead of schedule with excellent attention to detail.",
-    imgURL: "/api/placeholder/100/100",
-    rating: 5
-  },
-  {
-    name: "Michael Chen",
-    address: "StartUp Ventures",
-    review: "The custom API development transformed our business processes. Highly recommend for any technical project.",
-    imgURL: "/api/placeholder/100/100",
-    rating: 4
-  },
-  {
-    name: "Emma Rodriguez",
-    address: "Creative Studios",
-    review: "Outstanding full-stack development. The team's technical expertise and creative approach delivered exactly what we needed.",
-    imgURL: "/api/placeholder/100/100",
-    rating: 5
-  }
-];
+
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -59,23 +31,16 @@ const containerVariants = {
 };
 
 const Reviews = () => {
-  const [showDemo, setShowDemo] = useState(false);
+ 
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: false, amount: 0.2 });
-  
-  // For demonstration purposes, use demo data if no reviews available
-  // In production, replace this with your actual data source
+
+  const { data: reviews } = useTestimonials({featured:true});
+
   const data = {
-    reviews: showDemo ? demoReviews : []
+    reviews: reviews?.testimonials || []
   };
 
-  useEffect(() => {
-    // In a real application, you'd load actual data here
-    // This is just for demonstration
-    setShowDemo(true);
-    
-   
-  }, []);
 
   // Generate star ratings
   const renderStars = (rating: number) => {
@@ -179,7 +144,7 @@ const Reviews = () => {
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="p-8 relative">
+                    <div className="p-8 relative h-62">
                       {/* Large quote background */}
                       <Quote className="absolute top-4 right-4 w-16 h-16 text-red-600/10" strokeWidth={1} />
                       
@@ -188,7 +153,7 @@ const Reviews = () => {
                         <div className="relative">
                           <div className="relative rounded-full p-0.5 bg-gradient-to-r from-red-500 to-red-700">
                             <Image
-                              src={"https://avatars.githubusercontent.com/u/99266781?v=4"}
+                              src={review.imgDisplayURL!}
                               alt={review.name}
                               width={60}
                               height={60}
@@ -198,17 +163,17 @@ const Reviews = () => {
                         </div>
                         <div>
                           <h3 className="text-lg font-bold text-white">{review.name}</h3>
-                          <p className="text-gray-400 text-sm">{review.address}</p>
+                          <p className="text-gray-400 text-sm">{review.position} @ {review.company}</p>
                           <div className="flex mt-1">
-                            {renderStars(review.rating)}
+                            {renderStars(review.starCount)}
                           </div>
                         </div>
                       </div>
                       
                       {/* Review Text */}
                       <div className="mt-4 relative z-10">
-                        <p className="text-gray-300 italic leading-relaxed">
-                          &quot;{review.review}&quot;
+                        <p className="text-gray-300 italic leading-relaxed text-sm ">
+                          &quot;{review.testimonial}&quot;
                         </p>
                       </div>
                       

@@ -11,11 +11,11 @@ import { uploadImageToCloudinary } from "@/utils/cloudinary";
 // API route with search, filters, and pagination
 export async function GET(req: NextRequest) {
   try {
-    const isAdmin = await checkRole("admin");
+    // const isAdmin = await checkRole("admin");
 
-    if (!isAdmin) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-    }
+    // if (!isAdmin) {
+    //   return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    // }
 
     await dbConnect();
 

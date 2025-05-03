@@ -216,6 +216,7 @@ export function EditTestimonialDialog({
               onChange={(e) => handleChange("testimonial", e.target.value)}
               placeholder="What they said about your work..."
               rows={5}
+              maxLength={277}
               required
             />
           </div>

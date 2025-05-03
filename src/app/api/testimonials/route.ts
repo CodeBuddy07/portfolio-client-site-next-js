@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
 
         const testimonials = await testimonialQuery.exec();
 
-        console.log("Testimonials:", testimonials);
+        //console.log("Testimonials:", testimonials);
 
         return NextResponse.json({
             testimonials,

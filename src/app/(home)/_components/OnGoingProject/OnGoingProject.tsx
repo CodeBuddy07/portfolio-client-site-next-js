@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Title from "@/components/Shared/Title";
 import { DotLottiePlayer } from "@dotlottie/react-player";
@@ -9,24 +9,17 @@ import { Calendar, Clock, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { useProjects } from "@/Tanstack/Project/useProjects";
+import { IProject } from "@/app/api/_models/ProjectModel";
 
 
 const OnGoing = () => {
-    const data = {
-        _id: "65bf295a8a8f308c18f6e889",
-        placeholder: "onGoing",
-        category: "MERN",
-        deadline: "2025-05-01",
-        description:
-            "Developed a file upload and sharing system where users receive custom domain URLs for their files, redirecting seamlessly to Google Drive. Utilized React for the frontend, Node.js and Express.js for the backend, and the Google Drive API for storage. This project enhances file-sharing with branded, user-friendly URLs.",
-        imgDeleteURL:
-            "https://ibb.co/RNwQPW5/293d2999878bd85affd1e3e32952d2fa",
-        imgDisplayURL:
-            "https://i.ibb.co/dtYk6yh/screencapture-barauthenup-digitelunionsoft-2024-10-21-22-44-36.png",
-        name: "File Uploading System",
-        starDate: "2025-04-20",
-        visible: true,
-    };
+
+    const { data: projectData } = useProjects({ status: "pending" });
+
+    console.log(projectData?.projects[0]);
+
+    const data: IProject = projectData?.projects[0] || {}
 
     const months = [
         "January",
@@ -53,12 +46,12 @@ const OnGoing = () => {
         };
     };
 
-    const startDate = formatDate(data?.starDate);
+    const startDate = formatDate(data?.startDate);
     const endDate = formatDate(data?.deadline);
 
     const calculateProgress = () => {
-        if (!data?.starDate || !data?.deadline) return 0;
-        const start = new Date(data.starDate);
+        if (!data?.startDate || !data?.deadline) return 0;
+        const start = new Date(data.startDate);
         const end = new Date(data.deadline);
         const today = new Date();
         if (today < start) return 0;
@@ -79,7 +72,7 @@ const OnGoing = () => {
             transition: {
                 staggerChildren: 0.1,
                 delayChildren: 0.3
-              }
+            }
         },
     };
 
@@ -98,15 +91,15 @@ const OnGoing = () => {
     const imageVariants = {
         hidden: { opacity: 0, scale: 0.85 },
         visible: {
-          opacity: 1,
-          scale: 1,
-          transition: { duration: 0.6, ease: "easeOut" },
+            opacity: 1,
+            scale: 1,
+            transition: { duration: 0.6, ease: "easeOut" },
         },
-      };
-      
+    };
 
-    const containerRef = React.useRef(null);
-    const isInView = useInView(containerRef, { once: false, amount: 0.2 });
+
+
+
 
     return (
         <section
@@ -119,11 +112,10 @@ const OnGoing = () => {
 
             {data?.visible ? (
                 <motion.div
-                    ref={containerRef}
+
                     className="container mx-auto px-4 mt-12"
                     variants={containerVariants}
-                    initial="hidden"
-                    animate={isInView ? "visible" : "hidden"}
+                    animate={true}
                 >
 
 
@@ -137,8 +129,8 @@ const OnGoing = () => {
                                 >
                                     <div className="relative w-full h-full">
                                         <Image
-                                            src={data.imgDisplayURL}
-                                            alt={data.name}
+                                            src={data.imgDisplayURL!}
+                                            alt={data.title}
                                             fill
                                             className="object-cover transition-transform duration-1000 ease-linear group-hover:scale-110"
                                             sizes="(max-width: 768px) 100vw, 40vw"
@@ -148,7 +140,7 @@ const OnGoing = () => {
                                         {/* Preview Button: Opens an external link (e.g., GitHub repo) */}
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-start p-4 cursor-pointer">
                                             <a
-                                                href={"https://github.com/CodeBuddy07/portfolio-client-site-next-js"} // Replace with your repo URL
+                                                href={data.gitHubURL} // Replace with your repo URL
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                             >
@@ -174,7 +166,13 @@ const OnGoing = () => {
                                 >
                                     <div className="flex items-center justify-between mb-3">
                                         <Badge className="bg-red-600/20 text-red-400 hover:bg-red-600/30 border-none text-xs">
-                                            {data.category}
+                                            {
+                                                data.category
+                                                    .toLowerCase()
+                                                    .split('-')
+                                                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                                                    .join(' ')
+                                            }
                                         </Badge>
                                         <div className="flex items-center text-xs text-gray-400">
                                             <Clock className="h-3 w-3 mr-1" />
@@ -182,7 +180,7 @@ const OnGoing = () => {
                                         </div>
                                     </div>
 
-                                    <h2 className="text-xl font-medium text-white mb-2">{data.name}</h2>
+                                    <h2 className="text-xl font-medium text-white mb-2">{data.title}</h2>
 
                                     <Progress
                                         className="h-1.5 bg-gray-800"
@@ -231,10 +229,13 @@ const OnGoing = () => {
                                     </div>
 
                                     <div className="flex flex-wrap gap-2 mt-4">
-                                        <Badge variant="outline" className="text-xs bg-transparent border-gray-700 text-gray-400">React</Badge>
-                                        <Badge variant="outline" className="text-xs bg-transparent border-gray-700 text-gray-400">Node.js</Badge>
-                                        <Badge variant="outline" className="text-xs bg-transparent border-gray-700 text-gray-400">Express</Badge>
-                                        <Badge variant="outline" className="text-xs bg-transparent border-gray-700 text-gray-400">Google Drive API</Badge>
+                                        {
+                                            data?.techStacks?.map((tech) => {
+                                                return (
+                                                    <Badge key={tech} variant="outline" className="text-xs bg-transparent border-gray-700 text-gray-400">{tech}</Badge>
+                                                )
+                                            })
+                                        }
                                     </div>
                                 </motion.div>
                             </div>

@@ -154,7 +154,7 @@ export default function TestimonialDashboard() {
                                         </div>
                                     </TableCell>
                                     <TableCell>
-                                        <div className="line-clamp-2 text-sm">
+                                        <div className=" text-sm  truncate max-w-xs">
                                             {testimonial.testimonial}
                                         </div>
                                     </TableCell>
