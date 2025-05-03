@@ -8,8 +8,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function PATCH(
   request: NextRequest,
-  context: { params: { id: string } }
-) {
+  context: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
   try {
     // Admin authentication
     const isAdmin = await checkRole("admin");
@@ -19,7 +19,7 @@ export async function PATCH(
     
     await dbConnect();
     
-    const { id } = context.params;
+    const { id } = await context.params;
     const testimonial = await Testimonial.findById(id);
     
     if (!testimonial) {

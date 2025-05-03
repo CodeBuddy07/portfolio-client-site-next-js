@@ -9,12 +9,12 @@ import { deleteImageFromCloudinary, uploadImageToCloudinary } from '@/utils/clou
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
-) {
+  context: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
   try {
     await dbConnect();
     
-    const { id } = context.params;
+    const { id } = await context.params;
     const testimonial = await Testimonial.findById(id);
     
     if (!testimonial) {
@@ -35,8 +35,8 @@ export async function GET(
 
 export async function PUT(
     request: NextRequest,
-    context: { params: { id: string } }
-  ) {
+    context: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
     try {
       // Admin authentication
       const isAdmin = await checkRole("admin");
@@ -46,7 +46,7 @@ export async function PUT(
       
       await dbConnect();
       
-      const { id } = context.params;
+      const { id } = await context.params;
       const testimonial = await Testimonial.findById(id);
       
       if (!testimonial) {
@@ -105,8 +105,8 @@ export async function PUT(
   
   export async function DELETE(
     request: NextRequest,
-    context: { params: { id: string } }
-  ) {
+    context: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
     try {
       // Admin authentication
       const isAdmin = await checkRole("admin");
@@ -116,7 +116,7 @@ export async function PUT(
       
       await dbConnect();
       
-      const { id } = context.params;
+      const { id } = await context.params;
       const testimonial = await Testimonial.findById(id);
       
       if (!testimonial) {

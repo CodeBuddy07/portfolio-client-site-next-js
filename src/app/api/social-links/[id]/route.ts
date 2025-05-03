@@ -35,7 +35,10 @@ export async function PUT(
   }
 }
 
-export async function DELETE(_: Request, { params }: { params: { id: string } }) {
+export async function DELETE(
+    _: Request,
+    context: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
   try {
     const isAdmin = await checkRole("admin");
     if (!isAdmin) {
@@ -44,7 +47,9 @@ export async function DELETE(_: Request, { params }: { params: { id: string } })
 
     await dbConnect();
 
-    const deleted = await SocialLink.findByIdAndDelete(params.id);
+    const {id} = await context.params
+
+    const deleted = await SocialLink.findByIdAndDelete(id);
 
     if (!deleted) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });

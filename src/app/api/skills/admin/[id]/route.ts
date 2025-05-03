@@ -5,14 +5,17 @@ import { dbConnect } from "@/utils/dbConnects";
 
 
 // 🔁 PUT (Update)
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(
+    req: NextRequest, 
+    context: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
   try {
     const isAdmin = await checkRole("admin");
     if (!isAdmin) return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-
+    const {id} = await context.params
     await dbConnect();
     const body = await req.json();
-    const updated = await Skill.findByIdAndUpdate(params.id, body, { new: true });
+    const updated = await Skill.findByIdAndUpdate(id, body, { new: true });
     return NextResponse.json(updated);
   } catch (error) {
     console.error("Error updating skill:", error);
@@ -21,13 +24,16 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 }
 
 // ❌ DELETE
-export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+    _: NextRequest, 
+    context: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
   try {
     const isAdmin = await checkRole("admin");
     if (!isAdmin) return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
-
+    const {id} = await context.params
     await dbConnect();
-    await Skill.findByIdAndDelete(params.id);
+    await Skill.findByIdAndDelete(id);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error deleting skill:", error);
