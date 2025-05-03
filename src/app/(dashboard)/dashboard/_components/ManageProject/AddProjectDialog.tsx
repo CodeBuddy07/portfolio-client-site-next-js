@@ -153,8 +153,8 @@ export function AddProjectDialog({ isOpen, onClose }: AddProjectDialogProps) {
     
 
       createProject(formData, {
-        onSuccess: (data) => {
-          console.log("Project created successfully:", data);
+        onSuccess: () => {
+          toast.success("Project created successfully");
           resetForm(); // Reset the form after successful submission
         },
         onError: (err) => {

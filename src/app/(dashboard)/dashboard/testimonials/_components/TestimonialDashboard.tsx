@@ -53,7 +53,6 @@ export default function TestimonialDashboard() {
         projectData: true,
     });
 
-    console.log(testimonialsData, "testimonialsData");
 
     const testimonials: ITestimonial[] = (testimonialsData?.testimonials || []) as unknown as ITestimonial[];
     const totalPages = testimonialsData?.pagination?.pages || 1;

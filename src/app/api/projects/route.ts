@@ -58,8 +58,6 @@ export async function GET(req: NextRequest) {
       Project.countDocuments(query),
     ]);
 
-    console.log("Projects fetched:", projects.length, "Total:", total , search);
-
     return NextResponse.json({
       projects,
       pagination: {

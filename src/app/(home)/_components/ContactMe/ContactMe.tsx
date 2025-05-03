@@ -65,7 +65,6 @@ const Contact = () => {
 
   const onSubmit = async (values: FormValues): Promise<void> => {
 
-    console.log(values);
     createEmail(values, {
       onSuccess: () => {
         toast.success("Message sent successfully!");

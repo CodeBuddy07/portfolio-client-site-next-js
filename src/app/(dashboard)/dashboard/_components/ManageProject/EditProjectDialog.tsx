@@ -207,8 +207,7 @@ export function EditProjectDialog({
     }
     
     updateProject({id: editedProject._id, data: formData}, {
-      onSuccess: (data) => {
-        console.log("Project updated successfully:", data);
+      onSuccess: () => {
         toast.success("Project updated successfully");
         onClose();
       },

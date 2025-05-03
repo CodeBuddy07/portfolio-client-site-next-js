@@ -85,8 +85,7 @@ export function AddTestimonialDialog({ isOpen, onClose, projectId }: AddTestimon
     });
 
     createTestimonial(formData, {
-      onSuccess: (data) => {
-        console.log("Testimonial created successfully:", data);
+      onSuccess: () => {
         resetForm();
         onClose();
         toast.success("Testimonial added successfully");

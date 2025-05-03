@@ -17,8 +17,6 @@ const OnGoing = () => {
 
     const { data: projectData } = useProjects({ status: "pending" });
 
-    console.log(projectData?.projects[0]);
-
     const data: IProject = projectData?.projects[0] || {}
 
     const months = [
