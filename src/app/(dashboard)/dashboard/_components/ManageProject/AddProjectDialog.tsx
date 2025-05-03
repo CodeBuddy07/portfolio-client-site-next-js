@@ -308,7 +308,6 @@ export function AddProjectDialog({ isOpen, onClose }: AddProjectDialogProps) {
                 value={newProject.budget || ""}
                 onChange={(e) => handleChange("budget", e.target.value ? Number(e.target.value) : undefined)}
                 placeholder="Project budget"
-                required
                 className="w-full"
               />
             </div>
@@ -350,7 +349,6 @@ export function AddProjectDialog({ isOpen, onClose }: AddProjectDialogProps) {
                 type="date"
                 value={newProject.deadline || ""}
                 onChange={(e) => handleChange("deadline", e.target.value)}
-                required
               />
             </div>
           </div>
@@ -364,7 +362,7 @@ export function AddProjectDialog({ isOpen, onClose }: AddProjectDialogProps) {
                 value={newProject.clientName || ""}
                 onChange={(e) => handleChange("clientName", e.target.value)}
                 placeholder="Client name"
-                required
+
               />
             </div>
 
@@ -375,7 +373,6 @@ export function AddProjectDialog({ isOpen, onClose }: AddProjectDialogProps) {
                 value={newProject.clientContact || ""}
                 onChange={(e) => handleChange("clientContact", e.target.value)}
                 placeholder="Email or phone number"
-                required
               />
             </div>
           </div>

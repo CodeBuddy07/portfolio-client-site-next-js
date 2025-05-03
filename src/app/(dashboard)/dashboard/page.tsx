@@ -6,7 +6,7 @@ import { Suspense } from "react";
 export default function Page() {
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl font-bold mb-6">Projects Dashboard</h1>
+      <h1 className="text-xl font-bold mb-6">Projects Dashboard</h1>
       <Suspense fallback={<ProjectDashboardSkeleton />}>
         <ProjectDashboard />
         <div>

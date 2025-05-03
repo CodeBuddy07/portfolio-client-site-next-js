@@ -308,7 +308,6 @@ export function EditProjectDialog({
                 value={editedProject.budget || ""}
                 onChange={(e) => handleChange("budget", e.target.value ? Number(e.target.value) : 0)}
                 placeholder="Project budget"
-                required
                 className="w-full"
               />
             </div>
@@ -350,7 +349,6 @@ export function EditProjectDialog({
                 type="date"
                 value={editedProject.deadline || ""}
                 onChange={(e) => handleChange("deadline", e.target.value)}
-                required
               />
             </div>
           </div>
@@ -364,7 +362,6 @@ export function EditProjectDialog({
                 value={editedProject.clientName || ""}
                 onChange={(e) => handleChange("clientName", e.target.value)}
                 placeholder="Client name"
-                required
               />
             </div>
             
@@ -375,7 +372,6 @@ export function EditProjectDialog({
                 value={editedProject.clientContact || ""}
                 onChange={(e) => handleChange("clientContact", e.target.value)}
                 placeholder="Email or phone number"
-                required
               />
             </div>
           </div>

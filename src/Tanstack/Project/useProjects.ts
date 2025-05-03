@@ -2,30 +2,43 @@
 import api from '@/utils/api';
 import { useQuery } from '@tanstack/react-query';
 
-
-export const useProjects = (filters: {
+interface ProjectFilters {
   visible?: boolean;
   category?: string;
   status?: string;
-}) => {
-  const searchParams = new URLSearchParams();
+  search?: string;
+  page?: number;
+  limit?: number;
+}
 
-  if (filters.visible !== undefined) {
-    searchParams.append('visible', filters.visible.toString());
-  }
-  if (filters.category) {
-    searchParams.append('category', filters.category);
-  }
-  if (filters.status) {
-    searchParams.append('status', filters.status);
-  }
-
+export const useProjects = (filters: ProjectFilters) => {
   return useQuery({
     queryKey: ['projects', filters],
     queryFn: async () => {
-      const res = await api.get(`/projects?${searchParams.toString()}`);
-      return res.data.projects;
+      const params = new URLSearchParams();
+
+      if (filters.visible !== undefined) {
+        params.append('visible', filters.visible.toString());
+      }
+      if (filters.category) {
+        params.append('category', filters.category);
+      }
+      if (filters.status) {
+        params.append('status', filters.status);
+      }
+      if (filters.search) {
+        params.append('search', filters.search);
+      }
+      if (filters.page) {
+        params.append('page', filters.page.toString());
+      }
+      if (filters.limit) {
+        params.append('limit', filters.limit.toString());
+      }
+
+      const res = await api.get(`/projects?${params.toString()}`);
+      return res.data; // includes both `projects` and `pagination`
     },
-    staleTime: 1000 * 60 * 5, // cache for 5 mins
+    staleTime: 1000 * 60 * 5, // cache for 5 minutes
   });
 };

@@ -16,8 +16,8 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { useState } from "react";
 import { toast } from "sonner";
+import { useCreateEmail } from "@/Tanstack/Emails/useCreateEmail";
 
 
 
@@ -36,8 +36,8 @@ const formSchema = z.object({
 });
 
 const Contact = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   
+
   const data = {
     email: "rjruhul05@gmail.com",
     phone: "+8801737073172",
@@ -55,34 +55,27 @@ const Contact = () => {
   });
 
   // Handle form submission
-interface FormValues {
+  interface FormValues {
     name: string;
     email: string;
     message: string;
-}
+  }
 
-const onSubmit = async (values: FormValues): Promise<void> => {
-    setIsSubmitting(true);
-    try {
-        // Here you would typically send the form data to your backend
-        console.log(values);
-        
-        // Simulate API call
-        await new Promise<void>(resolve => setTimeout(resolve, 1000));
-        
-        toast.success("Message sent!",{
-            description: "We'll get back to you as soon as possible.",
-        });
-        
+  const { mutate: createEmail, isPending: isSubmitting } = useCreateEmail();
+
+  const onSubmit = async (values: FormValues): Promise<void> => {
+
+    console.log(values);
+    createEmail(values, {
+      onSuccess: () => {
+        toast.success("Message sent successfully!");
         form.reset();
-    } catch (error: any) {
-        toast.error("Failed to send message",{
-            description: error.message || "Please try again later.",
-        });
-    } finally {
-        setIsSubmitting(false);
-    }
-};
+      },
+      onError: (error) => {
+        toast.error((error as any).response.data.error || "Failed to send message. Please try again.");
+      },
+    });
+  };
 
   return (
     <div
@@ -99,46 +92,48 @@ const onSubmit = async (values: FormValues): Promise<void> => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               {/* Name Input */}
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <div className="relative">
-                        <User className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                        <Input
-                          placeholder="Your Name"
-                          className="pl-9 bg-gray-800/50 border-gray-700 focus-visible:ring-red-500 text-gray-200"
-                          {...field}
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage className="text-xs text-red-400" />
-                  </FormItem>
-                )}
-              />
+              <div className="flex flex-col md:flex-row gap-4">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormControl>
+                        <div className="relative ">
+                          <User className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                          <Input
+                            placeholder="Your Name"
+                            className="pl-9 bg-gray-800/50 border-gray-700 focus-visible:ring-red-500 text-gray-200"
+                            {...field}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage className="text-xs text-red-400" />
+                    </FormItem>
+                  )}
+                />
 
-              {/* Email Input */}
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <div className="relative">
-                        <AtSign className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                        <Input
-                          placeholder="Your Email"
-                          className="pl-9 bg-gray-800/50 border-gray-700 focus-visible:ring-red-500 text-gray-200"
-                          {...field}
-                        />
-                      </div>
-                    </FormControl>
-                    <FormMessage className="text-xs text-red-400" />
-                  </FormItem>
-                )}
-              />
+                {/* Email Input */}
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormControl>
+                        <div className="relative">
+                          <AtSign className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                          <Input
+                            placeholder="Your Email"
+                            className="pl-9 bg-gray-800/50 border-gray-700 focus-visible:ring-red-500 text-gray-200"
+                            {...field}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage className="text-xs text-red-400" />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               {/* Message Textarea */}
               <FormField

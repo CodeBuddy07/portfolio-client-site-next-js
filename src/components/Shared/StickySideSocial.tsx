@@ -39,6 +39,7 @@ const StickySideBar = () => {
           { name: "LinkedIn", link: "https://linkedin.com", icon: "linkedin" },
           { name: "Twitter", link: "https://twitter.com", icon: "twitter" },
           { name: "Instagram", link: "https://instagram.com", icon: "instagram" },
+          { name: "Facebook", link: "https://facebook.com", icon: "facebook" },
           { name: "Email", link: "mailto:contact@example.com", icon: "mail" }
         ];
         

@@ -5,13 +5,13 @@ import { useState } from "react";
 import { Search, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
 } from "@/components/ui/table";
 import {
   DropdownMenu,
@@ -19,20 +19,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { Badge } from "@/components/ui/badge";
 import { AddProjectDialog } from "./AddProjectDialog";
 import { EditProjectDialog } from "./EditProjectDialog";
 import { DeleteProjectDialog } from "./DeleteProjectDialog";
 import { IProject } from "@/app/api/_models/ProjectModel";
 import { useProjects } from "@/Tanstack/Project/useProjects";
+import PaginationComponent from "@/components/Shared/Pagination";
+import { ProjectDashboardSkeleton } from "./LoadingSkeleton";
+import { AddTestimonialDialog } from "../../testimonials/_components/AddTestimonialDialog";
 
 
 
@@ -48,32 +43,19 @@ export default function ProjectDashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<IProject | null>(null);
-  
+
   // Pagination settings
-  const itemsPerPage = 5;
-  
+  const itemsPerPage = 10;
+
   // Service functions
-  const { data : projects, isLoading} = useProjects({});
+  const { data: projectsData, isLoading } = useProjects({ search: searchQuery, page: currentPage, limit: itemsPerPage });
 
-  console.log("Projects:", projects);
-  
+  const projects = projectsData?.projects || []; // Ensure projects is an array
 
-  
-  // Calculate pagination
-  const totalPages = Math.ceil(projects?.length / itemsPerPage);
-  const paginatedProjects = projects?.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-  
 
-  
-
-  
-
-  
   // Status badge color mapping
   const statusColors: Record<string, string> = {
     "completed": "bg-green-500",
@@ -82,8 +64,11 @@ export default function ProjectDashboard() {
   };
 
   if (isLoading) {
-    return <div className="flex justify-center py-10">Loading projects...</div>;
+    return (
+      <ProjectDashboardSkeleton />
+    );
   }
+
 
   return (
     <div className="space-y-6">
@@ -104,7 +89,7 @@ export default function ProjectDashboard() {
           Add Project
         </Button>
       </div>
-      
+
       {/* Projects Table */}
       <div className="rounded-md border">
         <Table>
@@ -114,19 +99,20 @@ export default function ProjectDashboard() {
               <TableHead>Category</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Start Date</TableHead>
+              <TableHead>Deadline</TableHead>
               <TableHead>Budget</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {paginatedProjects.length === 0 ? (
+            {projects.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} className="text-center py-6 text-gray-500">
                   No projects found
                 </TableCell>
               </TableRow>
             ) : (
-              paginatedProjects.map((project: IProject) => (
+              projects.map((project: IProject) => (
                 <TableRow key={project._id}>
                   <TableCell>
                     <div>
@@ -141,7 +127,8 @@ export default function ProjectDashboard() {
                     </Badge>
                   </TableCell>
                   <TableCell>{new Date(project.startDate).toLocaleDateString()}</TableCell>
-                  <TableCell>${project.budget?.toLocaleString() || "N/A"}</TableCell>
+                  <TableCell>{new Date(project.deadline).toLocaleDateString()}</TableCell>
+                  <TableCell> {project.budget! > 0 ? `$ ${project.budget?.toLocaleString()}` : "N/A"}</TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -167,6 +154,15 @@ export default function ProjectDashboard() {
                         >
                           Delete
                         </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => {
+                            setSelectedProject(project);
+                            setIsReviewDialogOpen(true);
+                          }}
+                          className="text-red-600"
+                        >
+                          Add Review
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
@@ -176,60 +172,44 @@ export default function ProjectDashboard() {
           </TableBody>
         </Table>
       </div>
-      
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <Pagination className="mt-4">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious 
-                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
-              />
-            </PaginationItem>
-            
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <PaginationItem key={index}>
-                <PaginationLink
-                  onClick={() => setCurrentPage(index + 1)}
-                  isActive={currentPage === index + 1}
-                >
-                  {index + 1}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
-            
-            <PaginationItem>
-              <PaginationNext 
-                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}  
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      )}
-      
+
+      <PaginationComponent
+        currentPage={currentPage}
+        totalPages={projectsData?.pagination?.pages || 1}
+        onPageChange={setCurrentPage}
+      />
+
+
       {/* Add Project Dialog */}
-      <AddProjectDialog 
-        isOpen={isAddDialogOpen} 
+      <AddProjectDialog
+        isOpen={isAddDialogOpen}
         onClose={() => setIsAddDialogOpen(false)}
       />
-      
+
       {/* Edit Project Dialog */}
       {selectedProject && (
         <EditProjectDialog
           isOpen={isEditDialogOpen}
           onClose={() => setIsEditDialogOpen(false)}
-          project={selectedProject}       
+          project={selectedProject}
         />
       )}
-      
+
+      {/* Add Review Dialog */}
+      {selectedProject && (
+        <AddTestimonialDialog
+          isOpen={isReviewDialogOpen}
+          onClose={() => setIsReviewDialogOpen(false)}
+          projectId={selectedProject._id as string} // Explicitly cast _id to string
+        />
+      )}
+
       {/* Delete Project Dialog */}
       {selectedProject && (
         <DeleteProjectDialog
           isOpen={isDeleteDialogOpen}
           onClose={() => setIsDeleteDialogOpen(false)}
-          project={{id: selectedProject._id as string, title: selectedProject.title}} // Explicitly cast _id to string
+          project={{ id: selectedProject._id as string, title: selectedProject.title }} // Explicitly cast _id to string
         />
       )}
     </div>

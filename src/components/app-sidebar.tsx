@@ -46,12 +46,12 @@ const navMain = [
     items: [
       {
         title: "Skills",
-        url: "#",
+        url: "/dashboard/skills",
         icon: BadgeCheck, // ✅ Validated skills
       },
       {
-        title: "Socials",
-        url: "#",
+        title: "Social-Links",
+        url: "/dashboard/socials",
         icon: Network, // 🌐 For social links/networks
       },
       {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // app/api/projects/route.ts
 import { dbConnect } from "@/utils/dbConnects";
 import { NextRequest, NextResponse } from "next/server";
@@ -6,44 +7,68 @@ import { checkRole } from "@/utils/roles";
 import { uploadImageToCloudinary } from "@/utils/cloudinary";
 
 
+
+// API route with search, filters, and pagination
 export async function GET(req: NextRequest) {
   try {
-    const isAdmin = await checkRole('admin')
+    const isAdmin = await checkRole("admin");
 
     if (!isAdmin) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
-    // Connect to the database
     await dbConnect();
 
-    // Get query parameters
     const url = new URL(req.url);
     const visibility = url.searchParams.get("visible");
     const category = url.searchParams.get("category");
     const status = url.searchParams.get("status");
+    const search = url.searchParams.get("search")?.trim();
+    const page = parseInt(url.searchParams.get("page") || "1");
+    const limit = parseInt(url.searchParams.get("limit") || "10");
 
-    // Build query
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const query: any = {};
-    
-    // Add filters if they exist
+    // Build query object
+    const query: Record<string, any> = {};
+
     if (visibility !== null) {
       query.visible = visibility === "true";
     }
-    
+
     if (category) {
       query.category = category;
     }
-    
+
     if (status) {
       query.status = status;
     }
 
-    // Fetch projects
-    const projects = await Project.find(query).sort({ createdAt: -1 });
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+        { tags: { $regex: search, $options: "i" } },
+      ];
+    }
 
-    return NextResponse.json({ projects }, { status: 200 });
+    const skip = (page - 1) * limit;
+
+    // Execute query with pagination
+    const [projects, total] = await Promise.all([
+      Project.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit),
+      Project.countDocuments(query),
+    ]);
+
+    console.log("Projects fetched:", projects.length, "Total:", total , search);
+
+    return NextResponse.json({
+      projects,
+      pagination: {
+        total,
+        page,
+        limit,
+        pages: Math.ceil(total / limit),
+      },
+    }, { status: 200 });
   } catch (error) {
     console.error("Error fetching projects:", error);
     return NextResponse.json(
@@ -52,6 +77,7 @@ export async function GET(req: NextRequest) {
     );
   }
 }
+
 
 
 export async function POST(req: NextRequest) {

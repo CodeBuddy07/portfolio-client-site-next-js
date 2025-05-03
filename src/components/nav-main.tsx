@@ -35,14 +35,17 @@ export function NavMain({
 }) {
   const pathname = usePathname()
 
-  // Function to check if a URL is active (exact match or parent of current path)
-  const isActiveUrl = (url: string) => {
-    // Exact match
-    if (pathname === url) return true
-    // Parent path match (for nested routes)
-    if (pathname.startsWith(url) && (url !== '/' || pathname === '/')) return true
-    return false
-  }
+  // // Function to check if a URL is active (exact match or parent of current path)
+  // const isActiveUrl = (url: string) => {
+  //   // Exact match
+  //   if (pathname === url) return true
+  //   // Parent path match (for nested routes)
+  //   if (pathname.startsWith(url) && (url !== '/' || pathname === '/')) return true
+  //   return false
+  // }
+
+  const isActiveUrl = (url: string) => pathname === url;
+
 
   return (
     <SidebarGroup>

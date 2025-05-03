@@ -29,6 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <link rel="icon" href="./favicon.ico" sizes="any" />
       <body suppressHydrationWarning className={`${saira.className} antialiased`}>
         <ClerkProvider>
           <TanstackQueryProvider>
