@@ -185,7 +185,7 @@ const Contact = () => {
           <div className="space-y-5">
             {/* Email */}
             <div className="flex items-center gap-3">
-              <div className="bg-gray-800 p-2 rounded-full">
+              <div className="bg-gray-900 p-2 rounded-full">
                 <Mail className="text-red-500 w-4 h-4" />
               </div>
               <div>
@@ -196,7 +196,7 @@ const Contact = () => {
 
             {/* Phone */}
             <div className="flex items-center gap-3">
-              <div className="bg-gray-800 p-2 rounded-full">
+              <div className="bg-gray-900 p-2 rounded-full">
                 <Phone className="text-red-500 w-4 h-4" />
               </div>
               <div>
@@ -207,7 +207,7 @@ const Contact = () => {
 
             {/* WhatsApp */}
             <div className="flex items-center gap-3">
-              <div className="bg-gray-800 p-2 rounded-full">
+              <div className="bg-gray-900 p-2 rounded-full">
                 <MessageSquare className="text-red-500 w-4 h-4" />
               </div>
               <div>

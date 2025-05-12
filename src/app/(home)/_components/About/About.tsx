@@ -10,7 +10,7 @@ import { motion, useInView } from "framer-motion";
 const About = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
-  
+
   const data = {
     _id: "65b7abb3ed5527627f4f6fa2",
     placeholder: "about",
@@ -30,10 +30,10 @@ const About = () => {
         <div className="absolute top-1/3 right-1/4 w-64 h-64 rounded-full bg-red-600/5 filter blur-3xl"></div>
         <div className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full bg-red-600/5 filter blur-3xl"></div>
       </div>
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <Title title="ABOUT ME" description="Get to know more about my skills and experience" />
-        
+
         <div className="mt-16 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           {/* Profile Image */}
           <motion.div
@@ -42,9 +42,9 @@ const About = () => {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="relative w-full max-w-96"
           >
-            
+
             <div className="relative bg-gradient-to-br from-gray-900 to-black overflow-hidden rounded-2xl border border-gray-800">
-              
+
               <div className=" overflow-hidden">
                 <Image
                   src={data.selfImgDisplayURL}
@@ -56,7 +56,7 @@ const About = () => {
               </div>
             </div>
           </motion.div>
-          
+
           {/* About Text and Action Buttons */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
@@ -70,7 +70,7 @@ const About = () => {
                 <div className="h-px w-6 bg-red-500"></div>
                 <span className="text-red-500 font-medium">Web Developer</span>
               </div>
-              
+
               {/* About text */}
               <div className="text-gray-300 text-sm space-y-4">
                 {data.about.split('\n\n').map((paragraph, index) => (
@@ -79,7 +79,7 @@ const About = () => {
                   </p>
                 ))}
               </div>
-              
+
               {/* Stats */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 py-4 border-t border-b border-gray-800">
                 <div className="text-center">
@@ -95,16 +95,22 @@ const About = () => {
                   <div className="text-gray-400 text-sm">Happy Clients</div>
                 </div>
               </div>
-              
+
               {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 mt-6">
                 <Button className="relative overflow-hidden group bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 transition-all duration-300">
-                  <span className="relative z-10 flex items-center gap-2">
+                  <a onClick={() => {
+                    const targetElement = document.getElementById('contact');
+                    if (targetElement) {
+                      targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }
+                  } className="relative z-10 flex items-center gap-2">
                     <Send size={16} /> Contact Me
-                  </span>
+                  </a>
                   <span className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
                 </Button>
-                
+
                 <Button
                   variant="outline"
                   className="group border-gray-700 hover:border-red-500 hover:bg-transparent transition-all duration-300"
