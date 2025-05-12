@@ -7,7 +7,7 @@ import StickySideBar from '@/components/Shared/StickySideSocial';
 
 
 export const metadata: Metadata = {
-    title: 'Ruhul Amin.',
+    title: 'Ruhul Amin',
     description: "Hey there! I'm Ruhul Amin, a passionate web developer with a knack for building fast, modern, and user-friendly web experiences.",
 };
 
