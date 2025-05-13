@@ -39,7 +39,7 @@ const Contact = () => {
   
 
   const data = {
-    email: "rjruhul05@gmail.com",
+    email: "ruhulamin.dev07@gmail.com",
     phone: "+8801737073172",
     whatsApp: "+8801705684699",
   };

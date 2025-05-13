@@ -164,7 +164,7 @@ export default function SocialLinksDashboard() {
       {selectedLink && (
         <EditSocialLinkDialog
           isOpen={isEditDialogOpen}
-          onClose={() => setIsEditDialogOpen(false)}
+          onClose={() => {setIsEditDialogOpen(false); setSelectedLink(null)}}
           socialLink={selectedLink}
         />
       )}
