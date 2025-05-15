@@ -2,7 +2,6 @@ import About from '@/app/(home)/_components/About/About';
 import FloatingSkills from '@/app/(home)/_components/SkillSlider/SkillSlider';
 import { Header } from '@/app/(home)/_components/Header/Header';
 import Quote from '@/app/(home)/_components/Quote/Quote';
-
 import React from 'react';
 import Reviews from '@/app/(home)/_components/Reviews/Reviews';
 import Stats from '@/app/(home)/_components/Stats/Stats';
