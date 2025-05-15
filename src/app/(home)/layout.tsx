@@ -9,6 +9,10 @@ import StickySideBar from '@/components/Shared/StickySideSocial';
 export const metadata: Metadata = {
     title: 'Ruhul Amin',
     description: "Hey there! I'm Ruhul Amin, a passionate web developer with a knack for building fast, modern, and user-friendly web experiences.",
+    robots: {
+        index: true,
+        follow: true,
+    },
 };
 
 const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -36,7 +40,7 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
             />
             <Navbar />
-            <StickySideBar/>
+            <StickySideBar />
             <main > {/* Add padding to account for fixed navbar */}
                 {children}
             </main>
