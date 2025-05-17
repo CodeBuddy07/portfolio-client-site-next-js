@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/Providers/Theme-Provider";
 import { ParallaxProviders } from "@/Providers/Parallax-Provider";
@@ -16,11 +15,6 @@ const saira = Saira({
 });
 
 
-
-export const metadata: Metadata = {
-  title: "Ruhul Amin",
-  description: "Hey there! I'm Ruhul Amin, a passionate web developer with a knack for building fast, modern, and user-friendly web experiences.",
-};
 
 export default function RootLayout({
   children,
