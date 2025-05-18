@@ -12,6 +12,8 @@ import {
   Mail,
   Earth
 } from "lucide-react";
+import { TbBrandLeetcode } from "react-icons/tb";
+
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useSocialLinks } from '@/Tanstack/SocialLinks/useSocialLinks';
 
@@ -32,12 +34,13 @@ const StickySideBar = () => {
     instagram: <Instagram color='red' size={18} />,
     facebook: <Facebook color='red' size={18} />,
     youtube: <Youtube color='red' size={18} />,
-    mail: <Mail color='red' size={18} />
+    mail: <Mail color='red' size={18} />,
+    leetcode: <TbBrandLeetcode color='red' size={18} />
   };
 
   const getIconComponent = (iconName: keyof typeof icons) => {
       const iconKey = iconName.toLowerCase() as keyof typeof icons;
-      return icons[iconKey] || <Earth size={18} />;
+      return icons[iconKey] || <Earth color='red' size={18} />;
   };
 
   return (
