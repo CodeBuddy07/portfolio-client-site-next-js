@@ -1,15 +1,7 @@
 'use client'
 import { useSocialLinks } from '@/Tanstack/SocialLinks/useSocialLinks';
-import {
-  Github,
-  Linkedin,
-  Twitter,
-  Instagram,
-  Facebook,
-  Youtube,
-  Mail
-} from "lucide-react";
 import Image from 'next/image';
+import { getIconComponent, icons } from './StickySideSocial';
 
 
 
@@ -23,21 +15,7 @@ const Footer = () => {
 
   const { data: socialLinks } = useSocialLinks();
 
-  // Map icon names to Lucide components
-  const icons = {
-    github: <Github  size={18} />,
-    linkedin: <Linkedin  size={18} />,
-    twitter: <Twitter  size={18} />,
-    instagram: <Instagram  size={18} />,
-    facebook: <Facebook  size={18} />,
-    youtube: <Youtube  size={18} />,
-    mail: <Mail  size={18} />
-  };
 
-  const getIconComponent = (iconName: keyof typeof icons) => {
-    const iconKey = iconName.toLowerCase() as keyof typeof icons;
-    return icons[iconKey] || <Github />;
-  };
 
 
   return (
