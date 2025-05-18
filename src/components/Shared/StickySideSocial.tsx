@@ -9,7 +9,8 @@ import {
   Instagram,
   Facebook,
   Youtube,
-  Mail
+  Mail,
+  Earth
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useSocialLinks } from '@/Tanstack/SocialLinks/useSocialLinks';
@@ -36,7 +37,7 @@ const StickySideBar = () => {
 
   const getIconComponent = (iconName: keyof typeof icons) => {
       const iconKey = iconName.toLowerCase() as keyof typeof icons;
-      return icons[iconKey] || <Github />;
+      return icons[iconKey] || <Earth size={18} />;
   };
 
   return (
