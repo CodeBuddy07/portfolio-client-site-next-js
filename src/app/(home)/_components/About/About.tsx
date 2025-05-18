@@ -15,7 +15,7 @@ const About = () => {
     _id: "65b7abb3ed5527627f4f6fa2",
     placeholder: "about",
     about: "Hey there! I'm Ruhul Amin, a passionate web developer with a knack for building fast, modern, and user-friendly web experiences. My journey began with core web technologies like HTML, CSS, and JavaScript, and has evolved into full-stack expertise.\n\nI'm skilled in using React and Next.js with TypeScript, and I style UIs using Tailwind CSS, ShadCN UI, and Ant Design. My backend toolkit includes Node.js, Express.js, and database solutions like MongoDB and PostgreSQL with Prisma or Mongoose.\n\nI also work with tools like Firebase, Clerk, and Docker to bring scalability and secure functionality to every project.\n\nLet’s collaborate and turn your ideas into reality! Whether you’re looking to build modern apps, streamline development, or create powerful digital experiences — I’m here to make it happen.",
-    resumeURL: "https://docs.google.com/document/d/1HNn6EsjwJ9kXSgB8iMhfaqcZCl_4LB9BKt8KY7L5zB4/edit?usp=sharing",
+    resumeURL: "https://drive.google.com/file/d/1I7_4X7492DkBu0Kyn0sFBWcjd2Bd5nLF/view?usp=sharing",
     selfImgDisplayURL: "/ProfileImage.jpg"
   };
 
@@ -118,7 +118,7 @@ const About = () => {
                 >
                   <span className="flex items-center gap-2">
                     <ArrowDownToLine size={16} className="group-hover:text-red-500 transition-colors duration-300" />
-                    <span className="group-hover:text-red-500 transition-colors duration-300">Download CV</span>
+                    <span className="group-hover:text-red-500 transition-colors duration-300">Download Resume</span>
                   </span>
                 </Button>
               </div>
