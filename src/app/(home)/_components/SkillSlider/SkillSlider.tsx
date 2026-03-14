@@ -100,7 +100,7 @@ function HexCell({ skill }: { skill: ISkill }) {
           width={38}
           height={38}
           unoptimized
-          className={`relative z-10 transition-transform duration-300 group-hover:scale-110 select-none ${needsInvert ? "invert" : ""
+          className={`relative transition-transform duration-300 group-hover:scale-110 select-none ${needsInvert ? "invert" : ""
             }`}
           style={{ objectFit: "contain" }}
         />
