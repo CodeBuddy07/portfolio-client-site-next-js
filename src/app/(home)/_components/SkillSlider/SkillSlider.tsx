@@ -163,6 +163,8 @@ const TechStack = () => {
 
   const { data: skills, isLoading } = useSkills();
 
+  console.log(skills);
+
   // Filter visible, sort by order field ascending
   const visibleSkills: ISkill[] = (skills ?? [])
     .filter((s: ISkill) => s.visible)
