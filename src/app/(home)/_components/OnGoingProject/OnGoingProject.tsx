@@ -106,7 +106,12 @@ const OnGoing = () => {
 
         >
 
-            <Title title="On Going Project" description="Follow my progress on the latest project I'm working on" />
+            <Title
+                eyebrow="work in progress"
+                title="ONGOING PROJECT"
+                highlight="PROJECT"
+                description="Follow my progress on the latest project I'm working on"
+            />
 
             {data?.visible ? (
                 <motion.div

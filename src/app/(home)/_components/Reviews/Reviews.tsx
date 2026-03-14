@@ -31,11 +31,11 @@ const containerVariants = {
 };
 
 const Reviews = () => {
- 
+
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: false, amount: 0.2 });
 
-  const { data: reviews } = useTestimonials({featured:true});
+  const { data: reviews } = useTestimonials({ featured: true });
 
   const data = {
     reviews: reviews?.testimonials || []
@@ -45,9 +45,9 @@ const Reviews = () => {
   // Generate star ratings
   const renderStars = (rating: number) => {
     return Array(5).fill(0).map((_, i) => (
-      <Star 
-        key={i} 
-        className={`w-4 h-4 ${i < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-600"}`} 
+      <Star
+        key={i}
+        className={`w-4 h-4 ${i < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-600"}`}
       />
     ));
   };
@@ -56,27 +56,27 @@ const Reviews = () => {
     <section className="bg-[#0c0a09] shadow-[0px_0px_65px_65px_#0c0a09] z-10 relative py-24 w-full overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <motion.div 
+        <motion.div
           className="absolute top-1/3 left-1/4 w-64 h-64 rounded-full bg-red-600/5 filter blur-3xl"
-          animate={{ 
+          animate={{
             x: [0, 30, 0],
             y: [0, -30, 0],
             scale: [1, 1.05, 1]
           }}
-          transition={{ 
+          transition={{
             duration: 12,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-1/4 right-1/3 w-80 h-80 rounded-full bg-blue-600/5 filter blur-3xl"
-          animate={{ 
+          animate={{
             x: [0, -40, 0],
             y: [0, 20, 0],
             scale: [1, 1.1, 1]
           }}
-          transition={{ 
+          transition={{
             duration: 18,
             repeat: Infinity,
             ease: "easeInOut",
@@ -86,9 +86,11 @@ const Reviews = () => {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <Title 
-          title="CLIENT TESTIMONIALS" 
-          description="What our clients say about our development services and collaboration experience."
+        <Title
+          eyebrow="client reviews"
+          title="CLIENT TESTIMONIALS"
+          highlight="TESTIMONIALS"
+          description="What clients say about my development services and collaboration experience."
         />
 
         <motion.div
@@ -129,7 +131,7 @@ const Reviews = () => {
                   spaceBetween: 50,
                 },
               }}
-              pagination={{ 
+              pagination={{
                 clickable: true,
                 bulletClass: "swiper-pagination-bullet !bg-red-500 !opacity-70",
                 bulletActiveClass: "!bg-red-600 !opacity-100"
@@ -139,7 +141,7 @@ const Reviews = () => {
             >
               {data.reviews.map((review, index) => (
                 <SwiperSlide key={index} className="bg-transparent ">
-                  <motion.div 
+                  <motion.div
                     className="backdrop-blur-sm bg-black/80 border border-gray-800 rounded-2xl overflow-hidden shadow-xl"
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.3 }}
@@ -147,7 +149,7 @@ const Reviews = () => {
                     <div className="p-8 relative h-62">
                       {/* Large quote background */}
                       <Quote className="absolute top-4 right-4 w-16 h-16 text-red-600/10" strokeWidth={1} />
-                      
+
                       {/* Avatar and Info */}
                       <div className="flex items-center space-x-4 mb-6 relative z-10">
                         <div className="relative">
@@ -169,14 +171,14 @@ const Reviews = () => {
                           </div>
                         </div>
                       </div>
-                      
+
                       {/* Review Text */}
                       <div className="mt-4 relative z-10">
                         <p className="text-gray-300 italic leading-relaxed text-sm ">
                           &quot;{review.testimonial}&quot;
                         </p>
                       </div>
-                      
+
                       {/* Bottom decoration */}
                       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600/0 via-red-600 to-red-600/0"></div>
                     </div>
@@ -185,7 +187,7 @@ const Reviews = () => {
               ))}
             </Swiper>
           ) : (
-            <motion.div 
+            <motion.div
               className="flex flex-col items-center justify-center py-10"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -198,7 +200,7 @@ const Reviews = () => {
                   loop
                 />
               </div>
-              <motion.h3 
+              <motion.h3
                 className="mt-6 text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-700"
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}

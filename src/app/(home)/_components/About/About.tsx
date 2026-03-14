@@ -32,7 +32,12 @@ const About = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <Title title="ABOUT ME" description="Get to know more about my skills and experience" />
+        <Title
+          eyebrow="who i am"
+          title="ABOUT ME"
+          highlight="ME"
+          description="Get to know more about my skills and experience"
+        />
 
         <div className="mt-16 flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           {/* Profile Image */}

@@ -36,7 +36,7 @@ const formSchema = z.object({
 });
 
 const Contact = () => {
-  
+
 
   const data = {
     email: "ruhulamin.dev07@gmail.com",
@@ -81,7 +81,12 @@ const Contact = () => {
       id="contact"
       className="bg-[url('/5.jpg')] bg-cover bg-center bg-no-repeat w-full py-20 lg:px-32 xl:px-80 px-5"
     >
-      <Title title="CONTACT" />
+      <Title
+        eyebrow="get in touch"
+        title="CONTACT"
+        highlight="CONTACT"
+        description="Have a project in mind or just want to say hello? I'd love to hear from you."
+      />
 
       <div className="container mx-auto mt-12 flex flex-col md:flex-row gap-8">
         {/* Contact Form */}

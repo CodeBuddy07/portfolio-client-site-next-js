@@ -49,13 +49,18 @@ export default function EducationSection() {
     <div className="bg-[#0c0a09] shadow-[0px_0px_65px_65px_#0c0a09] z-10 relative py-12 md:py-24 w-full overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="mb-12 md:mb-16 text-center"
         >
-          <Title title="Education" description="My academic journey and qualifications"/>
+          <Title
+            eyebrow="academic journey"
+            title="MY EDUCATION"
+            highlight="EDUCATION"
+            description="My academic journey and qualifications"
+          />
         </motion.div>
 
         {/* Education Timeline Tree */}
@@ -67,10 +72,10 @@ export default function EducationSection() {
         >
           {/* Timeline Stem - Mobile (left aligned) */}
           <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-red-600 to-red-900 md:hidden"></div>
-          
+
           {/* Timeline Stem - Desktop (centered) */}
           <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-red-600 to-red-900 transform -translate-x-1/2"></div>
-          
+
           {educationData.map((item, index) => (
             <motion.div
               key={item.id}
@@ -84,13 +89,13 @@ export default function EducationSection() {
 
               {/* Content Card */}
               <div className="ml-14 md:ml-0">
-                <motion.div 
+                <motion.div
                   whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(185, 28, 28, 0.3)" }}
                   transition={{ duration: 0.3 }}
                   className={`
                     bg-stone-900 p-5 sm:p-6 rounded-lg shadow-lg w-full
-                    ${index % 2 === 0 ? 
-                      'md:mr-auto md:max-w-[calc(50%-40px)] md:border-l-4 md:border-red-600' : 
+                    ${index % 2 === 0 ?
+                      'md:mr-auto md:max-w-[calc(50%-40px)] md:border-l-4 md:border-red-600' :
                       'md:ml-auto md:max-w-[calc(50%-40px)] md:border-r-4 md:border-red-600'
                     }
                   `}

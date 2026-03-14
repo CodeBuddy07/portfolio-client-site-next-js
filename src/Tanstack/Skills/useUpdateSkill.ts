@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "@/utils/api";
-
+ 
 export const useUpdateSkill = () => {
   const queryClient = useQueryClient();
-
+ 
   return useMutation({
     mutationFn: async ({
       id,
@@ -13,7 +13,8 @@ export const useUpdateSkill = () => {
       updates: {
         name?: string;
         iconURL?: string;
-        percentage?: number;
+        color?: string;
+        order?: number;
         visible?: boolean;
       };
     }) => {
@@ -22,6 +23,7 @@ export const useUpdateSkill = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-skills"] });
+      queryClient.invalidateQueries({ queryKey: ["skills"] });
     },
   });
 };

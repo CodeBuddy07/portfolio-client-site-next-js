@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useProjects } from "@/Tanstack/Project/useProjects";
 import { IProject } from "@/app/api/_models/ProjectModel";
 import { ProjectDetailDialog } from "./_components/ProjectDetailDialog";
+import Title from "@/components/Shared/Title";
 
 
 
@@ -85,16 +86,15 @@ const Projects = () => {
 
             <div className="container mx-auto px-4 relative z-10">
                 {/* Section header */}
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-orange-500 inline-block mb-4">
-                        Featured Projects
-                    </h2>
-                    <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-orange-500 mx-auto mb-6"></div>
-                    <p className="text-gray-400 max-w-xl mx-auto">
-                        Explore my latest work showcasing my technical skills and creative solutions
-                    </p>
-                </div>
 
+
+                <Title
+                    eyebrow="featured projects"
+                    title="FEATURED PROJECTS"
+                    highlight="PROJECTS"
+                    description="Explore my latest work showcasing my technical skills and creative solutions."
+                />
+                
                 {/* Category filters */}
                 <div className="flex flex-wrap justify-center gap-3 mb-12">
                     {categories.map((category, index) => (

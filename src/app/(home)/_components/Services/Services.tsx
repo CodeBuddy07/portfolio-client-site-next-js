@@ -59,20 +59,20 @@ const containerVariants = {
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { 
-      duration: 0.6, 
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
       ease: [0.25, 0.1, 0.25, 1.0]
-    } 
+    }
   }
 };
 
 const glowVariants = {
   initial: { opacity: 0.3, scale: 1 },
-  hover: { 
-    opacity: 0.6, 
+  hover: {
+    opacity: 0.6,
     scale: 1.05,
     transition: { duration: 0.8, ease: "easeInOut" }
   }
@@ -92,7 +92,12 @@ const Services = () => {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <Title title="What I Do" description="Crafting fast, scalable, and modern web solutions with clean code and a user-first approach." />
+        <Title
+          eyebrow="expertise"
+          title="WHAT I DO"
+          highlight="DO"
+          description="Crafting fast, scalable, and modern web solutions with clean code and a user-first approach."
+        />
 
         <motion.div
           ref={containerRef}
@@ -111,13 +116,13 @@ const Services = () => {
                 className="h-full"
               >
                 <Card className="relative h-full overflow-hidden bg-black/80 border border-gray-800 hover:border-red-500/50 transition-all duration-300">
-                  <motion.div 
+                  <motion.div
                     className="absolute inset-0 bg-gradient-to-tr from-red-600/20 to-blue-600/5 rounded-2xl"
                     variants={glowVariants}
                     initial="initial"
                     whileHover="hover"
                   />
-                  
+
                   <CardContent className="p-6 space-y-6 h-full flex flex-col">
                     <div className="flex items-center gap-4">
                       <div className="bg-gradient-to-br from-red-500 to-red-700 p-3 rounded-xl shadow-lg shadow-red-500/20">
@@ -125,13 +130,13 @@ const Services = () => {
                       </div>
                       <h3 className="text-xl font-bold text-white tracking-tight">{service.name}</h3>
                     </div>
-                    
+
                     <p className="text-gray-400 flex-grow">
                       {service.description}
                     </p>
-                    
+
                     <div className="pt-4">
-                      <motion.div 
+                      <motion.div
                         className="h-1 w-12 bg-gradient-to-r from-red-500 to-red-700 rounded-full"
                         whileHover={{ width: "100%", transition: { duration: 0.5 } }}
                       />
