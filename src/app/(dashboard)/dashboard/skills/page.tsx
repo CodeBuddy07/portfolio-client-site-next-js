@@ -30,7 +30,7 @@ import { AddSkillDialog } from "./_components/AddSkillDialog";
 import { EditSkillDialog } from "./_components/EditSkillDialog";
 import { ISkill } from "@/app/api/_models/SkillModel";
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 10;
 
 export default function SkillsDashboard() {
   const [isAddDialogOpen, setIsAddDialogOpen]   = useState(false);
