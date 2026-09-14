@@ -9,14 +9,15 @@ import { Reveal, Words } from "@/components/motion";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Product engineer at CodeMines in Dhaka. Two years, 81 repositories, 1,660 commits — multi-tenant SaaS, financial ERPs, and mobile apps in production.",
+  description: "Product engineer and co-founder of CodeMines, Dhaka. Three years, 81 repositories, 1,660 commits — multi-tenant SaaS, financial ERPs, and mobile apps in production.",
 };
 
 const timeline = [
   ["2023", "Started building for the web. HTML, CSS, then JavaScript and the first React apps."],
-  ["2024", "First paid systems work. A salaried contract at Alpha Media, an IPTV business — maintaining their platform and building the IPTV Business Management System on top of it. Then SparkTech Agency: eight-plus months of NestJS, React Native, AWS video delivery, Redis and BullMQ on production products. A tradespeople marketplace and a blood-donor network for Feni District on the side; the latter is still running."],
-  ["2025", "Joined CodeMines. NestJS, Prisma and PostgreSQL became the default. Shipped four React Native apps through App Store review, a VC modelling SaaS, an e-commerce store on Stripe. 72 pull requests reviewed and merged."],
-  ["2026", "Multi-tenant retail POS SaaS with ORM-level tenant isolation. A wholesale ERP with integer money, FIFO costing and a double-entry ledger. A four-surface product suite with operational runbooks as GitHub Actions. Over a thousand commits, most of them on systems businesses run their day on. Completed the CS diploma in May; started a BSc in CSE at BUBT."],
+  ["2023", "Started building for the web — HTML, CSS, then JavaScript and the first React apps. By June, first paid work: a salaried contract at Alpha Media, an IPTV business, maintaining their platform and building the IPTV Business Management System on top of it."],
+  ["2024", "Finished the Alpha Media contract in February. Joined SparkTech Agency in June as a full-stack developer: NestJS, React Native, AWS video delivery, Redis and BullMQ on production products. A tradespeople marketplace and a blood-donor network for Feni District on the side; the latter is still running."],
+  ["2025", "NestJS, Prisma and PostgreSQL became the default. Shipped four React Native apps through App Store review, a VC modelling SaaS, an e-commerce store on Stripe. 72 pull requests reviewed and merged."],
+  ["2026", "Completed the CS diploma in May. SparkTech ended in June; formed CodeMines with former colleagues the same month. Multi-tenant retail POS SaaS with ORM-level tenant isolation. A wholesale ERP with integer money, FIFO costing and a double-entry ledger. A four-surface product suite with runbooks as GitHub Actions. Started a BSc in CSE at BUBT."],
 ];
 
 export default function AboutPage() {
@@ -36,11 +37,11 @@ export default function AboutPage() {
           </Reveal>
           <Reveal delay={0.1} className="max-w-2xl space-y-5 text-[17px] leading-relaxed text-ink-2">
             <p>
-              I&apos;m Ruhul, a product engineer at{" "}
+              I&apos;m Ruhul, a product engineer and co-founder of{" "}
               <a href={site.studio.url} target="_blank" rel="noopener noreferrer" className="text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">
                 CodeMines
               </a>
-              , a small product studio in Dhaka. Before that I spent eight months at SparkTech Agency and a contract year keeping an IPTV business&apos;s systems running. Over the last two years I&apos;ve put {site.stats.commits.toLocaleString()} commits into {site.stats.repos} repositories — most of them products that real businesses run their day on: a multi-tenant point-of-sale SaaS, a wholesale ERP with real accounting underneath, a jobs marketplace, a shared-housing platform, and mobile apps that went through App Store and Play Store review.
+              , a small product studio in Dhaka. Before that: two years at SparkTech Agency, and eight months on contract keeping an IPTV business&apos;s systems running. Over the last three years I&apos;ve put {site.stats.commits.toLocaleString()} commits into {site.stats.repos} repositories — most of them products that real businesses run their day on: a multi-tenant point-of-sale SaaS, a wholesale ERP with real accounting underneath, a jobs marketplace, a shared-housing platform, and mobile apps that went through App Store and Play Store review.
             </p>
             <p>
               I work across the whole stack in TypeScript — Next.js and React on the front, NestJS and Node behind it, PostgreSQL or MongoDB underneath, React Native when it needs to be in someone&apos;s pocket — and I own the deployment too: Docker, nginx, GitHub Actions, a VPS when Vercel isn&apos;t the right answer. I&apos;d rather be the person who can take a product from a brief to a running system than the person who does one layer of it well.
@@ -54,7 +55,7 @@ export default function AboutPage() {
             <dl className="grid grid-cols-1 gap-4 border-t border-line pt-6 text-sm sm:grid-cols-3">
               <div>
                 <dt className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-3">Currently</dt>
-                <dd className="mt-1 text-ink">Product engineer, CodeMines</dd>
+                <dd className="mt-1 text-ink">Co-founder &amp; product engineer, CodeMines</dd>
               </div>
               <div>
                 <dt className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-3">Based in</dt>
@@ -69,7 +70,7 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section eyebrow="Timeline" title="Two years, in shipping terms.">
+      <Section eyebrow="Timeline" title="Three years, in shipping terms.">
         <ol className="relative border-l border-line pl-8">
           {timeline.map(([y, t], i) => (
             <Reveal key={y} delay={i * 0.06} as="li" className="relative pb-10 last:pb-0">

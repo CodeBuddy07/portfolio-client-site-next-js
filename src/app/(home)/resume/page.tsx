@@ -35,7 +35,7 @@ export default function ResumePage() {
             </div>
             <ul className="text-sm text-ink-2 md:text-right print:text-black/70">
               <li>{resume.location}</li>
-              <li><a href={`mailto:${resume.email}`} className="hover:text-ink">{resume.email}</a></li>
+              <li><a href={`mailto:${resume.email}`} className="hover:text-ink">{resume.email}</a> · {resume.phone}</li>
               <li><a href={`https://${resume.site}`} className="hover:text-ink">{resume.site}</a> · <a href={`https://${resume.github}`} className="hover:text-ink">{resume.github}</a></li>
               <li><a href={`https://${resume.linkedin}`} className="hover:text-ink">{resume.linkedin}</a></li>
             </ul>
