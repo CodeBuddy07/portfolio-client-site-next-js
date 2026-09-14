@@ -1,36 +1,34 @@
-import About from '@/app/(home)/_components/About/About';
-import FloatingSkills from '@/app/(home)/_components/SkillSlider/SkillSlider';
-import { Header } from '@/app/(home)/_components/Header/Header';
-import Quote from '@/app/(home)/_components/Quote/Quote';
-import React from 'react';
-import Reviews from '@/app/(home)/_components/Reviews/Reviews';
-import Stats from '@/app/(home)/_components/Stats/Stats';
-import Services from '@/app/(home)/_components/Services/Services';
-import Projects from '@/app/(home)/_components/Projects/Project';
-import OnGoing from '@/app/(home)/_components/OnGoingProject/OnGoingProject';
-import Contact from '@/app/(home)/_components/ContactMe/ContactMe';
-import Footer from '@/components/Shared/Footer';
-import EducationSection from './_components/Education/Education';
+import { Hero } from "@/components/site/Hero";
+import { Work } from "@/components/site/Work";
+import { Capabilities } from "@/components/site/Capabilities";
+import { Stack } from "@/components/site/Stack";
+import { About } from "@/components/site/About";
+import { Contact } from "@/components/site/Contact";
+import { site } from "@/content/site";
 
-
-const page = () => {
-
-    return (
-        <div className=' bg-black'>
-            <Header />
-            <About />
-            <EducationSection/>
-            <Quote />
-            <FloatingSkills />
-            <Reviews />
-            <Stats />
-            <Services />
-            <Projects />
-            <OnGoing />
-            <Contact />
-            <Footer />
-        </div>
-    );
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.name,
+  url: site.url,
+  jobTitle: site.role,
+  email: `mailto:${site.email}`,
+  worksFor: { "@type": "Organization", name: site.studio.name, url: site.studio.url },
+  sameAs: [site.socials.github, site.socials.linkedin, site.socials.upwork],
+  address: { "@type": "PostalAddress", addressLocality: "Dhaka", addressCountry: "BD" },
+  knowsAbout: ["Next.js", "NestJS", "React Native", "TypeScript", "PostgreSQL", "MongoDB", "Node.js"],
 };
 
-export default page;
+export default function HomePage() {
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
+      <Hero />
+      <Work />
+      <Capabilities />
+      <Stack />
+      <About />
+      <Contact />
+    </>
+  );
+}

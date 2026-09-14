@@ -1,53 +1,12 @@
-import React from 'react';
-import { Metadata } from 'next';
-import Navbar from '@/app/(home)/_components/Navbar/Navbar';
-import { LenisProvider } from '@/Providers/LenisProvider';
-import AnimatedCursor from "react-animated-cursor"
-import StickySideBar from '@/components/Shared/StickySideSocial';
+import { Nav } from "@/components/site/Nav";
+import { Footer } from "@/components/site/Footer";
 
-
-export const metadata: Metadata = {
-    title: 'Ruhul Amin',
-    description: "Hey there! I'm Ruhul Amin, a passionate web developer with a knack for building fast, modern, and user-friendly web experiences.",
-    robots: {
-        index: true,
-        follow: true,
-    },
-};
-
-const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-
-
-
-    return (
-        <LenisProvider>
-            <AnimatedCursor
-                innerSize={8}
-                outerSize={18}
-                innerScale={1}
-                outerScale={2}
-
-                outerAlpha={0.2}
-                innerStyle={{
-                    backgroundColor: 'white'
-                }}
-                outerStyle={{
-
-                    backgroundColor: '#DC2626',
-                    mixBlendMode: 'exclusion',
-
-                }}
-
-            />
-            <Navbar />
-            <StickySideBar />
-            <main > {/* Add padding to account for fixed navbar */}
-                {children}
-            </main>
-        </LenisProvider>
-
-
-    );
-};
-
-export default DashboardLayout;
+export default function SiteLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="site min-h-screen">
+      <Nav />
+      <main>{children}</main>
+      <Footer />
+    </div>
+  );
+}

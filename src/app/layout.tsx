@@ -1,110 +1,79 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/Providers/Theme-Provider";
-import { ParallaxProviders } from "@/Providers/Parallax-Provider";
-import { Saira } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
-import { ClerkProvider } from "@clerk/nextjs";
 import { TanstackQueryProvider } from "@/Providers/TanstackQueryProvider";
+import { site } from "@/content/site";
 
-
-const saira = Saira({
+const geistSans = Geist({
   subsets: ["latin"],
-  weight: ["100", "300", "400", "500", "700", "900"],
-  style: ["normal", "italic"],
+  variable: "--font-geist-sans",
   display: "swap",
 });
 
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
 
+export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
+  title: {
+    default: `${site.name} — Full-stack engineer`,
+    template: `%s — ${site.name}`,
+  },
+  description: site.description,
+  keywords: [
+    "Ruhul Amin",
+    "full-stack developer",
+    "Next.js developer",
+    "NestJS",
+    "React Native developer",
+    "TypeScript",
+    "PostgreSQL",
+    "freelance developer",
+  ],
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  openGraph: {
+    type: "website",
+    url: site.url,
+    siteName: site.name,
+    title: `${site.name} — Full-stack engineer`,
+    description: site.description,
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: site.name }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} — Full-stack engineer`,
+    description: site.description,
+    images: ["/og-image.png"],
+  },
+  robots: { index: true, follow: true },
+  icons: {
+    icon: [
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+};
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-  <head>
-    <title>Ruhul Amin — Full Stack Developer | ruhulcodes.com</title>
-
-    {/* <!-- Favicon + Apple Icons --> */}
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#ffffff" />
-
-    {/* <!-- SEO Meta --> */}
-    <meta name="description" content="Ruhul Amin — Full Stack Developer from Dhaka. I build powerful apps with React, Next.js, Node.js & MongoDB." />
-    <meta name="keywords" content="Ruhul Amin, Full Stack Developer, React, Next.js, MongoDB, Dhaka Developer, Portfolio" />
-    <meta name="author" content="Ruhul Amin" />
-    <meta name="robots" content="index, follow" />
-
-    {/* <!-- Open Graph (Facebook, LinkedIn) --> */}
-    <meta property="og:title" content="Ruhul Amin — Full Stack Web Developer" />
-    <meta property="og:description" content="Check out my portfolio and projects at ruhulcodes.com" />
-    <meta property="og:url" content="https://ruhulcodes.com" />
-    <meta property="og:image" content="https://ruhulcodes.com/og-image.png" />
-    <meta property="og:type" content="website" />
-
-    {/* <!-- Twitter Card --> */}
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Ruhul Amin — Full Stack Web Developer" />
-    <meta name="twitter:description" content="Visit my portfolio: ruhulcodes.com" />
-    <meta name="twitter:image" content="https://ruhulcodes.com/og-image.png" />
-    
-    {/* <!-- Structured Data --> */}
-    <script type="application/ld+json">
-    {`
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Ruhul Amin",
-        "url": "https://ruhulcodes.com",
-        "sameAs": [
-          "https://github.com/CodeBuddy07",
-          "https://linkedin.com/in/codebuddy07",
-          "https://www.facebook.com/codebuddy07"
-        ],
-        "jobTitle": "Full Stack Web Developer",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "ruhulcodes.com"
-        },
-        "alumniOf": {
-          "@type": "EducationalOrganization",
-          "name": "Dhaka Polytechnic Institute"
-        },
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Moghbazar",
-          "addressRegion": "Dhaka",
-          "addressCountry": "BD"
-        }
-      }
-    `}
-    </script>
-  </head>
-
-  <body suppressHydrationWarning className={`${saira.className} antialiased`}>
-    <ClerkProvider>
-      <TanstackQueryProvider>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ParallaxProviders>
+    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body suppressHydrationWarning className="font-sans antialiased">
+        <TanstackQueryProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
             {children}
             <Toaster richColors position="top-center" />
-          </ParallaxProviders>
-        </ThemeProvider>
-        {/* Optional: React Query Devtools */}
-        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-      </TanstackQueryProvider>
-    </ClerkProvider>
-  </body>
-</html>
-
+          </ThemeProvider>
+        </TanstackQueryProvider>
+      </body>
+    </html>
   );
 }
