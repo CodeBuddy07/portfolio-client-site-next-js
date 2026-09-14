@@ -4,7 +4,7 @@ import { Counter, Magnetic, Words } from "@/components/motion";
 import { HeroShell } from "./HeroShell";
 
 const proof = [
-  { value: site.stats.commits, suffix: "", label: "commits shipped in two years" },
+  { value: site.stats.commits, suffix: "", label: "commits shipped since 2024" },
   { value: site.stats.productsShipped, suffix: "", label: "products in production" },
   { value: site.stats.storeApps, suffix: "", label: "apps on the App Store and Play Store" },
   { value: 24, suffix: "h", label: "typical reply time · GMT+6" },
@@ -31,7 +31,7 @@ export function Hero() {
         <div className="rise rise-3 mt-7 max-w-2xl text-lg leading-relaxed text-ink-2 md:text-xl">
           <p>
             Multi-tenant SaaS, financial ERPs, real-time platforms and mobile apps — designed, shipped and operated
-            in production. Product engineer at{" "}
+            in production. Product engineer and co-founder of{" "}
             <a href={site.studio.url} target="_blank" rel="noopener noreferrer" className="text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">
               {site.studio.name}
             </a>

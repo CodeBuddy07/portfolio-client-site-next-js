@@ -9,7 +9,7 @@ export function Footer() {
         <div>
           <p className="text-sm font-semibold text-ink">{site.name}</p>
           <p className="mt-1 max-w-xs text-sm leading-relaxed text-ink-3">
-            {site.role} at{" "}
+            Product engineer · co-founder of{" "}
             <a href={site.studio.url} target="_blank" rel="noopener noreferrer" className="text-ink-2 hover:text-ink">
               {site.studio.name}
             </a>

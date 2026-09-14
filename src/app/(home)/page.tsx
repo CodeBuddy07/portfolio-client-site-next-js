@@ -79,10 +79,10 @@ export default function HomePage() {
 
       <WritingTeaser />
 
-      <Section eyebrow="About" title="Engineer at CodeMines. Diagnostician by habit.">
+      <Section eyebrow="About" title="Co-founder of CodeMines. Engineer first.">
         <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
           <p className="max-w-2xl text-lg leading-relaxed text-ink-2">
-            I&apos;ve spent the last two years shipping products end to end at a small studio in Dhaka — {site.stats.commits.toLocaleString()} commits across {site.stats.repos} repositories, most of it multi-tenant SaaS, financial systems and mobile apps that real businesses run on. I work in TypeScript across the whole stack, I measure before I change things, and I don&apos;t ship code I can&apos;t explain line by line.
+            Three years of shipping products end to end — a contract at an IPTV business, two years at SparkTech Agency, and now CodeMines, the studio I co-founded: {site.stats.commits.toLocaleString()} commits across {site.stats.repos} repositories, most of it multi-tenant SaaS, financial systems and mobile apps that real businesses run on. I work in TypeScript across the whole stack, I measure before I change things, and I don&apos;t ship code I can&apos;t explain line by line.
           </p>
           <Link href="/about" className="inline-flex items-center gap-1 text-sm text-ink-2 hover:text-ink">
             More about me <ArrowIcon />
