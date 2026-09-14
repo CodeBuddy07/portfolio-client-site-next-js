@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { nav, site } from "@/content/site";
 import { ButtonLink, Container } from "./primitives";
@@ -11,6 +12,7 @@ import { cn } from "@/lib/utils";
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -19,12 +21,16 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => setOpen(false), [pathname]);
+
   useEffect(() => {
     document.documentElement.style.overflow = open ? "hidden" : "";
     return () => {
       document.documentElement.style.overflow = "";
     };
   }, [open]);
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
   return (
     <header
@@ -39,17 +45,22 @@ export function Nav() {
           <span className="text-sm font-semibold tracking-tight text-ink">{site.name}</span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
           {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm text-ink-2 transition-colors hover:text-ink"
+              aria-current={isActive(item.href) ? "page" : undefined}
+              className={cn(
+                "relative text-sm transition-colors hover:text-ink",
+                isActive(item.href) ? "text-ink" : "text-ink-2"
+              )}
             >
               {item.label}
+              {isActive(item.href) && <span className="absolute -bottom-[22px] left-0 right-0 h-px bg-ink" aria-hidden />}
             </Link>
           ))}
-          <ButtonLink href="/#contact" size="md" className="h-9 px-4">
+          <ButtonLink href="/contact" className="h-9 px-4">
             Let&apos;s talk
           </ButtonLink>
         </nav>
@@ -73,13 +84,12 @@ export function Nav() {
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-3 text-base text-ink-2 hover:bg-surface hover:text-ink"
+                className={cn("rounded-lg px-3 py-3 text-base hover:bg-surface hover:text-ink", isActive(item.href) ? "text-ink" : "text-ink-2")}
               >
                 {item.label}
               </Link>
             ))}
-            <ButtonLink href="/#contact" onClick={() => setOpen(false)} className="mt-3">
+            <ButtonLink href="/contact" className="mt-3">
               Let&apos;s talk
             </ButtonLink>
           </Container>

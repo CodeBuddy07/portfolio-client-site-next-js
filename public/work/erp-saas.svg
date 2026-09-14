@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000">
+<defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1.2" fill="rgba(255,255,255,0.07)"/></pattern>
+<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8a8a94"/></marker></defs>
+<rect width="1600" height="1000" fill="#101013"/><rect width="1600" height="1000" fill="url(#g)"/>
+<text x="80" y="110" font-family="ui-monospace,Menlo,monospace" font-size="26" letter-spacing="6" fill="#8a8a94">REQUEST PATH · MULTI-TENANT SAAS</text>
+<rect x="80" y="220" width="340" height="96" rx="18" fill="#17171b" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+<text x="250.0" y="264" text-anchor="middle" font-family="ui-sans-serif,Inter,system-ui" font-size="28" font-weight="600" fill="#f4f4f5">Cashier app</text>
+<text x="250.0" y="296" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#8a8a94">Next.js 16</text>
+<rect x="540" y="220" width="420" height="96" rx="18" fill="#17171b" stroke="#ef4444" stroke-width="2"/>
+<text x="750.0" y="264" text-anchor="middle" font-family="ui-sans-serif,Inter,system-ui" font-size="28" font-weight="600" fill="#f4f4f5">Access token</text>
+<text x="750.0" y="296" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#8a8a94">organizationId inside</text>
+<rect x="540" y="420" width="420" height="96" rx="18" fill="#17171b" stroke="#ef4444" stroke-width="2"/>
+<text x="750.0" y="464" text-anchor="middle" font-family="ui-sans-serif,Inter,system-ui" font-size="28" font-weight="600" fill="#f4f4f5">TenantGuard</text>
+<text x="750.0" y="496" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#8a8a94">membership re-resolved</text>
+<rect x="540" y="620" width="420" height="96" rx="18" fill="#17171b" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+<text x="750.0" y="664" text-anchor="middle" font-family="ui-sans-serif,Inter,system-ui" font-size="28" font-weight="600" fill="#f4f4f5">PermissionsGuard</text>
+<text x="750.0" y="696" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#8a8a94">catalogue, not roles</text>
+<rect x="1060" y="620" width="460" height="96" rx="18" fill="#17171b" stroke="#ef4444" stroke-width="2"/>
+<text x="1290.0" y="664" text-anchor="middle" font-family="ui-sans-serif,Inter,system-ui" font-size="28" font-weight="600" fill="#f4f4f5">Prisma tenant extension</text>
+<text x="1290.0" y="696" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#8a8a94">refuses unfiltered queries</text>
+<rect x="1060" y="820" width="460" height="96" rx="18" fill="#17171b" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+<text x="1290.0" y="864" text-anchor="middle" font-family="ui-sans-serif,Inter,system-ui" font-size="28" font-weight="600" fill="#f4f4f5">PostgreSQL 16</text>
+<text x="1290.0" y="896" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#8a8a94">one schema, many shops</text>
+<path d="M420 268 L 540 268" fill="none" stroke="#8a8a94" stroke-width="2" marker-end="url(#a)"/>
+<path d="M750.0 316 C 750.0 368.0, 750.0 368.0, 750.0 420" fill="none" stroke="#8a8a94" stroke-width="2" marker-end="url(#a)"/>
+<path d="M750.0 516 C 750.0 568.0, 750.0 568.0, 750.0 620" fill="none" stroke="#8a8a94" stroke-width="2" marker-end="url(#a)"/>
+<path d="M960 668 L 1060 668" fill="none" stroke="#8a8a94" stroke-width="2" marker-end="url(#a)"/>
+<path d="M1290.0 716 C 1290.0 768.0, 1290.0 768.0, 1290.0 820" fill="none" stroke="#8a8a94" stroke-width="2" marker-end="url(#a)"/>
+<rect x="1180.0" y="746.0" width="220" height="44" rx="22" fill="#101013" stroke="rgba(255,255,255,0.1)"/><text x="1290.0" y="776.0" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#c4c4cc">organizationId = ?</text>
+</svg>

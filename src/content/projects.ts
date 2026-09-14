@@ -22,9 +22,193 @@ export type Project = {
   image: { src: string; width: number; height: number };
   featured: boolean;
   quote?: { text: string; from: string };
+  /** Client code is private; the case study describes the engineering, not the codebase. */
+  confidential?: boolean;
+  /** Notable engineering decisions, shown as a list on the case study. */
+  engineering?: string[];
 };
 
 export const projects: Project[] = [
+  {
+    slug: "multi-tenant-retail-saas",
+    name: "Retail ERP / POS SaaS",
+    title: "A multi-tenant retail ERP and POS SaaS for small shops",
+    tagline: "One codebase, many shops, zero data leakage: tenant isolation enforced at the ORM layer, permissions instead of roles, tokens that can't be forged into another store.",
+    kind: "web",
+    category: "SaaS platform",
+    year: 2026,
+    client: "Confidential — Middle East retail",
+    industry: "Retail / point of sale",
+    role: "Architect and lead engineer, API and web app",
+    summary:
+      "A multi-tenant ERP and point-of-sale SaaS for small and medium shops: products, stock, sales, staff and reporting per organisation, with an owner / manager / cashier permission model, all on a NestJS 11 + Prisma 7 + PostgreSQL 16 API and a Next.js 16 web app.",
+    challenge:
+      "Multi-tenancy is where SaaS products quietly leak data. A single missed `where organizationId = …` in one of hundreds of queries and one shop can read another's sales. The system had to make that class of bug impossible rather than merely unlikely, while staying fast enough for a cashier at a till.",
+    built: [
+      "Tenant identity carried only in the access token — organizationId is never read from a request body, header or query string.",
+      "A `TenantGuard` that re-resolves the membership from the database on every request, so a deactivated employee or a suspended shop loses access immediately, not at token expiry.",
+      "Permission-based guards (not role-based), backed by a permission catalogue, so roles can change without touching code.",
+      "A Prisma client extension that refuses any query against a tenant-owned table that does not filter by organizationId — a forgotten filter fails loudly in development instead of leaking in production.",
+      "Argon2id passwords; refresh tokens stored as SHA-256 digests, rotated on use, with reuse revoking the whole token family.",
+      "One response envelope, stable error codes, Swagger in non-production, rate limiting, scheduled jobs, S3 uploads, Redis caching, e2e tests against a dedicated database.",
+    ],
+    engineering: [
+      "Tenant isolation as a compile-and-runtime invariant, not a convention",
+      "Permissions over roles",
+      "Refresh-token family revocation",
+      "Six-document architecture and security spec, including what is deliberately not claimed",
+    ],
+    results: [
+      { value: "0", label: "Ways to query a tenant table without a tenant filter" },
+      { value: "3", label: "Seeded roles — owner, manager, cashier — on one permission catalogue" },
+      { value: "e2e", label: "Tests against a real Postgres, not mocks" },
+      { value: "6", label: "Architecture, database, API, permissions, security and local-dev docs" },
+    ],
+    stack: ["NestJS 11", "Prisma 7", "PostgreSQL 16", "Redis", "Next.js 16", "TypeScript", "Zod", "AWS S3", "Docker"],
+    links: {},
+    liveStatus: "live",
+    image: { src: "/work/erp-saas.svg", width: 1600, height: 1000 },
+    featured: true,
+    confidential: true,
+  },
+  {
+    slug: "wholesale-garments-erp",
+    name: "Wholesale Garments ERP",
+    title: "An ERP for a wholesale garments business — with real accounting underneath",
+    tagline: "Integer money, FIFO lot costing, a double-entry ledger and append-only history. Built so the numbers a business runs on are never approximately right.",
+    kind: "web",
+    category: "ERP · Finance",
+    year: 2026,
+    client: "Confidential — Oman",
+    industry: "Wholesale trade",
+    role: "Architect and lead engineer, API and web app",
+    summary:
+      "A full ERP for a wholesale garments importer: purchases in supplier currency, landed-cost inventory, sales, invoicing, a general ledger and reporting — NestJS + Prisma + PostgreSQL behind a React 19 + Vite + shadcn front end.",
+    challenge:
+      "Most 'ERPs' built by web teams store money as floats, cost inventory by average, and edit history in place. All three produce books that don't reconcile. This business trades in Omani Rial with three decimal places, buys in Bangladeshi Taka, and needed accounts an auditor could follow.",
+    built: [
+      "Money as a value object: integer baisa (1 OMR = 1000 baisa), never floats, persisted to NUMERIC(18,3). Arithmetic that cannot silently lose a third decimal.",
+      "FIFO lot costing: every shipment receipt is a StockLot with its own landed cost; sales consume lots oldest-first and record exact cost of goods sold.",
+      "A double-entry ledger — every financial action posts a balanced LedgerTransaction against a seeded chart of accounts.",
+      "Immutable history: ledgers, confirmed sales, invoices and stock movements are append-only; corrections are reversing records, never edits.",
+      "Per-shipment FX: purchases entered in the supplier's currency with the exchange rate captured on the shipment.",
+      "Fail-fast environment validation, strict ESLint where `any` is an error, Vitest, an ERD and data-model document, CI and deploy pipelines.",
+    ],
+    engineering: [
+      "Integer money value object",
+      "FIFO lot costing with landed cost",
+      "Double-entry ledger, append-only",
+      "Per-shipment foreign exchange",
+    ],
+    results: [
+      { value: "3 dp", label: "OMR handled exactly, as integer baisa" },
+      { value: "FIFO", label: "Exact COGS per sale from lot-level landed cost" },
+      { value: "Balanced", label: "Every transaction posts double-entry" },
+      { value: "Append-only", label: "Corrections reverse, they never overwrite" },
+    ],
+    stack: ["NestJS", "Prisma", "PostgreSQL", "TypeScript", "React 19", "Vite", "shadcn/ui", "TanStack Query", "Docker", "GitHub Actions"],
+    links: {},
+    liveStatus: "live",
+    image: { src: "/work/garments-erp.svg", width: 1600, height: 1000 },
+    featured: true,
+    confidential: true,
+  },
+  {
+    slug: "messbuddy",
+    name: "MessBuddy",
+    title: "MessBuddy — a full product suite for shared-housing management",
+    tagline: "API, web app, mobile app and super-admin, deployed to a VPS with runbooks written as GitHub Actions.",
+    kind: "web",
+    category: "Platform · Web + mobile",
+    year: 2026,
+    client: "MessBuddy",
+    industry: "Property / shared housing",
+    role: "Backend lead; web and mobile contributor",
+    summary:
+      "A platform for managing shared houses (\"messes\"): members, meals, bills and balances, with a NestJS + Prisma API, a Next.js web app, a React Native app and a super-admin panel. Real-time updates over Socket.IO, background jobs on BullMQ, PDF statements.",
+    challenge:
+      "Four surfaces sharing one source of truth, with money and meal counts that have to reconcile across all of them — and an operator who needs to diagnose and fix production without an engineer on call.",
+    built: [
+      "NestJS + Prisma API with Socket.IO for live balance updates and BullMQ for bill generation and notifications.",
+      "PDF statements generated server-side.",
+      "Next.js web app (Firebase auth, Zustand) and React Native app on the same API.",
+      "Docker + nginx deployment on a VPS via GitHub Actions — plus operational runbooks as workflows: `vps-diagnostics` and `vps-fix-bill-balances`, runnable from the Actions tab.",
+    ],
+    engineering: ["Operations as code — diagnostics and data repair as GitHub Actions", "One API, four clients"],
+    results: [
+      { value: "4", label: "Surfaces: API, web, mobile, super-admin" },
+      { value: "Live", label: "Balances over Socket.IO" },
+      { value: "1-click", label: "Production diagnostics from the Actions tab" },
+    ],
+    stack: ["NestJS", "Prisma", "PostgreSQL", "BullMQ", "Socket.IO", "Next.js", "React Native", "Docker", "nginx", "GitHub Actions"],
+    links: {},
+    liveStatus: "live",
+    image: { src: "/work/messbuddy.svg", width: 1600, height: 1000 },
+    featured: false,
+  },
+  {
+    slug: "jobsitex",
+    name: "JobsiteX",
+    title: "JobsiteX — a jobs marketplace with a native mobile app",
+    tagline: "NestJS API with Stripe, BullMQ and Socket.IO; React Native app with maps and in-app payments.",
+    kind: "mobile",
+    category: "Marketplace · Web + mobile",
+    year: 2026,
+    client: "JobsiteX",
+    industry: "Labour marketplace",
+    role: "Backend lead; mobile contributor",
+    summary:
+      "A two-sided jobs marketplace: a NestJS + Prisma API handling listings, matching, payments and real-time messaging, a React Native (Expo, NativeWind) app with map-based discovery and Stripe payments, and an admin dashboard.",
+    challenge:
+      "Marketplaces live or die on trust between two sides who've never met — payments have to be escrow-safe, messaging has to be instant, and the mobile app has to work on a jobsite with bad signal.",
+    built: [
+      "NestJS API with Stripe payment flows, BullMQ job queues and Socket.IO messaging.",
+      "S3 uploads for documents and photos.",
+      "React Native app with react-native-maps discovery and Stripe React Native checkout.",
+      "Docker + GitHub Actions deployment.",
+    ],
+    engineering: ["Escrow-style payment flow on Stripe", "Real-time messaging with delivery guarantees via queues"],
+    results: [
+      { value: "Stripe", label: "In-app payments on mobile" },
+      { value: "Real-time", label: "Messaging over Socket.IO" },
+    ],
+    stack: ["NestJS", "Prisma", "PostgreSQL", "Stripe", "BullMQ", "Socket.IO", "React Native", "Expo", "AWS S3", "Docker"],
+    links: {},
+    liveStatus: "live",
+    image: { src: "/work/jobsitex.svg", width: 1600, height: 1000 },
+    featured: false,
+  },
+  {
+    slug: "sms-gateway-agent",
+    name: "SMS Gateway Agent",
+    title: "A backend-free Android agent that turns SMS into webhooks",
+    tagline: "Rules → processors → payload → offline queue → webhook. Point it at your endpoints; the same binary does payment verification, OTP forwarding and alerting.",
+    kind: "mobile",
+    category: "Android · Automation",
+    year: 2026,
+    client: "Internal tooling",
+    industry: "Payments automation",
+    role: "Sole engineer",
+    summary:
+      "A standalone Android app (Kotlin + React Native) that observes incoming SMS, matches them against configurable rules, runs processors to extract structured data, and forwards it to webhooks — with an offline queue so nothing is lost when the phone has no signal.",
+    challenge:
+      "Mobile-money and bank confirmations in Bangladesh arrive as SMS. Businesses needed those turned into machine-readable events without running a server, and without changing the app every time a new bank format appeared.",
+    built: [
+      "Rules engine with configurable matchers and processors, so new SMS formats are configuration, not code.",
+      "Payload builder and offline queue with retry, then a webhook sender with per-endpoint config.",
+      "No backend of its own by design — it targets whatever endpoints you give it.",
+    ],
+    engineering: ["Configuration over code for new formats", "Offline-first queue with retry"],
+    results: [
+      { value: "0", label: "Servers required" },
+      { value: "Offline", label: "Queue with retry — nothing dropped" },
+    ],
+    stack: ["Kotlin", "React Native", "Android"],
+    links: {},
+    liveStatus: "live",
+    image: { src: "/work/sms-gateway.svg", width: 1600, height: 1000 },
+    featured: false,
+  },
   {
     slug: "termsheetgenie",
     name: "TermSheetGenie",
@@ -161,7 +345,7 @@ export const projects: Project[] = [
     links: { live: "https://berzerkerfurreycomics.com/" },
     liveStatus: "offline",
     image: { src: "/work/berzerker-furrey-comics.webp", width: 800, height: 449 },
-    featured: true,
+    featured: false,
   },
   {
     slug: "momentum-activity",
@@ -254,7 +438,7 @@ export const projects: Project[] = [
     links: { appStore: "https://apps.apple.com/us/app/hrlynx/id6752120098" },
     liveStatus: "live",
     image: { src: "/work/hrlynx.webp", width: 800, height: 601 },
-    featured: true,
+    featured: false,
   },
   {
     slug: "facesculpt-ai",
