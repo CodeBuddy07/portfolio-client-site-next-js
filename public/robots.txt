@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /api
+
+# Host
+Host: https://ruhulcodes.com
+
+# Sitemaps
+Sitemap: https://ruhulcodes.com/sitemap.xml

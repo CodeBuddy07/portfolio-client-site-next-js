@@ -1,14 +1,13 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -42,6 +41,19 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Marketing-site palette. Dark, quiet, one accent. */
+  --color-canvas: #09090b;
+  --color-surface: #101013;
+  --color-surface-2: #17171b;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-strong: rgba(255, 255, 255, 0.14);
+  --color-ink: #f4f4f5;
+  --color-ink-2: #c4c4cc;
+  --color-ink-3: #8a8a94;
+  --color-signal: #ef4444;
+  --color-signal-soft: rgba(239, 68, 68, 0.12);
+  --color-ok: #22c55e;
 }
 
 :root {
@@ -117,50 +129,72 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 
-/* globals.css */
-html, body {
-  height: auto;
-  overflow: auto;
+/* Public site shell: forces the dark palette regardless of the dashboard's theme toggle. */
+.site {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  color-scheme: dark;
 }
 
-
-
-::-webkit-scrollbar {
-  width: 5px;
-  height: 4px;
+.site ::selection {
+  background: var(--color-signal);
+  color: #fff;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  
-  background-color: black;
+.site ::-webkit-scrollbar {
+  width: 8px;
 }
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: red; 
-  border-radius: 10px;
+.site ::-webkit-scrollbar-track {
+  background: var(--color-canvas);
 }
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #fc0707; 
+.site ::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 8px;
+}
+.site ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
 }
 
-.swiper-pagination-bullet {
-  background: #ef4444 !important; /* Tailwind's red-500 */
+/* Subtle dotted grid used behind the hero. */
+.grid-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 100%);
 }
 
-.swiper-pagination-bullet-active {
-  background: #dc2626 !important; /* Tailwind's red-600 when active */
+/* Single, restrained entrance used on the hero only. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
-.swiper-wrapper {
-  padding-top: 10px;
-  padding-bottom: 10px;
+.rise {
+  animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.rise-1 { animation-delay: 60ms; }
+.rise-2 { animation-delay: 140ms; }
+.rise-3 { animation-delay: 220ms; }
+.rise-4 { animation-delay: 300ms; }
+@media (prefers-reduced-motion: reduce) {
+  .rise { animation: none; }
 }
