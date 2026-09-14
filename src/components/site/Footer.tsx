@@ -34,7 +34,7 @@ export function Footer() {
       </Container>
       <Container className="mt-10 flex flex-col gap-2 border-t border-line pt-6 text-xs text-ink-3 md:flex-row md:justify-between">
         <p>© {new Date().getFullYear()} {site.name}</p>
-        <p className="font-mono">Next.js · Tailwind · deployed on Vercel</p>
+        <p>{site.location}</p>
       </Container>
     </footer>
   );
