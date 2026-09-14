@@ -71,6 +71,11 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
               Live site temporarily offline
             </span>
           )}
+          {p.confidential && (
+            <span className="inline-flex h-11 items-center rounded-full border border-dashed border-line-strong px-5 text-sm text-ink-3">
+              Client code is private — this describes the engineering
+            </span>
+          )}
         </div>
 
         <div className="relative mt-14 aspect-[16/9] overflow-hidden rounded-2xl border border-line bg-surface md:mt-16">
@@ -123,6 +128,18 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                 ))}
               </div>
             </section>
+            {p.engineering && (
+              <section>
+                <Eyebrow className="mb-6">Engineering decisions</Eyebrow>
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {p.engineering.map((e) => (
+                    <li key={e} className="rounded-xl border border-line bg-surface px-4 py-3 text-sm text-ink">
+                      {e}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
             {p.quote && (
               <figure className="rounded-2xl border border-line bg-surface p-8">
                 <blockquote className="text-lg leading-relaxed text-ink">&ldquo;{p.quote.text}&rdquo;</blockquote>

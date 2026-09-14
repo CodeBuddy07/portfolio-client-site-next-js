@@ -42,8 +42,8 @@ export function Contact() {
     <Section
       id="contact"
       eyebrow="Contact"
-      title="Tell me what's broken, or what you want to build."
-      lede="Two or three sentences is enough. I reply within 24 hours with a straight answer — including whether I'm the right person for it."
+      title="Tell me what you're building."
+      lede="Or what needs to work better. Two or three sentences is enough — I reply within 24 hours with what I'd do, how long it takes, and what it costs."
     >
       <div className="grid gap-12 md:grid-cols-[1fr_1.2fr] md:gap-16">
         <div className="space-y-8">
