@@ -3,7 +3,8 @@ import Image from "next/image";
 import { site } from "@/content/site";
 import { CTA } from "@/components/site/CTA";
 import { Stack } from "@/components/site/Stack";
-import { Container, Eyebrow, Section } from "@/components/site/primitives";
+import { ArrowIcon, ButtonLink, Container, Eyebrow, Section } from "@/components/site/primitives";
+import { resume } from "@/content/resume";
 import { Reveal, Words } from "@/components/motion";
 
 export const metadata: Metadata = {
@@ -78,6 +79,25 @@ export default function AboutPage() {
             </Reveal>
           ))}
         </ol>
+      </Section>
+
+      <Section eyebrow="Education" title="Credentials." lede="Formal education, alongside two years of shipping.">
+        <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-start">
+          <ul className="divide-y divide-line rounded-2xl border border-line bg-surface">
+            {resume.education.map((e) => (
+              <li key={e.school} className="grid gap-2 p-6 md:grid-cols-[180px_1fr]">
+                <span className="font-mono text-xs text-ink-3">{e.period}</span>
+                <span>
+                  <span className="block font-semibold text-ink">{e.award}</span>
+                  <span className="block text-sm text-ink-2">{e.school}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <ButtonLink href="/resume" variant="secondary" className="shrink-0">
+            Full CV <ArrowIcon />
+          </ButtonLink>
+        </div>
       </Section>
 
       <Stack />

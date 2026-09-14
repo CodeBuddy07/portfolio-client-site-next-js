@@ -26,6 +26,8 @@ export type Project = {
   confidential?: boolean;
   /** Notable engineering decisions, shown as a list on the case study. */
   engineering?: string[];
+  /** Real screenshots of the live product. */
+  gallery?: { src: string; alt: string }[];
 };
 
 export const projects: Project[] = [
@@ -240,6 +242,7 @@ export const projects: Project[] = [
     links: { live: "https://termsheetgenie.com/" },
     liveStatus: "live",
     image: { src: "/work/termsheetgenie.jpg", width: 928, height: 1152 },
+    gallery: [{ src: "/work/gallery/termsheetgenie-home.jpg", alt: "TermSheetGenie landing page — simulate and manage investment rounds" }],
     featured: true,
     quote: {
       text: "TermSheetGenie replaced the three spreadsheets I used to manage every deal. The simulation engine alone saves me hours on every new investment round.",
@@ -277,6 +280,7 @@ export const projects: Project[] = [
     links: { live: "https://fenibloodline.com/" },
     liveStatus: "live",
     image: { src: "/work/feni-blood-line.webp", width: 1376, height: 768 },
+    gallery: [{ src: "/work/gallery/feni-home.jpg", alt: "Feni Blood Line homepage with live emergency requests" }],
     featured: true,
     quote: {
       text: "We found a matching donor within minutes of posting an emergency request. Feni Blood Line is exactly what our community needed — fast, reliable, and built by people who care.",
@@ -313,6 +317,7 @@ export const projects: Project[] = [
     links: { live: "https://mealbox-client-red.vercel.app/" },
     liveStatus: "live",
     image: { src: "/work/mealbox.webp", width: 800, height: 800 },
+    gallery: [{ src: "/work/gallery/mealbox-home.jpg", alt: "MealBox storefront" }],
     featured: true,
   },
   {
@@ -529,6 +534,7 @@ export const projects: Project[] = [
     links: { live: "https://dollarcoin.org/" },
     liveStatus: "live",
     image: { src: "/work/dollarcoin.webp", width: 800, height: 800 },
+    gallery: [{ src: "/work/gallery/dollarcoin-home.jpg", alt: "DollarCoin homepage — stable cryptocurrency backed by the US dollar" }],
     featured: false,
   },
 ];

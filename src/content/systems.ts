@@ -2,9 +2,9 @@ export type SystemNode = {
   id: string;
   label: string;
   sub?: string;
-  x: number;
-  y: number;
-  w?: number;
+  /** Grid position; the component computes pixel layout from label widths. */
+  col: number;
+  row: number;
   accent?: boolean;
   detail: { heading: string; body: string; code?: string };
 };
@@ -17,7 +17,6 @@ export type System = {
   title: string;
   intro: string;
   project: string;
-  viewBox: [number, number];
   nodes: SystemNode[];
   edges: SystemEdge[];
 };
@@ -30,15 +29,13 @@ export const systems: System[] = [
     intro:
       "Every request in the retail ERP/POS SaaS passes four checkpoints before it touches a row. Click a node to see what it does and why it exists.",
     project: "multi-tenant-retail-saas",
-    viewBox: [1000, 620],
     nodes: [
       {
         id: "token",
         label: "Access token",
         sub: "organizationId inside",
-        x: 60,
-        y: 60,
-        w: 260,
+        col: 0,
+        row: 0,
         accent: true,
         detail: {
           heading: "Tenant identity lives in the token, nowhere else",
@@ -51,9 +48,8 @@ export const systems: System[] = [
         id: "tenant-guard",
         label: "TenantGuard",
         sub: "membership re-resolved",
-        x: 370,
-        y: 60,
-        w: 260,
+        col: 1,
+        row: 0,
         accent: true,
         detail: {
           heading: "Re-check the membership on every request",
@@ -66,9 +62,8 @@ export const systems: System[] = [
         id: "perm-guard",
         label: "PermissionsGuard",
         sub: "catalogue, not roles",
-        x: 680,
-        y: 60,
-        w: 260,
+        col: 2,
+        row: 0,
         detail: {
           heading: "Permissions, not roles",
           body:
@@ -80,9 +75,8 @@ export const systems: System[] = [
         id: "service",
         label: "Service",
         sub: "passes organizationId explicitly",
-        x: 370,
-        y: 250,
-        w: 260,
+        col: 1,
+        row: 1,
         detail: {
           heading: "Call sites stay explicit",
           body:
@@ -93,9 +87,8 @@ export const systems: System[] = [
         id: "extension",
         label: "Prisma tenant extension",
         sub: "refuses unfiltered queries",
-        x: 370,
-        y: 420,
-        w: 260,
+        col: 1,
+        row: 2,
         accent: true,
         detail: {
           heading: "A forgotten filter fails loudly",
@@ -108,9 +101,8 @@ export const systems: System[] = [
         id: "db",
         label: "PostgreSQL 16",
         sub: "one schema, many shops",
-        x: 680,
-        y: 420,
-        w: 260,
+        col: 2,
+        row: 2,
         detail: {
           heading: "Shared schema, isolated rows",
           body:
@@ -133,15 +125,13 @@ export const systems: System[] = [
     intro:
       "The ERP's numbers are exact by construction: integer money, lot-level costing, and a ledger you can only append to. Click through the model.",
     project: "wholesale-garments-erp",
-    viewBox: [1000, 620],
     nodes: [
       {
         id: "money",
         label: "Money",
         sub: "integer baisa, never float",
-        x: 60,
-        y: 60,
-        w: 260,
+        col: 0,
+        row: 0,
         accent: true,
         detail: {
           heading: "A third decimal you can't lose",
@@ -154,9 +144,8 @@ export const systems: System[] = [
         id: "shipment",
         label: "Shipment",
         sub: "BDT → OMR at a fixed rate",
-        x: 370,
-        y: 60,
-        w: 260,
+        col: 1,
+        row: 0,
         detail: {
           heading: "Foreign exchange captured per shipment",
           body:
@@ -167,9 +156,8 @@ export const systems: System[] = [
         id: "lot",
         label: "StockLot",
         sub: "landed cost per lot",
-        x: 680,
-        y: 60,
-        w: 260,
+        col: 2,
+        row: 0,
         accent: true,
         detail: {
           heading: "Every receipt is its own lot",
@@ -181,9 +169,8 @@ export const systems: System[] = [
         id: "sale",
         label: "Sale",
         sub: "consumes lots FIFO",
-        x: 680,
-        y: 250,
-        w: 260,
+        col: 2,
+        row: 1,
         detail: {
           heading: "Oldest lot first, exact COGS",
           body:
@@ -194,9 +181,8 @@ export const systems: System[] = [
         id: "ledger",
         label: "Ledger",
         sub: "double-entry, append-only",
-        x: 370,
-        y: 420,
-        w: 260,
+        col: 1,
+        row: 2,
         accent: true,
         detail: {
           heading: "Every action posts a balanced transaction",
@@ -208,9 +194,8 @@ export const systems: System[] = [
         id: "reports",
         label: "Reports",
         sub: "derived, never stored",
-        x: 60,
-        y: 420,
-        w: 260,
+        col: 0,
+        row: 2,
         detail: {
           heading: "Balances are computed, not cached",
           body:

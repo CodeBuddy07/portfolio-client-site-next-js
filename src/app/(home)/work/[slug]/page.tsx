@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { ParallaxImage } from "@/components/site/ParallaxImage";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { adjacentProjects, getProject, projects } from "@/content/projects";
@@ -78,9 +79,13 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           )}
         </div>
 
-        <div className="relative mt-14 aspect-[16/9] overflow-hidden rounded-2xl border border-line bg-surface md:mt-16">
-          <Image src={p.image.src} alt={`${p.name} — ${p.category}`} fill priority sizes="(min-width: 1152px) 1152px, 100vw" className="object-cover object-top" />
-        </div>
+        <ParallaxImage
+          src={p.image.src}
+          alt={`${p.name} — ${p.category}`}
+          priority
+          sizes="(min-width: 1152px) 1152px, 100vw"
+          className="mt-14 aspect-[16/10] rounded-2xl border border-line bg-surface md:mt-16"
+        />
 
         <dl className="mt-10 grid grid-cols-2 gap-6 border-y border-line py-8 md:grid-cols-4">
           {[
@@ -128,6 +133,19 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                 ))}
               </div>
             </section>
+            {p.gallery && p.gallery.length > 0 && (
+              <section>
+                <Eyebrow className="mb-6">Screens</Eyebrow>
+                <div className="grid gap-4">
+                  {p.gallery.map((g) => (
+                    <figure key={g.src} className="overflow-hidden rounded-2xl border border-line bg-surface">
+                      <Image src={g.src} alt={g.alt} width={1440} height={900} sizes="(min-width: 1024px) 760px, 100vw" className="h-auto w-full" />
+                      <figcaption className="border-t border-line px-4 py-2 text-xs text-ink-3">{g.alt}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </section>
+            )}
             {p.engineering && (
               <section>
                 <Eyebrow className="mb-6">Engineering decisions</Eyebrow>
