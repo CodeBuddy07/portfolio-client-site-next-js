@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 
 const timeline = [
   ["2023", "Started building for the web. HTML, CSS, then JavaScript and the first React apps."],
-  ["2024", "First real backends: Express, MongoDB, JWT. An IPTV business-management system, a tradespeople marketplace, a blood-donor network for Feni District that's still running."],
+  ["2024", "First paid systems work. A salaried contract at Alpha Media, an IPTV business — maintaining their platform and building the IPTV Business Management System on top of it. Then SparkTech Agency: eight-plus months of NestJS, React Native, AWS video delivery, Redis and BullMQ on production products. A tradespeople marketplace and a blood-donor network for Feni District on the side; the latter is still running."],
   ["2025", "Joined CodeMines. NestJS, Prisma and PostgreSQL became the default. Shipped four React Native apps through App Store review, a VC modelling SaaS, an e-commerce store on Stripe. 72 pull requests reviewed and merged."],
-  ["2026", "Multi-tenant retail POS SaaS with ORM-level tenant isolation. A wholesale ERP with integer money, FIFO costing and a double-entry ledger. A four-surface product suite with operational runbooks as GitHub Actions. Over a thousand commits, most of them on systems businesses run their day on."],
+  ["2026", "Multi-tenant retail POS SaaS with ORM-level tenant isolation. A wholesale ERP with integer money, FIFO costing and a double-entry ledger. A four-surface product suite with operational runbooks as GitHub Actions. Over a thousand commits, most of them on systems businesses run their day on. Completed the CS diploma in May; started a BSc in CSE at BUBT."],
 ];
 
 export default function AboutPage() {
@@ -32,7 +32,7 @@ export default function AboutPage() {
       <Section>
         <div className="grid gap-12 md:grid-cols-[minmax(0,320px)_1fr] md:gap-16">
           <Reveal className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-line bg-surface md:sticky md:top-24">
-            <Image src="/ProfileImage.jpg" alt={site.name} fill sizes="(min-width: 768px) 320px, 100vw" className="object-cover" priority />
+            <Image src="/ruhul-amin.jpg" alt={site.name} fill sizes="(min-width: 768px) 320px, 100vw" className="object-cover object-top" priority />
           </Reveal>
           <Reveal delay={0.1} className="max-w-2xl space-y-5 text-[17px] leading-relaxed text-ink-2">
             <p>
@@ -40,7 +40,7 @@ export default function AboutPage() {
               <a href={site.studio.url} target="_blank" rel="noopener noreferrer" className="text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">
                 CodeMines
               </a>
-              , a small product studio in Dhaka. Over the last two years I&apos;ve put {site.stats.commits.toLocaleString()} commits into {site.stats.repos} repositories — most of them products that real businesses run their day on: a multi-tenant point-of-sale SaaS, a wholesale ERP with real accounting underneath, a jobs marketplace, a shared-housing platform, and mobile apps that went through App Store and Play Store review.
+              , a small product studio in Dhaka. Before that I spent eight months at SparkTech Agency and a contract year keeping an IPTV business&apos;s systems running. Over the last two years I&apos;ve put {site.stats.commits.toLocaleString()} commits into {site.stats.repos} repositories — most of them products that real businesses run their day on: a multi-tenant point-of-sale SaaS, a wholesale ERP with real accounting underneath, a jobs marketplace, a shared-housing platform, and mobile apps that went through App Store and Play Store review.
             </p>
             <p>
               I work across the whole stack in TypeScript — Next.js and React on the front, NestJS and Node behind it, PostgreSQL or MongoDB underneath, React Native when it needs to be in someone&apos;s pocket — and I own the deployment too: Docker, nginx, GitHub Actions, a VPS when Vercel isn&apos;t the right answer. I&apos;d rather be the person who can take a product from a brief to a running system than the person who does one layer of it well.
@@ -61,8 +61,8 @@ export default function AboutPage() {
                 <dd className="mt-1 text-ink">Dhaka · GMT+6</dd>
               </div>
               <div>
-                <dt className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-3">Also</dt>
-                <dd className="mt-1 text-ink">Finishing a CS diploma, Dhaka Polytechnic</dd>
+                <dt className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-3">Studying</dt>
+                <dd className="mt-1 text-ink">BSc CSE, BUBT · Diploma CST, 2026</dd>
               </div>
             </dl>
           </Reveal>
@@ -81,7 +81,7 @@ export default function AboutPage() {
         </ol>
       </Section>
 
-      <Section eyebrow="Education" title="Credentials." lede="Formal education, alongside two years of shipping.">
+      <Section eyebrow="Education" title="Credentials." lede="Diploma completed in May 2026; the degree runs alongside the work.">
         <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-start">
           <ul className="divide-y divide-line rounded-2xl border border-line bg-surface">
             {resume.education.map((e) => (

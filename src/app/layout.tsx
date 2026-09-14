@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/Providers/Theme-Provider";
 import { Toaster } from "@/components/ui/sonner";
-import { TanstackQueryProvider } from "@/Providers/TanstackQueryProvider";
 import { site } from "@/content/site";
 
 const geistSans = Geist({
@@ -71,12 +69,8 @@ export default function RootLayout({
         <noscript>
           <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
-        <TanstackQueryProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            {children}
-            <Toaster richColors position="top-center" />
-          </ThemeProvider>
-        </TanstackQueryProvider>
+        {children}
+        <Toaster richColors position="top-center" theme="dark" />
       </body>
     </html>
   );

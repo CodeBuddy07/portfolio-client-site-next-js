@@ -1,11 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
 import { site } from "@/content/site";
-import { useCreateEmail } from "@/Tanstack/Emails/useCreateEmail";
 import { ArrowIcon, Button, Section } from "./primitives";
 import { cn } from "@/lib/utils";
 
@@ -24,16 +24,24 @@ export function Contact() {
     resolver: zodResolver(schema),
     defaultValues: { name: "", email: "", message: "" },
   });
-  const { mutate, isPending } = useCreateEmail();
+  const [isPending, setPending] = useState(false);
 
-  const onSubmit = (values: Values) => {
-    mutate(values, {
-      onSuccess: () => {
-        toast.success("Got it — I'll reply within 24 hours.");
-        form.reset();
-      },
-      onError: () => toast.error("That didn't send. Email me directly instead."),
-    });
+  const onSubmit = async (values: Values) => {
+    setPending(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      toast.success("Got it — I'll reply within 24 hours.");
+      form.reset();
+    } catch {
+      toast.error("That didn't send. Email me directly instead.");
+    } finally {
+      setPending(false);
+    }
   };
 
   const err = form.formState.errors;
