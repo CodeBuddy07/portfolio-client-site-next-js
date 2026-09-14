@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { ParallaxImage } from "@/components/site/ParallaxImage";
+import { imageFit } from "@/components/site/ProjectCard";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { adjacentProjects, getProject, projects } from "@/content/projects";
@@ -83,6 +84,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           src={p.image.src}
           alt={`${p.name} — ${p.category}`}
           priority
+          fit={imageFit(p.image)}
           sizes="(min-width: 1152px) 1152px, 100vw"
           className="mt-14 aspect-[16/10] rounded-2xl border border-line bg-surface md:mt-16"
         />
@@ -178,7 +180,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
               <p className="mt-2 text-sm leading-relaxed text-ink-2">
                 Tell me what it is and what&apos;s in the way. I reply within 24 hours.
               </p>
-              <ButtonLink href="/#contact" className="mt-5 w-full">
+              <ButtonLink href="/contact" className="mt-5 w-full">
                 Start a conversation <ArrowIcon />
               </ButtonLink>
             </div>

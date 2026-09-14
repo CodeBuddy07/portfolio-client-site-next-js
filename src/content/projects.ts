@@ -241,13 +241,9 @@ export const projects: Project[] = [
     stack: ["TypeScript", "React", "Node.js", "PostgreSQL", "Tailwind CSS", "AWS S3"],
     links: { live: "https://termsheetgenie.com/" },
     liveStatus: "live",
-    image: { src: "/work/termsheetgenie.jpg", width: 928, height: 1152 },
-    gallery: [{ src: "/work/gallery/termsheetgenie-home.jpg", alt: "TermSheetGenie landing page — simulate and manage investment rounds" }],
+    image: { src: "/work/gallery/termsheetgenie-home.jpg", width: 1440, height: 900 },
+    gallery: [{ src: "/work/termsheetgenie.jpg", alt: "TermSheetGenie — round simulation view" }],
     featured: true,
-    quote: {
-      text: "TermSheetGenie replaced the three spreadsheets I used to manage every deal. The simulation engine alone saves me hours on every new investment round.",
-      from: "General Partner, early-stage fund",
-    },
   },
   {
     slug: "feni-blood-line",
@@ -282,10 +278,6 @@ export const projects: Project[] = [
     image: { src: "/work/feni-blood-line.webp", width: 1376, height: 768 },
     gallery: [{ src: "/work/gallery/feni-home.jpg", alt: "Feni Blood Line homepage with live emergency requests" }],
     featured: true,
-    quote: {
-      text: "We found a matching donor within minutes of posting an emergency request. Feni Blood Line is exactly what our community needed — fast, reliable, and built by people who care.",
-      from: "Community member, Feni District",
-    },
   },
   {
     slug: "mealbox",
@@ -316,8 +308,8 @@ export const projects: Project[] = [
     stack: ["Next.js", "TypeScript", "Node.js", "MongoDB", "Stripe", "Tailwind CSS"],
     links: { live: "https://mealbox-client-red.vercel.app/" },
     liveStatus: "live",
-    image: { src: "/work/mealbox.webp", width: 800, height: 800 },
-    gallery: [{ src: "/work/gallery/mealbox-home.jpg", alt: "MealBox storefront" }],
+    image: { src: "/work/gallery/mealbox-home.jpg", width: 1440, height: 900 },
+    gallery: [{ src: "/work/mealbox.webp", alt: "MealBox — meal detail" }],
     featured: true,
   },
   {
@@ -533,8 +525,8 @@ export const projects: Project[] = [
     stack: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     links: { live: "https://dollarcoin.org/" },
     liveStatus: "live",
-    image: { src: "/work/dollarcoin.webp", width: 800, height: 800 },
-    gallery: [{ src: "/work/gallery/dollarcoin-home.jpg", alt: "DollarCoin homepage — stable cryptocurrency backed by the US dollar" }],
+    image: { src: "/work/gallery/dollarcoin-home.jpg", width: 1440, height: 900 },
+    gallery: [{ src: "/work/dollarcoin.webp", alt: "DollarCoin — brand mark" }],
     featured: false,
   },
 ];

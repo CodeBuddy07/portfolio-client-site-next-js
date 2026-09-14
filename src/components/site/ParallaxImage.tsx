@@ -6,7 +6,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 import { cn } from "@/lib/utils";
 
 /** next/image that drifts a few percent as it scrolls through the viewport. */
-export function ParallaxImage({ className, amount = 8, alt, ...img }: ImageProps & { amount?: number }) {
+export function ParallaxImage({ className, amount = 8, alt, fit = "cover", ...img }: ImageProps & { amount?: number; fit?: "cover" | "contain" }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
@@ -14,7 +14,7 @@ export function ParallaxImage({ className, amount = 8, alt, ...img }: ImageProps
   return (
     <div ref={ref} className={cn("relative overflow-hidden", className)}>
       <motion.div style={reduce ? undefined : { y }} className="absolute inset-[-10%]">
-        <Image {...img} alt={alt} fill className="object-cover object-top" />
+        <Image {...img} alt={alt} fill className={fit === "cover" ? "object-cover object-top" : "object-contain p-[12%]"} />
       </motion.div>
     </div>
   );

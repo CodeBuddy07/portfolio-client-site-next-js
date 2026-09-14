@@ -2,7 +2,7 @@ import { site } from "./site";
 
 export const person = {
   name: "Ruhul Amin",
-  title: "Product Engineer · Co-founder, CodeMines",
+  title: "Full Stack Developer · Product Engineer & Co-founder, CodeMines",
   shortTitle: "Product Engineer",
   location: "Dhaka, Bangladesh · GMT+6",
   email: site.email,
@@ -49,7 +49,7 @@ const sparktech: Role = {
 
 const independent: Role = {
   org: "Independent",
-  role: "Full-stack developer",
+  role: "Full Stack Developer",
   period: "Mar 2024 — May 2025",
   where: "Remote",
   bullets: [

@@ -5,8 +5,14 @@ import { ArrowIcon, Chip, Eyebrow } from "./primitives";
 import { Tilt } from "@/components/motion";
 import { cn } from "@/lib/utils";
 
+/** Landscape shots fill the 16:10 frame; square and portrait ones are shown whole instead of cropped. */
+export function imageFit(img: { width: number; height: number }): "cover" | "contain" {
+  return img.width / img.height >= 1.45 ? "cover" : "contain";
+}
+
 export function ProjectCard({ project, priority = false, className, large = false }: { project: Project; priority?: boolean; className?: string; large?: boolean }) {
   const store = project.links.appStore ? "App Store" : project.links.playStore ? "Play Store" : project.confidential ? "Confidential" : null;
+  const fit = imageFit(project.image);
   return (
     <Tilt className={cn("group h-full rounded-2xl", className)}>
       <Link
@@ -20,7 +26,10 @@ export function ProjectCard({ project, priority = false, className, large = fals
             fill
             sizes={large ? "(min-width: 1024px) 1152px, 100vw" : "(min-width: 1024px) 560px, (min-width: 640px) 50vw, 100vw"}
             priority={priority}
-            className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+            className={cn(
+              "transition-transform duration-700 ease-out group-hover:scale-[1.03]",
+              fit === "cover" ? "object-cover object-top" : "object-contain p-8 sm:p-10",
+            )}
           />
         </div>
         <div className="flex flex-1 flex-col p-6">
