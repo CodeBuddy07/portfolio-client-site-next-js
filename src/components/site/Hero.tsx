@@ -1,6 +1,7 @@
 import { site } from "@/content/site";
 import { ArrowIcon, ButtonLink, Container } from "./primitives";
 import { Counter, Magnetic, Words } from "@/components/motion";
+import { HeroShell } from "./HeroShell";
 
 const proof = [
   { value: site.stats.commits, suffix: "", label: "commits shipped in two years" },
@@ -11,8 +12,7 @@ const proof = [
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-36 pb-20 md:pt-44 md:pb-28">
-      <div className="grid-dots pointer-events-none absolute inset-0" aria-hidden />
+    <HeroShell className="relative overflow-hidden pt-36 pb-20 md:pt-44 md:pb-28">
       <Container className="relative">
         <div className="rise rise-1 mb-8 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-xs text-ink-2">
           <span className="relative flex h-2 w-2">
@@ -65,6 +65,6 @@ export function Hero() {
           </dl>
         </div>
       </Container>
-    </section>
+    </HeroShell>
   );
 }

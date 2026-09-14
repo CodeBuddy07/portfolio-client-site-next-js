@@ -213,3 +213,13 @@
 @media (prefers-reduced-motion: reduce) {
   .rise, .word-rise, .page-enter { animation: none; }
 }
+
+/* CV print styles: white page, black type, no chrome. */
+@media print {
+  .site { background: #fff !important; color: #000 !important; color-scheme: light; }
+  .site > header, .site > footer, .site > [aria-hidden] { display: none !important; }
+  .page-enter { animation: none !important; }
+  .cv { box-shadow: none; }
+  .cv-row { display: grid; grid-template-columns: 150px 1fr; gap: 0.5rem 1rem; }
+  @page { size: A4; margin: 14mm 16mm; }
+}

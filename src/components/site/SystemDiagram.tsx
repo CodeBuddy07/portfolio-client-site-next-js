@@ -7,35 +7,57 @@ import { cn } from "@/lib/utils";
 
 const NODE_H = 88;
 
+const LABEL_PX = 13.2; // avg advance of the 24px semibold label
+const SUB_PX = 9.1; // avg advance of the 15px mono sub-label
+const PAD_X = 40;
+const MIN_W = 200;
+const COL_GAP = 96;
+const ROW_GAP = 92;
+
+type Laid = { x: number; y: number; w: number };
+
+function nodeWidth(n: { label: string; sub?: string }) {
+  const byLabel = n.label.length * LABEL_PX;
+  const bySub = (n.sub?.length ?? 0) * SUB_PX;
+  return Math.max(MIN_W, Math.ceil(Math.max(byLabel, bySub) + PAD_X));
+}
+
 export function SystemDiagram({ system }: { system: System }) {
   const [active, setActive] = useState(system.nodes[0].id);
   const reduce = useReducedMotion();
   const node = system.nodes.find((n) => n.id === active)!;
-  const byId = Object.fromEntries(system.nodes.map((n) => [n.id, n]));
-  // Fit the viewBox to the nodes with a small margin so the drawing fills its column.
-  const PAD = 24;
-  const minX = Math.min(...system.nodes.map((n) => n.x)) - PAD;
-  const minY = Math.min(...system.nodes.map((n) => n.y)) - PAD;
-  const maxX = Math.max(...system.nodes.map((n) => n.x + (n.w ?? 260))) + PAD;
-  const maxY = Math.max(...system.nodes.map((n) => n.y + NODE_H)) + PAD;
-  const vb = `${minX} ${minY} ${maxX - minX} ${maxY - minY}`;
+
+  // Column widths come from the widest node in each column, so labels never overflow.
+  const cols = Math.max(...system.nodes.map((n) => n.col)) + 1;
+  const colW = Array.from({ length: cols }, (_, c) =>
+    Math.max(...system.nodes.filter((n) => n.col === c).map(nodeWidth))
+  );
+  const colX = colW.map((_, c) => colW.slice(0, c).reduce((a, b) => a + b + COL_GAP, 0));
+  const laid: Record<string, Laid> = Object.fromEntries(
+    system.nodes.map((n) => {
+      const w = nodeWidth(n);
+      const x = colX[n.col] + (colW[n.col] - w) / 2;
+      return [n.id, { x, y: n.row * (NODE_H + ROW_GAP), w }];
+    })
+  );
+  const PAD = 20;
+  const maxX = Math.max(...Object.values(laid).map((l) => l.x + l.w));
+  const maxY = Math.max(...Object.values(laid).map((l) => l.y + NODE_H));
+  const vb = `${-PAD} ${-PAD} ${maxX + PAD * 2} ${maxY + PAD * 2}`;
 
   const edgePath = (from: string, to: string) => {
-    const a = byId[from];
-    const b = byId[to];
-    const aw = a.w ?? 260;
-    const bw = b.w ?? 260;
-    const sameRow = Math.abs(a.y - b.y) < 10;
-    if (sameRow) {
-      const x1 = a.x + aw, y1 = a.y + NODE_H / 2, x2 = b.x, y2 = b.y + NODE_H / 2;
-      return { d: `M${x1} ${y1} L${x2} ${y2}`, mx: (x1 + x2) / 2, my: y1 };
+    const a = laid[from];
+    const b = laid[to];
+    if (Math.abs(a.y - b.y) < 1) {
+      const y = a.y + NODE_H / 2;
+      const x1 = a.x < b.x ? a.x + a.w : a.x;
+      const x2 = a.x < b.x ? b.x : b.x + b.w;
+      return { d: `M${x1} ${y} L${x2} ${y}`, mx: (x1 + x2) / 2, my: y };
     }
-    const sameCol = Math.abs(a.x - b.x) < 10;
-    if (sameCol) {
-      const x1 = a.x + aw / 2, y1 = a.y + NODE_H, x2 = b.x + bw / 2, y2 = b.y;
-      return { d: `M${x1} ${y1} L${x2} ${y2}`, mx: x1, my: (y1 + y2) / 2 };
-    }
-    const x1 = a.x + aw / 2, y1 = a.y + NODE_H, x2 = b.x + bw / 2, y2 = b.y;
+    const down = a.y < b.y;
+    const x1 = a.x + a.w / 2, y1 = down ? a.y + NODE_H : a.y;
+    const x2 = b.x + b.w / 2, y2 = down ? b.y : b.y + NODE_H;
+    if (Math.abs(x1 - x2) < 1) return { d: `M${x1} ${y1} L${x2} ${y2}`, mx: x1, my: (y1 + y2) / 2 };
     const cy = (y1 + y2) / 2;
     return { d: `M${x1} ${y1} C ${x1} ${cy}, ${x2} ${cy}, ${x2} ${y2}`, mx: (x1 + x2) / 2, my: cy };
   };
@@ -67,7 +89,7 @@ export function SystemDiagram({ system }: { system: System }) {
                 />
                 {e.label && (
                   <g>
-                    <rect x={p.mx - 96} y={p.my - 16} width={192} height={32} rx={16} fill="#101013" stroke="rgba(255,255,255,0.1)" />
+                    <rect x={p.mx - (e.label.length * 8.6 + 28) / 2} y={p.my - 16} width={e.label.length * 8.6 + 28} height={32} rx={16} fill="#101013" stroke="rgba(255,255,255,0.1)" />
                     <text x={p.mx} y={p.my + 5} textAnchor="middle" fontSize={14} fontFamily="ui-monospace, Menlo, monospace" fill="#c4c4cc">
                       {e.label}
                     </text>
@@ -77,7 +99,7 @@ export function SystemDiagram({ system }: { system: System }) {
             );
           })}
           {system.nodes.map((n, i) => {
-            const w = n.w ?? 260;
+            const { x, y, w } = laid[n.id];
             const isActive = n.id === active;
             return (
               <motion.g
@@ -95,8 +117,8 @@ export function SystemDiagram({ system }: { system: System }) {
                 transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
               >
                 <rect
-                  x={n.x}
-                  y={n.y}
+                  x={x}
+                  y={y}
                   width={w}
                   height={NODE_H}
                   rx={18}
@@ -104,11 +126,11 @@ export function SystemDiagram({ system }: { system: System }) {
                   stroke={isActive ? "#ef4444" : n.accent ? "rgba(239,68,68,0.45)" : "rgba(255,255,255,0.14)"}
                   strokeWidth={isActive ? 2.5 : 1.5}
                 />
-                <text x={n.x + w / 2} y={n.y + (n.sub ? 40 : 52)} textAnchor="middle" fontSize={24} fontWeight={600} fontFamily="ui-sans-serif, system-ui" fill="#f4f4f5">
+                <text x={x + w / 2} y={y + (n.sub ? 40 : 52)} textAnchor="middle" fontSize={24} fontWeight={600} fontFamily="ui-sans-serif, system-ui" fill="#f4f4f5">
                   {n.label}
                 </text>
                 {n.sub && (
-                  <text x={n.x + w / 2} y={n.y + 66} textAnchor="middle" fontSize={15} fontFamily="ui-monospace, Menlo, monospace" fill="#8a8a94">
+                  <text x={x + w / 2} y={y + 66} textAnchor="middle" fontSize={15} fontFamily="ui-monospace, Menlo, monospace" fill="#8a8a94">
                     {n.sub}
                   </text>
                 )}
