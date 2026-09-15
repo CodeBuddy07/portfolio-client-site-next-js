@@ -9,12 +9,12 @@ import { Reveal, Words } from "@/components/motion";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Product engineer and co-founder of CodeMines, Dhaka. Three years, 81 repositories, 1,660 commits — multi-tenant SaaS, financial ERPs, and mobile apps in production.",
+  description: "Product engineer and co-founder of CodeMines, Dhaka. Three years, 81 repositories, 1,660 commits. Multi-tenant SaaS, financial ERPs and mobile apps in production.",
 };
 
 const timeline = [
-  ["2023", "Started building for the web — HTML, CSS, then JavaScript and the first React apps. By June, first paid work: a salaried contract at Alpha Media, an IPTV business, maintaining their platform and building the IPTV Business Management System on top of it."],
-  ["2024", "Finished the Alpha Media contract in February and went independent. A tradespeople marketplace, a healthcare e-commerce store, and a blood-donor network for Feni District — the last one is still running and still the only bilingual donor platform the district has."],
+  ["2023", "Started building for the web: HTML, CSS, then JavaScript and the first React apps. By June, first paid work: a salaried contract at Alpha Media, an IPTV business, maintaining their platform and building the IPTV Business Management System on top of it."],
+  ["2024", "Finished the Alpha Media contract in February and went independent. A tradespeople marketplace, a healthcare e-commerce store, and a blood-donor network for Feni District. The last one is still running and is still the only bilingual donor platform the district has."],
   ["2025", "Joined SparkTech Agency in June as a full-stack developer: NestJS, Prisma and PostgreSQL became the default, with React Native, AWS video delivery, Redis and BullMQ on production products. Shipped four React Native apps through App Store review, a VC modelling SaaS, an e-commerce store on Stripe. 72 pull requests reviewed and merged."],
   ["2026", "Completed the CS diploma in May. SparkTech ended in June; formed CodeMines with former colleagues the same month. Multi-tenant retail POS SaaS with ORM-level tenant isolation. A wholesale ERP with integer money, FIFO costing and a double-entry ledger. A four-surface product suite with runbooks as GitHub Actions. Started a BSc in CSE at BUBT."],
 ];
@@ -40,16 +40,16 @@ export default function AboutPage() {
               <a href={site.studio.url} target="_blank" rel="noopener noreferrer" className="text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">
                 CodeMines
               </a>
-              , a small product studio in Dhaka. Before that: a year at SparkTech Agency, a stretch of independent product work, and eight months on contract keeping an IPTV business&apos;s systems running. Over the last three years I&apos;ve put {site.stats.commits.toLocaleString()} commits into {site.stats.repos} repositories — most of them products that real businesses run their day on: a multi-tenant point-of-sale SaaS, a wholesale ERP with real accounting underneath, a jobs marketplace, a shared-housing platform, and mobile apps that went through App Store and Play Store review.
+              , a small product studio in Dhaka. Before that: a year at SparkTech Agency, a stretch of independent product work, and eight months on contract keeping an IPTV business&apos;s systems running. Over the last three years I&apos;ve put {site.stats.commits.toLocaleString()} commits into {site.stats.repos} repositories. Most of them are products that real businesses run their day on: a multi-tenant point-of-sale SaaS, a wholesale ERP with real accounting underneath, a jobs marketplace, a shared-housing platform, and mobile apps that went through App Store and Play Store review.
             </p>
             <p>
-              I work across the whole stack in TypeScript — Next.js and React on the front, NestJS and Node behind it, PostgreSQL or MongoDB underneath, React Native when it needs to be in someone&apos;s pocket — and I own the deployment too: Docker, nginx, GitHub Actions, a VPS when Vercel isn&apos;t the right answer. I&apos;d rather be the person who can take a product from a brief to a running system than the person who does one layer of it well.
+              I work across the whole stack in TypeScript: Next.js and React on the front, NestJS and Node behind it, PostgreSQL or MongoDB underneath, React Native when it needs to be in someone&apos;s pocket. I own the deployment too: Docker, nginx, GitHub Actions, a VPS when Vercel isn&apos;t the right answer. I&apos;d rather be the person who can take a product from a brief to a running system than the person who does one layer of it well.
             </p>
             <p>
-              The thing I care most about is the gap between &ldquo;it works&rdquo; and &ldquo;it&apos;s correct&rdquo;. Money that rounds. Tenants that leak. History that gets edited. Those are the bugs that cost businesses trust, and they don&apos;t show up in a demo. So I design against them from the start — integer money, isolation the ORM enforces, ledgers you can only append to — and I write down what a system deliberately doesn&apos;t claim.
+              What I care most about is the gap between working and correct: money that rounds, tenants that leak, history that gets edited. Those bugs cost businesses trust and never show up in a demo, so I design against them from the start with integer money, isolation the ORM enforces and ledgers you can only append to. I also write down what a system deliberately doesn&apos;t claim.
             </p>
             <p>
-              I use AI coding tools every day, as an agent rather than autocomplete: reading unfamiliar code, reproducing a bug, drafting the test that pins it. I don&apos;t ship a change I can&apos;t explain line by line. I&apos;m in Dhaka (GMT+6), which overlaps US mornings and EU afternoons, and I work asynchronously by default — written updates, small reviewable diffs, a clear note on what changed and what I deliberately left alone.
+              I use AI coding tools every day, as an agent rather than autocomplete: reading unfamiliar code, reproducing a bug, drafting the test that pins it. I don&apos;t ship a change I can&apos;t explain line by line. I&apos;m in Dhaka (GMT+6), which overlaps US mornings and EU afternoons, and I work asynchronously by default: written updates, small reviewable diffs, a clear note on what changed and what I deliberately left alone.
             </p>
             <dl className="grid grid-cols-1 gap-4 border-t border-line pt-6 text-sm sm:grid-cols-3">
               <div>
@@ -75,7 +75,7 @@ export default function AboutPage() {
           <div>
             <blockquote className="text-lg leading-relaxed text-ink md:text-xl">&ldquo;{testimonial.text}&rdquo;</blockquote>
             <figcaption className="mt-4 text-sm text-ink-3">
-              <span className="font-medium text-ink">{testimonial.name}</span> — {testimonial.title}
+              <span className="font-medium text-ink">{testimonial.name}</span>, {testimonial.title}
             </figcaption>
           </div>
         </figure>

@@ -38,12 +38,12 @@ export const articles: Article[] = [
       { type: "h2", text: "Hold money as an integer" },
       {
         type: "p",
-        text: "The Money value object holds a bigint count of baisa. Addition, subtraction and multiplication by an integer quantity are exact by definition — there is nothing to round. Construction from user input or the database goes through Decimal.js and rounds half-up once, explicitly, at the boundary.",
+        text: "The Money value object holds a bigint count of baisa. Addition, subtraction and multiplication by an integer quantity are exact by definition; there is nothing to round. Construction from user input or the database goes through Decimal.js and rounds half-up once, explicitly, at the boundary.",
       },
       {
         type: "code",
         lang: "ts",
-        caption: "src/common/money/money.ts — the core of it",
+        caption: "src/common/money/money.ts (the core of it)",
         code: `export class Money {
   /** Integer baisa. 12.345 OMR -> 12345n */
   private readonly baisa: bigint;
@@ -70,13 +70,13 @@ export const articles: Article[] = [
     return new Money(BigInt(dec.toFixed(0)));
   }
 
-  /** "12.345" — canonical string for a NUMERIC(18,3) column. */
+  /** "12.345": canonical string for a NUMERIC(18,3) column. */
   toOmrString(): string { return this.toDecimal().toFixed(Money.SCALE); }
 }`,
       },
       {
         type: "p",
-        text: "Two details matter more than they look. multiplyByQty refuses a non-integer quantity — if someone tries to sell 2.5 units the bug surfaces at the call site, not as a rounding artefact three tables away. And there is no constructor from a number: you cannot accidentally do new Money(12.345). The only doors in are fromOmr and fromBaisa, and both are explicit about what they accept.",
+        text: "Two details matter more than they look. multiplyByQty refuses a non-integer quantity: if someone tries to sell 2.5 units the bug surfaces at the call site, not as a rounding artefact three tables away. And there is no constructor from a number: you cannot accidentally do new Money(12.345). The only doors in are fromOmr and fromBaisa, and both are explicit about what they accept.",
       },
       { type: "h2", text: "Make the database agree" },
       {
@@ -86,7 +86,7 @@ export const articles: Article[] = [
       { type: "h2", text: "Cost is per lot, not per product" },
       {
         type: "p",
-        text: "Exact money only gets you exact prices. Exact margin needs exact cost, and the same SKU is bought at different prices in different shipments — different Taka price, different exchange rate on the day, different freight. Storing one average cost per product throws that information away.",
+        text: "Exact money only gets you exact prices. Exact margin needs exact cost, and the same SKU is bought at different prices in different shipments: different Taka price, different exchange rate on the day, different freight. Storing one average cost per product throws that information away.",
       },
       {
         type: "p",
@@ -95,7 +95,7 @@ export const articles: Article[] = [
       { type: "h2", text: "Never edit history" },
       {
         type: "p",
-        text: "Every financial action posts a double-entry LedgerTransaction: debits equal credits against a seeded chart of accounts. Ledgers, confirmed sales, invoices and stock movements are append-only. When something is wrong, the fix is a reversing record — a new row that undoes the old one — never an UPDATE. That is the difference between books an auditor can replay from day one and a database that merely has the right totals today.",
+        text: "Every financial action posts a double-entry LedgerTransaction: debits equal credits against a seeded chart of accounts. Ledgers, confirmed sales, invoices and stock movements are append-only. When something is wrong, the fix is a reversing record, a new row that undoes the old one, never an UPDATE. That is the difference between books an auditor can replay from day one and a database that merely has the right totals today.",
       },
       {
         type: "ul",
@@ -116,7 +116,7 @@ export const articles: Article[] = [
     slug: "tenant-isolation-at-the-orm",
     title: "A tenant filter you can't forget",
     summary:
-      "Multi-tenant SaaS leaks data one missing WHERE clause at a time. In the retail POS SaaS I made that class of bug throw before the SQL is built — without hiding the filter from the people reading the code.",
+      "Multi-tenant SaaS leaks data one missing WHERE clause at a time. In the retail POS SaaS I made that class of bug throw before the SQL is built, without hiding the filter from the people reading the code.",
     date: "2026-09-14",
     readingMinutes: 7,
     tags: ["SaaS", "NestJS", "Prisma", "Security"],
@@ -124,16 +124,16 @@ export const articles: Article[] = [
     body: [
       {
         type: "p",
-        text: "The retail ERP/POS SaaS runs many shops on one database schema. It's the right call for a product aimed at small shops — one migration, cheap cross-tenant reporting for the platform, simple operations. It also means the single most likely security bug in the codebase is a query that forgets to filter by organizationId and returns another shop's sales.",
+        text: "The retail ERP/POS SaaS runs many shops on one database schema. It's the right call for a product aimed at small shops: one migration, cheap cross-tenant reporting for the platform, simple operations. It also means the single most likely security bug in the codebase is a query that forgets to filter by organizationId and returns another shop's sales.",
       },
       {
         type: "p",
-        text: "Convention doesn't fix that. Code review doesn't reliably fix that — there are hundreds of queries and the missing clause looks exactly like a correct one. I wanted the mistake to be impossible to ship, and I wanted the code to stay readable for the next engineer. Those two goals pull in opposite directions, and the design is mostly about resolving that.",
+        text: "Convention doesn't fix that. Code review doesn't reliably fix that either; there are hundreds of queries and the missing clause looks exactly like a correct one. I wanted the mistake to be impossible to ship, and I wanted the code to stay readable for the next engineer. Those two goals pull in opposite directions, and the design is mostly about resolving that.",
       },
       { type: "h2", text: "Where the tenant comes from" },
       {
         type: "p",
-        text: "First principle: the organization is read from the signed access token and from nowhere else. Not a request body, not an X-Org header, not a query parameter — those are all under the client's control. The guard then re-resolves the caller's membership from the database on every request, so a deactivated employee or a suspended shop loses access immediately rather than at token expiry. The result is an AuthContext that controllers derive everything from.",
+        text: "First principle: the organization is read from the signed access token and from nowhere else. Not a request body, not an X-Org header, not a query parameter. Those are all under the client's control. The guard then re-resolves the caller's membership from the database on every request, so a deactivated employee or a suspended shop loses access immediately rather than at token expiry. The result is an AuthContext that controllers derive everything from.",
       },
       {
         type: "code",
@@ -141,7 +141,7 @@ export const articles: Article[] = [
         caption: "src/common/tenancy/tenant-context.ts",
         code: `/**
  * The authenticated caller, resolved server-side from the access token and the
- * database. Controllers must derive organizationId/branchId from here — never
+ * database. Controllers must derive organizationId/branchId from here, never
  * from the request body or a client-supplied header.
  */
 export interface AuthContext {
@@ -158,7 +158,7 @@ export interface AuthContext {
       },
       {
         type: "p",
-        text: "There is a second axis inside a tenant: branches. A branch manager who calls a list endpoint without a branchId should see their branches, not the whole organization. That used to be a bug — no branchId meant everything — so it became a helper that every branch-scoped query goes through.",
+        text: "There is a second axis inside a tenant: branches. A branch manager who calls a list endpoint without a branchId should see their branches, not the whole organization. That used to be a bug (no branchId meant everything), so it became a helper that every branch-scoped query goes through.",
       },
       {
         type: "code",
@@ -182,7 +182,7 @@ export interface AuthContext {
       {
         type: "code",
         lang: "ts",
-        caption: "src/database/tenant-guard.extension.ts — trimmed",
+        caption: "src/database/tenant-guard.extension.ts (trimmed)",
         code: `export const TENANT_SCOPED_MODELS = new Set([
   'Branch', 'Membership', 'Product', 'BranchInventory', 'StockMovement',
   'Customer', 'Sale', 'SaleItem', 'Payment', 'Refund', 'Expense', /* … */
@@ -218,12 +218,12 @@ export function createTenantGuardExtension() {
       },
       {
         type: "p",
-        text: "That comment is in the file, and it's the whole philosophy. The extension is not how tenancy works. It is what catches the day someone gets it wrong — in development and in the e2e suite, loudly, with a stable error code, instead of in production, silently, with someone else's data.",
+        text: "That comment is in the file, and it's the whole philosophy. The extension is not how tenancy works. It is what catches the day someone gets it wrong: in development and in the e2e suite, loudly, with a stable error code, instead of in production, silently, with someone else's data.",
       },
       { type: "h2", text: "The escape hatch is named" },
       {
         type: "p",
-        text: "Some work is legitimately cross-tenant: logging in by email before you know the organization, platform-admin aggregates, migrations, seeds. That goes through PrismaService.unscoped — the raw client, with a name that makes it obvious in review. If you see unscoped in a diff, you ask why.",
+        text: "Some work is legitimately cross-tenant: logging in by email before you know the organization, platform-admin aggregates, migrations, seeds. That goes through PrismaService.unscoped, the raw client, with a name that makes it obvious in review. If you see unscoped in a diff, you ask why.",
       },
       { type: "h2", text: "What else is in the same layer" },
       {

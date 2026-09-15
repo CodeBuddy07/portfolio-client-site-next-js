@@ -39,7 +39,7 @@ export const projects: Project[] = [
     kind: "web",
     category: "SaaS platform",
     year: 2026,
-    client: "Confidential — Middle East retail",
+    client: "Confidential (Middle East retail)",
     industry: "Retail / point of sale",
     role: "Architect and lead engineer, API and web app",
     summary:
@@ -47,10 +47,10 @@ export const projects: Project[] = [
     challenge:
       "Multi-tenancy is where SaaS products quietly leak data. A single missed `where organizationId = …` in one of hundreds of queries and one shop can read another's sales. The system had to make that class of bug impossible rather than merely unlikely, while staying fast enough for a cashier at a till.",
     built: [
-      "Tenant identity carried only in the access token — organizationId is never read from a request body, header or query string.",
+      "Tenant identity carried only in the access token. organizationId is never read from a request body, header or query string.",
       "A `TenantGuard` that re-resolves the membership from the database on every request, so a deactivated employee or a suspended shop loses access immediately, not at token expiry.",
       "Permission-based guards (not role-based), backed by a permission catalogue, so roles can change without touching code.",
-      "A Prisma client extension that refuses any query against a tenant-owned table that does not filter by organizationId — a forgotten filter fails loudly in development instead of leaking in production.",
+      "A Prisma client extension that refuses any query against a tenant-owned table that does not filter by organizationId, so a forgotten filter fails loudly in development instead of leaking in production.",
       "Argon2id passwords; refresh tokens stored as SHA-256 digests, rotated on use, with reuse revoking the whole token family.",
       "One response envelope, stable error codes, Swagger in non-production, rate limiting, scheduled jobs, S3 uploads, Redis caching, e2e tests against a dedicated database.",
     ],
@@ -62,7 +62,7 @@ export const projects: Project[] = [
     ],
     results: [
       { value: "0", label: "Ways to query a tenant table without a tenant filter" },
-      { value: "3", label: "Seeded roles — owner, manager, cashier — on one permission catalogue" },
+      { value: "3", label: "Seeded roles (owner, manager, cashier) on one permission catalogue" },
       { value: "e2e", label: "Tests against a real Postgres, not mocks" },
       { value: "6", label: "Architecture, database, API, permissions, security and local-dev docs" },
     ],
@@ -76,22 +76,22 @@ export const projects: Project[] = [
   {
     slug: "wholesale-garments-erp",
     name: "Wholesale Garments ERP",
-    title: "An ERP for a wholesale garments business — with real accounting underneath",
+    title: "An ERP for a wholesale garments business, with real accounting underneath",
     tagline: "Integer money, FIFO lot costing, a double-entry ledger and append-only history. Built so the numbers a business runs on are never approximately right.",
     kind: "web",
     category: "ERP · Finance",
     year: 2026,
-    client: "Confidential — Oman",
+    client: "Confidential (Oman)",
     industry: "Wholesale trade",
     role: "Architect and lead engineer, API and web app",
     summary:
-      "A full ERP for a wholesale garments importer: purchases in supplier currency, landed-cost inventory, sales, invoicing, a general ledger and reporting — NestJS + Prisma + PostgreSQL behind a React 19 + Vite + shadcn front end.",
+      "A full ERP for a wholesale garments importer: purchases in supplier currency, landed-cost inventory, sales, invoicing, a general ledger and reporting. NestJS + Prisma + PostgreSQL behind a React 19 + Vite + shadcn front end.",
     challenge:
       "Most 'ERPs' built by web teams store money as floats, cost inventory by average, and edit history in place. All three produce books that don't reconcile. This business trades in Omani Rial with three decimal places, buys in Bangladeshi Taka, and needed accounts an auditor could follow.",
     built: [
       "Money as a value object: integer baisa (1 OMR = 1000 baisa), never floats, persisted to NUMERIC(18,3). Arithmetic that cannot silently lose a third decimal.",
       "FIFO lot costing: every shipment receipt is a StockLot with its own landed cost; sales consume lots oldest-first and record exact cost of goods sold.",
-      "A double-entry ledger — every financial action posts a balanced LedgerTransaction against a seeded chart of accounts.",
+      "A double-entry ledger: every financial action posts a balanced LedgerTransaction against a seeded chart of accounts.",
       "Immutable history: ledgers, confirmed sales, invoices and stock movements are append-only; corrections are reversing records, never edits.",
       "Per-shipment FX: purchases entered in the supplier's currency with the exchange rate captured on the shipment.",
       "Fail-fast environment validation, strict ESLint where `any` is an error, Vitest, an ERD and data-model document, CI and deploy pipelines.",
@@ -118,7 +118,7 @@ export const projects: Project[] = [
   {
     slug: "messbuddy",
     name: "MessBuddy",
-    title: "MessBuddy — a full product suite for shared-housing management",
+    title: "MessBuddy: a full product suite for shared-housing management",
     tagline: "API, web app, mobile app and super-admin, deployed to a VPS with runbooks written as GitHub Actions.",
     kind: "web",
     category: "Platform · Web + mobile",
@@ -129,14 +129,14 @@ export const projects: Project[] = [
     summary:
       "A platform for managing shared houses (\"messes\"): members, meals, bills and balances, with a NestJS + Prisma API, a Next.js web app, a React Native app and a super-admin panel. Real-time updates over Socket.IO, background jobs on BullMQ, PDF statements.",
     challenge:
-      "Four surfaces sharing one source of truth, with money and meal counts that have to reconcile across all of them — and an operator who needs to diagnose and fix production without an engineer on call.",
+      "Four surfaces sharing one source of truth, with money and meal counts that have to reconcile across all of them, and an operator who needs to diagnose and fix production without an engineer on call.",
     built: [
       "NestJS + Prisma API with Socket.IO for live balance updates and BullMQ for bill generation and notifications.",
       "PDF statements generated server-side.",
       "Next.js web app (Firebase auth, Zustand) and React Native app on the same API.",
-      "Docker + nginx deployment on a VPS via GitHub Actions — plus operational runbooks as workflows: `vps-diagnostics` and `vps-fix-bill-balances`, runnable from the Actions tab.",
+      "Docker + nginx deployment on a VPS via GitHub Actions, plus operational runbooks as workflows: `vps-diagnostics` and `vps-fix-bill-balances`, runnable from the Actions tab.",
     ],
-    engineering: ["Operations as code — diagnostics and data repair as GitHub Actions", "One API, four clients"],
+    engineering: ["Operations as code: diagnostics and data repair as GitHub Actions", "One API, four clients"],
     results: [
       { value: "4", label: "Surfaces: API, web, mobile, super-admin" },
       { value: "Live", label: "Balances over Socket.IO" },
@@ -151,7 +151,7 @@ export const projects: Project[] = [
   {
     slug: "jobsitex",
     name: "JobsiteX",
-    title: "JobsiteX — a jobs marketplace with a native mobile app",
+    title: "JobsiteX: a jobs marketplace with a native mobile app",
     tagline: "NestJS API with Stripe, BullMQ and Socket.IO; React Native app with maps and in-app payments.",
     kind: "mobile",
     category: "Marketplace · Web + mobile",
@@ -162,7 +162,7 @@ export const projects: Project[] = [
     summary:
       "A two-sided jobs marketplace: a NestJS + Prisma API handling listings, matching, payments and real-time messaging, a React Native (Expo, NativeWind) app with map-based discovery and Stripe payments, and an admin dashboard.",
     challenge:
-      "Marketplaces live or die on trust between two sides who've never met — payments have to be escrow-safe, messaging has to be instant, and the mobile app has to work on a jobsite with bad signal.",
+      "Marketplaces live or die on trust between two sides who've never met. Payments have to be escrow-safe, messaging has to be instant, and the mobile app has to work on a jobsite with bad signal.",
     built: [
       "NestJS API with Stripe payment flows, BullMQ job queues and Socket.IO messaging.",
       "S3 uploads for documents and photos.",
@@ -192,18 +192,18 @@ export const projects: Project[] = [
     industry: "Payments automation",
     role: "Sole engineer",
     summary:
-      "A standalone Android app (Kotlin + React Native) that observes incoming SMS, matches them against configurable rules, runs processors to extract structured data, and forwards it to webhooks — with an offline queue so nothing is lost when the phone has no signal.",
+      "A standalone Android app (Kotlin + React Native) that observes incoming SMS, matches them against configurable rules, runs processors to extract structured data, and forwards it to webhooks, with an offline queue so nothing is lost when the phone has no signal.",
     challenge:
       "Mobile-money and bank confirmations in Bangladesh arrive as SMS. Businesses needed those turned into machine-readable events without running a server, and without changing the app every time a new bank format appeared.",
     built: [
       "Rules engine with configurable matchers and processors, so new SMS formats are configuration, not code.",
       "Payload builder and offline queue with retry, then a webhook sender with per-endpoint config.",
-      "No backend of its own by design — it targets whatever endpoints you give it.",
+      "No backend of its own by design; it targets whatever endpoints you give it.",
     ],
     engineering: ["Configuration over code for new formats", "Offline-first queue with retry"],
     results: [
       { value: "0", label: "Servers required" },
-      { value: "Offline", label: "Queue with retry — nothing dropped" },
+      { value: "Offline", label: "Queue with retry, nothing dropped" },
     ],
     stack: ["Kotlin", "React Native", "Android"],
     links: {},
@@ -214,7 +214,7 @@ export const projects: Project[] = [
   {
     slug: "termsheetgenie",
     name: "TermSheetGenie",
-    title: "TermSheetGenie — VC and investment management platform",
+    title: "TermSheetGenie: VC and investment management platform",
     tagline: "Cap tables, exit waterfalls and fund management in one SaaS instead of three spreadsheets.",
     kind: "web",
     category: "Web platform",
@@ -228,27 +228,27 @@ export const projects: Project[] = [
       "Early-stage investors and founders were modelling rounds in spreadsheets that were inaccurate, hard to share, and disconnected from the real term-sheet parameters. Nothing combined fund management, LP tracking, cap-table modelling and exit simulation in one place.",
     built: [
       "A three-phase simulation engine covering SAFEs, priced rounds and debt, with the cap table regenerated live from the API on every change.",
-      "Five fully scoped roles — investor, entrepreneur, student, admin and fund manager — each seeing only what it should.",
+      "Five fully scoped roles (investor, entrepreneur, student, admin and fund manager), each seeing only what it should.",
       "Drag-and-drop liquidation-preference ranking feeding a dynamic exit-waterfall chart.",
       "JWT auth with 2FA and OTP email, S3 document uploads, pipeline-company tracking and breakeven analysis.",
     ],
     results: [
       { value: "5", label: "Roles with fully scoped access" },
       { value: "3-phase", label: "Simulation engine (SAFEs, priced rounds, debt)" },
-      { value: "100%", label: "Live API data — no placeholder content on any screen" },
+      { value: "100%", label: "Live API data, no placeholder content on any screen" },
       { value: "2FA + OTP", label: "Auth, with S3 uploads and real-time notifications" },
     ],
     stack: ["TypeScript", "React", "Node.js", "PostgreSQL", "Tailwind CSS", "AWS S3"],
     links: { live: "https://termsheetgenie.com/" },
     liveStatus: "live",
     image: { src: "/work/gallery/termsheetgenie-home.jpg", width: 1440, height: 900 },
-    gallery: [{ src: "/work/termsheetgenie.jpg", alt: "TermSheetGenie — round simulation view" }],
+    gallery: [{ src: "/work/termsheetgenie.jpg", alt: "TermSheetGenie round simulation view" }],
     featured: true,
   },
   {
     slug: "feni-blood-line",
     name: "Feni Blood Line",
-    title: "Feni Blood Line — community blood-donor platform",
+    title: "Feni Blood Line: community blood-donor platform",
     tagline: "Verified donors, live availability and emergency requests for a district that used to rely on phone calls.",
     kind: "web",
     category: "Web platform",
@@ -282,7 +282,7 @@ export const projects: Project[] = [
   {
     slug: "mealbox",
     name: "MealBox",
-    title: "MealBox — meal planning and delivery platform",
+    title: "MealBox: meal planning and delivery platform",
     tagline: "Chef-prepared meals, real customisation, Stripe checkout and order tracking on an architecture built to grow.",
     kind: "ecommerce",
     category: "E-commerce platform",
@@ -293,7 +293,7 @@ export const projects: Project[] = [
     summary:
       "A full-stack meal-delivery product: customers browse and filter chef-prepared meals, customise preferences, keep a persistent cart, pay through Stripe and track orders; providers manage their menu and fulfilment through role-based access.",
     challenge:
-      "A delivery product has to feel effortless for customers and reliable for providers at the same time — fast browsing, real customisation, secure payment and order tracking — on an architecture that won't need a rewrite as the menu and user base grow.",
+      "A delivery product has to feel effortless for customers and reliable for providers at the same time (fast browsing, real customisation, secure payment and order tracking) on an architecture that won't need a rewrite as the menu and user base grow.",
     built: [
       "Next.js + TypeScript front end on a Node.js API with JWT authentication and role-based access for providers and customers.",
       "Meal search and filtering, a persistent cart, order tracking and profile management.",
@@ -309,13 +309,13 @@ export const projects: Project[] = [
     links: { live: "https://mealbox-client-red.vercel.app/" },
     liveStatus: "live",
     image: { src: "/work/gallery/mealbox-home.jpg", width: 1440, height: 900 },
-    gallery: [{ src: "/work/mealbox.webp", alt: "MealBox — meal detail" }],
+    gallery: [{ src: "/work/mealbox.webp", alt: "MealBox meal detail" }],
     featured: true,
   },
   {
     slug: "berzerker-furrey-comics",
     name: "Berzerker Furrey Comics",
-    title: "Berzerker Furrey Comics — comic-book e-commerce store",
+    title: "Berzerker Furrey Comics: comic-book e-commerce store",
     tagline: "A full storefront for raw and graded comics: browsable collections, Stripe checkout, customer dashboard, admin inventory control.",
     kind: "ecommerce",
     category: "E-commerce platform",
@@ -326,7 +326,7 @@ export const projects: Project[] = [
     summary:
       "A Next.js storefront on a NestJS + PostgreSQL back end for a comic-book seller: collections by age and grading, secure checkout, an order dashboard for customers, and end-to-end inventory and order management for the store.",
     challenge:
-      "Collectors had no dedicated, trustworthy storefront for this catalogue. The business needed discovery to be easy for customers — raw versus graded, by era, by grading company — while keeping complete control over inventory, pricing and fulfilment.",
+      "Collectors had no dedicated, trustworthy storefront for this catalogue. The business needed discovery to be easy for customers (raw versus graded, by era, by grading company) while keeping complete control over inventory, pricing and fulfilment.",
     built: [
       "Category and grading taxonomy (raw / graded, CGC / CBCS / CBX, Golden to Modern Age) with fast filtering.",
       "Stripe checkout with transactional emails through Resend.",
@@ -347,7 +347,7 @@ export const projects: Project[] = [
   {
     slug: "momentum-activity",
     name: "Momentum",
-    title: "Momentum — a social app for real-world activities",
+    title: "Momentum: a social app for real-world activities",
     tagline: "Discover, create and join local activities. On the App Store.",
     kind: "mobile",
     category: "Mobile app",
@@ -356,7 +356,7 @@ export const projects: Project[] = [
     industry: "Consumer / social",
     role: "Mobile + backend engineer",
     summary:
-      "A cross-platform React Native app where people create, explore and join community activities — workshops, local sports, festivals — with maps, categories and a memories feed that rewards actually showing up.",
+      "A cross-platform React Native app where people create, explore and join community activities (workshops, local sports, festivals) with maps, categories and a memories feed for the people who showed up.",
     challenge:
       "Communities are more connected online than ever and it's still hard to find something to do together offline. People needed a simple way to discover and join local activities near them.",
     built: [
@@ -367,7 +367,7 @@ export const projects: Project[] = [
     ],
     results: [
       { value: "iOS", label: "Live on the App Store" },
-      { value: "Real-world", label: "Events, not just feeds" },
+      { value: "Real-world", label: "Events, not feeds" },
     ],
     stack: ["React Native", "TypeScript", "Node.js", "MongoDB"],
     links: { appStore: "https://apps.apple.com/us/app/momentum-activity/id6758025583" },
@@ -378,7 +378,7 @@ export const projects: Project[] = [
   {
     slug: "hop-across-america",
     name: "Hop Across America",
-    title: "Hop Across America — event hub and management suite",
+    title: "Hop Across America: event hub and management suite",
     tagline: "One platform for a statewide multi-shop event: attendees, participating shops and logistics, across web and mobile.",
     kind: "mobile",
     category: "Event platform",
@@ -410,7 +410,7 @@ export const projects: Project[] = [
   {
     slug: "hrlynx",
     name: "HRlynx",
-    title: "HRlynx — AI HR personas for real-world guidance",
+    title: "HRlynx: AI HR personas for real-world guidance",
     tagline: "Practical, risk-aware HR guidance in the moment, from AI personas grounded in real HR experience.",
     kind: "mobile",
     category: "Mobile app · AI",
@@ -419,7 +419,7 @@ export const projects: Project[] = [
     industry: "HR tech",
     role: "Mobile + AI integration",
     summary:
-      "An iOS app built around AI-driven HR personas that give actionable, risk-aware guidance when a tricky people situation comes up — designed with HR professionals so it moves past theory.",
+      "An iOS app built around AI-driven HR personas that give actionable, risk-aware guidance when a tricky people situation comes up. Designed with HR professionals so it moves past theory.",
     challenge:
       "Most HR advice is either too theoretical or too slow to reach the person who needs it. Teams needed guidance at the moment a situation comes up, not a policy document to read later.",
     built: [
@@ -440,7 +440,7 @@ export const projects: Project[] = [
   {
     slug: "facesculpt-ai",
     name: "FaceSculpt AI",
-    title: "FaceSculpt AI — real-time facial analysis on mobile",
+    title: "FaceSculpt AI: real-time facial analysis on mobile",
     tagline: "Live on-device face detection that refuses a bad capture, then turns analysis into personalised guidance.",
     kind: "mobile",
     category: "Mobile app · AI",
@@ -451,7 +451,7 @@ export const projects: Project[] = [
     summary:
       "A cross-platform React Native app that analyses facial structure from the live camera feed and delivers personalised jawline, posture and face-fitness guidance.",
     challenge:
-      "Real-time face analysis on a phone is hard: detect a face from the live feed, confirm it's centred, visible and at the right distance, block capture until conditions are met — all without the lag that makes people give up.",
+      "Real-time face analysis on a phone is hard: detect a face from the live feed, confirm it's centred, visible and at the right distance, block capture until conditions are met, all without the lag that makes people give up.",
     built: [
       "Live face detection with framing and distance guidance, and capture gated on conditions being right.",
       "TensorFlow-based analysis feeding AI-generated, personalised guidance.",
@@ -471,7 +471,7 @@ export const projects: Project[] = [
   {
     slug: "chatterbee",
     name: "ChatterBee",
-    title: "ChatterBee — AAC communication and caregiver support",
+    title: "ChatterBee: AAC communication and caregiver support",
     tagline: "An augmentative and alternative communication app for non-verbal users, with the caregivers around them built in.",
     kind: "mobile",
     category: "Mobile app",
@@ -482,7 +482,7 @@ export const projects: Project[] = [
     summary:
       "An AAC app that helps non-verbal individuals communicate in everyday moments, paired with caregiver-facing tools so the people providing care stay involved.",
     challenge:
-      "People who rely on AAC — and the caregivers supporting them — need tools that are accessible, dependable and simple in real moments, not clinical or complicated.",
+      "People who rely on AAC, and the caregivers supporting them, need tools that are accessible, dependable and simple in real moments, not clinical or complicated.",
     built: [
       "Accessibility-first communication interface tuned for reliability and large, forgiving touch targets.",
       "Caregiver support features alongside the user experience.",
@@ -501,7 +501,7 @@ export const projects: Project[] = [
   {
     slug: "dollarcoin",
     name: "DollarCoin",
-    title: "DollarCoin — marketing site for a digital-currency ecosystem",
+    title: "DollarCoin: marketing site for a digital-currency ecosystem",
     tagline: "Explain a complex product quickly and credibly, in a trust-sensitive market, without the jargon.",
     kind: "marketing",
     category: "Marketing website",
@@ -512,7 +512,7 @@ export const projects: Project[] = [
     summary:
       "A fast, fully responsive Next.js marketing site with a clear information hierarchy and a distinctive animated visual identity, so first-time visitors understand the concept and reach the resources that matter.",
     challenge:
-      "A digital-currency project had to explain itself quickly to first-time visitors and stand out in a crowded, trust-sensitive space — without overwhelming people.",
+      "A digital-currency project had to explain itself quickly to first-time visitors and stand out in a crowded, trust-sensitive space without overwhelming people.",
     built: [
       "Next.js + Tailwind site with a clear hierarchy from concept to benefits to resources.",
       "An animated visual language kept performant.",
@@ -526,7 +526,7 @@ export const projects: Project[] = [
     links: { live: "https://dollarcoin.org/" },
     liveStatus: "live",
     image: { src: "/work/gallery/dollarcoin-home.jpg", width: 1440, height: 900 },
-    gallery: [{ src: "/work/dollarcoin.webp", alt: "DollarCoin — brand mark" }],
+    gallery: [{ src: "/work/dollarcoin.webp", alt: "DollarCoin brand mark" }],
     featured: false,
   },
 ];

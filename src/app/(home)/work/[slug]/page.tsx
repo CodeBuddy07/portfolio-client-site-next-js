@@ -75,14 +75,14 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           )}
           {p.confidential && (
             <span className="inline-flex h-11 items-center rounded-full border border-dashed border-line-strong px-5 text-sm text-ink-3">
-              Client code is private — this describes the engineering
+              Client code is private. This describes the engineering
             </span>
           )}
         </div>
 
         <ParallaxImage
           src={p.image.src}
-          alt={`${p.name} — ${p.category}`}
+          alt={`${p.name}, ${p.category}`}
           priority
           fit={imageFit(p.image)}
           sizes="(min-width: 1152px) 1152px, 100vw"
@@ -163,7 +163,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
             {p.quote && (
               <figure className="rounded-2xl border border-line bg-surface p-8">
                 <blockquote className="text-lg leading-relaxed text-ink">&ldquo;{p.quote.text}&rdquo;</blockquote>
-                <figcaption className="mt-4 text-sm text-ink-3">— {p.quote.from}</figcaption>
+                <figcaption className="mt-4 text-sm text-ink-3">{p.quote.from}</figcaption>
               </figure>
             )}
           </div>

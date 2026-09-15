@@ -14,14 +14,6 @@ export function Hero() {
   return (
     <HeroShell className="relative overflow-hidden pt-36 pb-20 md:pt-44 md:pb-28">
       <Container className="relative">
-        <div className="rise rise-1 mb-8 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-xs text-ink-2">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ok opacity-60" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-ok" />
-          </span>
-          {site.availability} · {site.responseTime.toLowerCase()}
-        </div>
-
         <Words
           text={site.headline}
           className="max-w-4xl text-[2.6rem] font-semibold leading-[1.02] tracking-[-0.03em] text-ink sm:text-6xl md:text-7xl"
@@ -30,7 +22,7 @@ export function Hero() {
 
         <div className="rise rise-3 mt-7 max-w-2xl text-lg leading-relaxed text-ink-2 md:text-xl">
           <p>
-            Multi-tenant SaaS, financial ERPs, real-time platforms and mobile apps — designed, shipped and operated
+            Multi-tenant SaaS, financial ERPs, real-time platforms and mobile apps, designed, shipped and operated
             in production. Product engineer and co-founder of{" "}
             <a href={site.studio.url} target="_blank" rel="noopener noreferrer" className="text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">
               {site.studio.name}

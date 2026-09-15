@@ -11,7 +11,7 @@ export function CTA({ title = "Have a product to build, or one that needs to wor
             <div>
               <h2 className="text-3xl font-semibold tracking-tight text-ink md:text-[2.5rem] md:leading-[1.1]">{title}</h2>
               <p className="mt-4 max-w-xl text-lg text-ink-2">
-                {body ?? `Two or three sentences is enough. I reply within 24 hours with what I'd do, how long it takes and what it costs.`}
+                {body ?? `Two or three sentences is enough. I'll come back with what I'd do, how long it takes and what it costs.`}
               </p>
             </div>
             <div className="flex flex-wrap gap-3 md:justify-end">

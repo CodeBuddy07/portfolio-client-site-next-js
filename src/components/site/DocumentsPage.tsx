@@ -28,7 +28,7 @@ export function DocumentsPage({ doc }: { doc: "resume" | "cv" }) {
         <p className="mb-6 text-sm text-ink-3 print:hidden">
           {doc === "resume"
             ? "The one-page version: what a first read needs. No photo, ATS-friendly."
-            : "The full record on two pages, with photo — the format expected in Bangladesh and most of Europe."}
+            : "The full record on two pages, with photo. The format expected in Bangladesh and most of Europe."}
         </p>
         <PaperScaler>{doc === "resume" ? <ResumeDocument /> : <CVDocument />}</PaperScaler>
       </Container>

@@ -107,7 +107,7 @@ export function SystemDiagram({ system }: { system: System }) {
                 role="button"
                 tabIndex={0}
                 aria-pressed={isActive}
-                aria-label={`${n.label}${n.sub ? ` — ${n.sub}` : ""}`}
+                aria-label={`${n.label}${n.sub ? `, ${n.sub}` : ""}`}
                 onClick={() => setActive(n.id)}
                 onKeyDown={(ev) => (ev.key === "Enter" || ev.key === " ") && (ev.preventDefault(), setActive(n.id))}
                 className="cursor-pointer outline-none"

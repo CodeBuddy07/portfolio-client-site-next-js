@@ -23,7 +23,7 @@ export type Role = { org: string; role: string; period: string; where: string; b
 const codemines: Role = {
   org: "CodeMines",
   role: "Co-founder & Product Engineer",
-  period: "Jul 2026 — present",
+  period: "Jul 2026 – present",
   where: "Dhaka",
   bullets: [
     "Formed the studio with former colleagues immediately after SparkTech; own architecture, back end and deployment across our products.",
@@ -37,11 +37,11 @@ const codemines: Role = {
 const sparktech: Role = {
   org: "SparkTech Agency",
   role: "Full Stack Developer",
-  period: "Jun 2025 — Jun 2026",
+  period: "Jun 2025 – Jun 2026",
   where: "Dhaka",
   bullets: [
     "Architected production applications on NestJS, React Native and AWS, including S3/CDN video delivery.",
-    "Shipped four React Native apps through App Store review — Momentum, Hop Across America, HRlynx, ChatterBee — and FaceSculpt AI (real-time on-device face detection) to the Play Store.",
+    "Shipped four React Native apps through App Store review (Momentum, Hop Across America, HRlynx, ChatterBee) and FaceSculpt AI (real-time on-device face detection) to the Play Store.",
     "Built TermSheetGenie (VC modelling SaaS: three-phase simulation engine, five-role access), Berzerker Furrey Comics (Next.js + NestJS + Stripe storefront), MealBox and JobsiteX (marketplace with Stripe, BullMQ, Socket.IO).",
     "JWT/OAuth2 authentication with role-based access control; event-driven back ends on Redis and BullMQ; REST APIs with webhooks, retries and idempotency keys.",
   ],
@@ -50,19 +50,19 @@ const sparktech: Role = {
 const independent: Role = {
   org: "Independent",
   role: "Full Stack Developer",
-  period: "Mar 2024 — May 2025",
+  period: "Mar 2024 – May 2025",
   where: "Remote",
   bullets: [
-    "Trade People — tradespeople marketplace (React, Express, MongoDB).",
-    "Feni Blood Line — verified-donor platform serving Feni District since 2023; bilingual, live emergency requests.",
-    "MediMart — healthcare e-commerce (Next.js, Express, MongoDB).",
+    "Trade People: tradespeople marketplace (React, Express, MongoDB).",
+    "Feni Blood Line: verified-donor platform serving Feni District since 2023; bilingual, live emergency requests.",
+    "MediMart: healthcare e-commerce (Next.js, Express, MongoDB).",
   ],
 };
 
 const alphaMedia: Role = {
   org: "Alpha Media",
   role: "Full Stack Developer (contract)",
-  period: "Jun 2023 — Feb 2024",
+  period: "Jun 2023 – Feb 2024",
   where: "IPTV business · salaried contract",
   bullets: [
     "Maintained the company's existing systems and built new ones alongside them.",
@@ -79,7 +79,7 @@ export const skills = [
 ];
 
 export const education = [
-  { school: "Bangladesh University of Business and Technology (BUBT)", award: "BSc in Computer Science and Engineering", period: "2026 — 2030 (expected)" },
+  { school: "Bangladesh University of Business and Technology (BUBT)", award: "BSc in Computer Science and Engineering", period: "2026 – 2030 (expected)" },
   { school: "Dhaka Polytechnic Institute", award: "Diploma in Computer Science and Technology", period: "Completed May 2026" },
   { school: "Thakurgaon Govt. Boys' High School", award: "Secondary School Certificate (Science), GPA 5.00 / 5.00", period: "2021" },
 ];
@@ -101,7 +101,7 @@ export const testimonial = {
 // ---- One-page resume: the same facts, cut to what a first read needs. ----
 export const resumeDoc = {
   summary:
-    "Product engineer who designs, builds and operates whole software products — multi-tenant SaaS, financial ERPs, real-time platforms and mobile apps. Three years across Alpha Media, SparkTech Agency and CodeMines, the studio I co-founded: 1,660 commits, 15 products in production, 5 apps on the App Store and Play Store. TypeScript end to end.",
+    "Full stack developer who designs, builds and operates whole software products: multi-tenant SaaS, financial ERPs, real-time platforms and mobile apps. Three years across Alpha Media, SparkTech Agency and CodeMines, the studio I co-founded: 1,660 commits, 15 products in production, 5 apps on the App Store and Play Store. TypeScript end to end.",
   experience: [
     { ...codemines, bullets: [codemines.bullets[1], codemines.bullets[2], codemines.bullets[3]] },
     { ...sparktech, bullets: [sparktech.bullets[1], sparktech.bullets[2], sparktech.bullets[3]] },

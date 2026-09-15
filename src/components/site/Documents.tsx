@@ -69,7 +69,7 @@ function EducationBlock({ short = false }: { short?: boolean }) {
         <li key={e.school} className="doc-edu-row">
           <span>{e.period}</span>
           <span>
-            <b>{e.award}</b> — {e.school}
+            <b>{e.award}</b>, {e.school}
           </span>
         </li>
       ))}
@@ -94,7 +94,7 @@ export function ResumeDocument() {
         <ul className="doc-products">
           {resumeDoc.products.map(([n, d, y]) => (
             <li key={n}>
-              <b>{n}</b> — {d} <span className="doc-muted">({y})</span>
+              <b>{n}</b>: {d} <span className="doc-muted">({y})</span>
             </li>
           ))}
         </ul>
@@ -114,7 +114,7 @@ export function ResumeDocument() {
                 <li key={c.name} className="doc-edu-row">
                   <span>{c.year}</span>
                   <span>
-                    <b>{c.name}</b> — {c.issuer}
+                    <b>{c.name}</b>, {c.issuer}
                   </span>
                 </li>
               ))}
@@ -172,7 +172,7 @@ export function CVDocument() {
                   <li key={c.name} className="doc-edu-row">
                     <span>{c.year}</span>
                     <span>
-                      <b>{c.name}</b> — {c.issuer}
+                      <b>{c.name}</b>, {c.issuer}
                     </span>
                   </li>
                 ))}
@@ -186,7 +186,7 @@ export function CVDocument() {
                 {cvDoc.references.map((r) => (
                   <li key={r.name} className="doc-edu-row single">
                     <span>
-                      <b>{r.name}</b> — {r.title}. {r.note}.
+                      <b>{r.name}</b>, {r.title}. {r.note}.
                     </span>
                   </li>
                 ))}

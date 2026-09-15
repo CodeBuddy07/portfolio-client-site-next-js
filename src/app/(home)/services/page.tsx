@@ -8,21 +8,21 @@ import { Reveal, Stagger, StaggerItem, Words } from "@/components/motion";
 
 export const metadata: Metadata = {
   title: "Services",
-  description: "SaaS and web platforms, ERPs and financial systems, mobile apps through store review, and deployment and operations — how I work and what you get.",
+  description: "SaaS and web platforms, ERPs and financial systems, mobile apps through store review, and deployment and operations. How I work and what you get.",
 };
 
 const engagement = [
   ["Fixed-scope build", "A defined product or feature set, priced as a whole, delivered in milestones you approve. Best when the spec is clear.", "Most new products"],
-  ["Retained engineering", "A monthly block of hours for an evolving product — features, fixes, operations. Best once something is live and growing.", "Most ongoing work"],
-  ["Architecture and audit", "A written review of an existing system — data model, security model, performance, deployment — with concrete recommendations you can act on with or without me.", "Before a rewrite or a scale-up"],
+  ["Retained engineering", "A monthly block of hours for an evolving product: features, fixes, operations. Best once something is live and growing.", "Most ongoing work"],
+  ["Architecture and audit", "A written review of an existing system (data model, security model, performance, deployment) with concrete recommendations you can act on with or without me.", "Before a rewrite or a scale-up"],
 ];
 
 const faqs = [
   ["How do you price?", "Fixed-scope work is quoted as a whole after discovery, with milestones. Retained work is a monthly hour block at an hourly rate. I say what things cost before I start, and I say when something is going to cost more than you'd expect."],
   ["Do you work alone or with a team?", "I co-founded CodeMines, a small product studio. For most engagements it's me end to end; for larger builds I bring design and a second engineer from the studio."],
-  ["What about timezone?", "I'm in Dhaka (GMT+6), which overlaps US mornings and EU afternoons. I work asynchronously by default — written updates, reviewable diffs — and take calls in the overlap."],
+  ["What about timezone?", "I'm in Dhaka (GMT+6), which overlaps US mornings and EU afternoons. I work asynchronously by default, with written updates and reviewable diffs, and take calls in the overlap."],
   ["Who owns the code?", "You do, from the first commit. Everything lives in your repositories and your infrastructure. There is nothing you need me for that I haven't written down."],
-  ["Do you use AI tools?", "Every day, as an agent rather than autocomplete — reading unfamiliar code, reproducing bugs, writing the first draft of tests. I don't ship a change I can't explain line by line, and neither does it."],
+  ["Do you use AI tools?", "Every day, as an agent rather than autocomplete: reading unfamiliar code, reproducing bugs, writing the first draft of tests. I don't ship a change I can't explain line by line, and neither does it."],
 ];
 
 export default function ServicesPage() {

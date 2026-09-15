@@ -40,8 +40,8 @@ export const systems: System[] = [
         detail: {
           heading: "Tenant identity lives in the token, nowhere else",
           body:
-            "The organization a caller belongs to is carried in the signed access token. Controllers never read organizationId from a request body, a header or a query string — those are all under the client's control. If you can't forge the token, you can't claim another shop.",
-          code: `// Controllers derive tenant from AuthContext — never from the request.\nexport interface AuthContext {\n  userId: string;\n  organizationId: string;\n  membershipId: string;\n  role: Role;\n  branchId: string;\n  allowedBranchIds: string[];\n  canAccessAllBranches: boolean;\n  terminalId: string | null;      // set when a paired till fixes the branch\n  permissions: Set<Permission>;\n}`,
+            "The organization a caller belongs to is carried in the signed access token. Controllers never read organizationId from a request body, a header or a query string. Those are all under the client's control. If you can't forge the token, you can't claim another shop.",
+          code: `// Controllers derive tenant from AuthContext, never from the request.\nexport interface AuthContext {\n  userId: string;\n  organizationId: string;\n  membershipId: string;\n  role: Role;\n  branchId: string;\n  allowedBranchIds: string[];\n  canAccessAllBranches: boolean;\n  terminalId: string | null;      // set when a paired till fixes the branch\n  permissions: Set<Permission>;\n}`,
         },
       },
       {
@@ -54,7 +54,7 @@ export const systems: System[] = [
         detail: {
           heading: "Re-check the membership on every request",
           body:
-            "A valid token is not proof of current access. The guard loads the membership from the database each request, so a deactivated employee or a suspended shop is locked out immediately — not fifteen minutes later when the token expires. Branch scope is resolved here too: a branch manager with no branchId in the query sees their branches, not the whole organization.",
+            "A valid token is not proof of current access. The guard loads the membership from the database each request, so a deactivated employee or a suspended shop is locked out immediately, not fifteen minutes later when the token expires. Branch scope is resolved here too: a branch manager with no branchId in the query sees their branches, not the whole organization.",
           code: `export function branchScope(ctx: AuthContext, requested?: string | null) {\n  if (requested) return { branchId: requested };\n  if (ctx.canAccessAllBranches) return {};\n  return { branchId: { in: ctx.allowedBranchIds } };\n}`,
         },
       },
@@ -67,7 +67,7 @@ export const systems: System[] = [
         detail: {
           heading: "Permissions, not roles",
           body:
-            "Handlers declare the permission they need (sales.refund, inventory.adjust, reports.view). Roles — owner, manager, cashier — are just named sets of permissions in a catalogue. That means a shop can change what a manager may do without a deploy, and the guard never has to know what a 'manager' is.",
+            "Handlers declare the permission they need (sales.refund, inventory.adjust, reports.view). Roles (owner, manager, cashier) are just named sets of permissions in a catalogue. That means a shop can change what a manager may do without a deploy, and the guard never has to know what a 'manager' is.",
           code: `export function hasPermission(ctx: AuthContext, permission: Permission) {\n  return ctx.permissions.has(permission);\n}`,
         },
       },
@@ -93,7 +93,7 @@ export const systems: System[] = [
         detail: {
           heading: "A forgotten filter fails loudly",
           body:
-            "A Prisma client extension wraps every operation on the 21 tenant-owned models. If a read, update, delete, count or aggregate arrives without organizationId in its where clause — recursively through AND/OR — it throws before the SQL is built. Writes must set organizationId on every row. There is one documented escape hatch, PrismaService.unscoped, for platform-level work such as login by email.",
+            "A Prisma client extension wraps every operation on the 21 tenant-owned models. If a read, update, delete, count or aggregate arrives without organizationId in its where clause, checked recursively through AND/OR, it throws before the SQL is built. Writes must set organizationId on every row. There is one documented escape hatch, PrismaService.unscoped, for platform-level work such as login by email.",
           code: `if (WHERE_OPERATIONS.has(operation) && !whereHasOrganization(a.where)) {\n  throw new AppException(\n    ErrorCode.TENANT_SCOPE_MISSING,\n    \`Refused an unscoped \${operation} on \${model}: queries must filter by organizationId.\`,\n  );\n}`,
         },
       },
@@ -136,7 +136,7 @@ export const systems: System[] = [
         detail: {
           heading: "A third decimal you can't lose",
           body:
-            "Omani Rial has three decimal places — 1 rial is 1000 baisa. The Money value object holds a bigint count of baisa, so addition and multiplication by quantity are exact. Rates (VAT, discounts) go through Decimal.js and round half-up back to baisa explicitly. It persists to NUMERIC(18,3). No float ever touches a monetary figure.",
+            "Omani Rial has three decimal places: 1 rial is 1000 baisa. The Money value object holds a bigint count of baisa, so addition and multiplication by quantity are exact. Rates (VAT, discounts) go through Decimal.js and round half-up back to baisa explicitly. It persists to NUMERIC(18,3). No float ever touches a monetary figure.",
           code: `export class Money {\n  private readonly baisa: bigint;\n\n  static fromOmr(value: string | number | Decimal): Money {\n    const dec = new Decimal(value).mul(1000)\n      .toDecimalPlaces(0, Decimal.ROUND_HALF_UP);\n    return new Money(BigInt(dec.toFixed(0)));\n  }\n\n  multiplyByQty(qty: number): Money {\n    if (!Number.isInteger(qty)) throw new Error(\`Quantity must be an integer\`);\n    return new Money(this.baisa * BigInt(qty));\n  }\n}`,
         },
       },

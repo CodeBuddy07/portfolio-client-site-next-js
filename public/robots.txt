@@ -5,7 +5,7 @@ Disallow: /dashboard
 Disallow: /api
 
 # Host
-Host: https://ruhulcodes.com
+Host: https://www.ruhulcodes.com
 
 # Sitemaps
-Sitemap: https://ruhulcodes.com/sitemap.xml
+Sitemap: https://www.ruhulcodes.com/sitemap.xml

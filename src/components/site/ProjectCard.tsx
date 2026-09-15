@@ -22,7 +22,7 @@ export function ProjectCard({ project, priority = false, className, large = fals
         <div className={cn("relative overflow-hidden border-b border-line bg-surface-2", "aspect-[16/10]")}>
           <Image
             src={project.image.src}
-            alt={`${project.name} — ${project.category}`}
+            alt={`${project.name}, ${project.category}`}
             fill
             sizes={large ? "(min-width: 1024px) 1152px, 100vw" : "(min-width: 1024px) 560px, (min-width: 640px) 50vw, 100vw"}
             priority={priority}

@@ -7,7 +7,7 @@ import { Words } from "@/components/motion";
 
 export const metadata: Metadata = {
   title: "Work",
-  description: `${projects.length} products in production — SaaS platforms, ERPs, e-commerce and mobile apps.`,
+  description: `${projects.length} products in production: SaaS platforms, ERPs, e-commerce and mobile apps.`,
 };
 
 export default function WorkPage() {

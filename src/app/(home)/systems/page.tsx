@@ -9,7 +9,7 @@ import { Reveal, Words } from "@/components/motion";
 
 export const metadata: Metadata = {
   title: "Systems",
-  description: "Interactive walkthroughs of the architecture behind products I've shipped — tenant isolation, money models, and what makes them safe.",
+  description: "Interactive walkthroughs of the architecture behind products I've shipped: tenant isolation, money models, and what makes them safe.",
 };
 
 export default function SystemsPage() {
@@ -20,7 +20,7 @@ export default function SystemsPage() {
           <Eyebrow className="mb-4">Systems</Eyebrow>
           <Words as="h1" text="The architecture behind the products." className="max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight text-ink md:text-6xl" />
           <p className="rise rise-3 mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
-              The code for most of this is private — it belongs to the businesses that run on it. The design isn&apos;t. Each diagram below is a real system in production; click any node to see what it does and why it&apos;s there.
+              The code for most of this is private; it belongs to the businesses that run on it. The design isn&apos;t. Each diagram below is a real system in production; click any node to see what it does and why it&apos;s there.
             </p>
         </Container>
       </div>

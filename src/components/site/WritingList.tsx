@@ -28,7 +28,7 @@ export function WritingTeaser() {
       id="writing"
       eyebrow="Writing"
       title="Decisions, explained."
-      lede="Engineering notes from real products — the code is private, the thinking isn't."
+      lede="Engineering notes from real products. The code is private; the thinking isn't."
       aside={
         <ButtonLink href="/writing" variant="secondary" className="shrink-0">
           All writing <ArrowIcon />

@@ -1,20 +1,18 @@
 export const site = {
   name: "Ruhul Amin",
   handle: "codebuddy07",
-  url: "https://ruhulcodes.com",
+  url: "https://www.ruhulcodes.com",
   role: "Product engineer · Co-founder, CodeMines",
   headline: "I build and run whole software products.",
-  sub: "Multi-tenant SaaS, financial ERPs, real-time platforms and mobile apps — designed, shipped and operated in production. Co-founder of CodeMines.",
+  sub: "Multi-tenant SaaS, financial ERPs, real-time platforms and mobile apps, designed, shipped and operated in production. Co-founder of CodeMines.",
   studio: { name: "CodeMines", url: "https://codemines.studio" },
   description:
-    "Product engineer and co-founder of CodeMines. I design, build and operate whole software products — multi-tenant SaaS, financial ERPs, real-time platforms and mobile apps — with Next.js, NestJS, PostgreSQL and React Native.",
+    "Product engineer and co-founder of CodeMines. I design, build and operate whole software products: multi-tenant SaaS, financial ERPs, real-time platforms and mobile apps, built with Next.js, NestJS, PostgreSQL and React Native.",
   email: "ruhulamin.dev07@gmail.com",
   phone: "+880 1317-947541",
   whatsapp: "https://wa.me/8801705684699",
   location: "Dhaka, Bangladesh (GMT+6)",
   overlap: "Overlaps US mornings and EU afternoons",
-  availability: "Available for new projects",
-  responseTime: "Replies within 24 hours",
   socials: {
     github: "https://github.com/CodeBuddy07",
     linkedin: "https://www.linkedin.com/in/codebuddy07",

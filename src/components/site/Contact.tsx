@@ -35,7 +35,7 @@ export function Contact() {
         body: JSON.stringify(values),
       });
       if (!res.ok) throw new Error(String(res.status));
-      toast.success("Got it — I'll reply within 24 hours.");
+      toast.success("Got it. I'll get back to you soon.");
       form.reset();
     } catch {
       toast.error("That didn't send. Email me directly instead.");
@@ -51,7 +51,7 @@ export function Contact() {
       id="contact"
       eyebrow="Contact"
       title="Tell me what you're building."
-      lede="Or what needs to work better. Two or three sentences is enough — I reply within 24 hours with what I'd do, how long it takes, and what it costs."
+      lede="Or what needs to work better. Two or three sentences is enough. I usually reply the same day with what I'd do, how long it takes, and what it costs."
     >
       <div className="grid gap-12 md:grid-cols-[1fr_1.2fr] md:gap-16">
         <div className="space-y-8">
@@ -73,9 +73,8 @@ export function Contact() {
           <div className="rounded-2xl border border-line bg-surface p-5 text-sm leading-relaxed text-ink-2">
             <p className="text-ink">How a first conversation usually goes</p>
             <p className="mt-2">
-              You describe the product or the problem. I ask a few questions, look at whatever you can share — a URL, a
-              repo, a screenshot — and come back with what I&apos;d do, roughly how long it takes, and what it costs.
-              No pitch deck.
+              You describe the product or the problem. I ask a few questions, look at whatever you can share (a URL, a
+              repo, a screenshot) and come back with what I&apos;d do, roughly how long it takes, and what it costs.
             </p>
           </div>
         </div>
@@ -104,7 +103,7 @@ export function Contact() {
             {err.message && <span className="text-xs text-signal">{err.message.message}</span>}
           </label>
           <div className="flex items-center justify-between gap-4 pt-2">
-            <p className="text-xs text-ink-3">{site.responseTime}.</p>
+            <p className="text-xs text-ink-3">Goes straight to my inbox.</p>
             <Button type="submit" size="lg" disabled={isPending}>
               {isPending ? "Sending…" : "Send message"} <ArrowIcon />
             </Button>

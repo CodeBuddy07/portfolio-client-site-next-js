@@ -5,7 +5,7 @@ import { Reveal, Words } from "@/components/motion";
 
 export const metadata: Metadata = {
   title: "Process",
-  description: "How a project runs with me: discovery, architecture, build, ship, operate — and what you hold in your hand at the end of each stage.",
+  description: "How a project runs with me: discovery, architecture, build, ship, operate, and what you get at the end of each stage.",
 };
 
 const stages = [
@@ -21,27 +21,27 @@ const stages = [
     title: "Architecture",
     time: "One to two weeks for a new product",
     body: "The data model, the boundaries between services, the security model, and how money moves. I write this down before I write code, because a diagram is cheaper to change than a schema with data in it. You get to see the shape of the thing and push back.",
-    deliver: ["Data model and ERD", "Security and permissions model — who can see what, and how that's enforced", "Deployment plan: where it runs, how it ships, what it costs to host"],
+    deliver: ["Data model and ERD", "Security and permissions model: who can see what, and how that's enforced", "Deployment plan: where it runs, how it ships, what it costs to host"],
   },
   {
     n: "03",
     title: "Build",
     time: "Milestones you approve",
-    body: "Small, reviewable diffs. Tests that run against a real database, not mocks. Written updates at the end of every working day so you never have to ask where things are. You see working software early — a staging environment from the first milestone — and I'd rather hear 'that's not what I meant' in week two than week ten.",
+    body: "Small, reviewable diffs. Tests that run against a real database, not mocks. Written updates at the end of every working day so you never have to ask where things are. You see working software early, on a staging environment from the first milestone. I'd rather hear 'that's not what I meant' in week two than week ten.",
     deliver: ["Staging environment from milestone one", "Daily written updates", "Tests, lint, type-check and CI green on every merge"],
   },
   {
     n: "04",
     title: "Ship",
     time: "Planned, not hoped for",
-    body: "Production deploys through CI, not from a laptop. Store submission for mobile, with the review notes and screenshots done. A runbook that says how to deploy, roll back, read the logs and fix the three most likely things to go wrong — written so someone who isn't me can follow it.",
+    body: "Production deploys through CI, not from a laptop. Store submission for mobile, with the review notes and screenshots done. A runbook that says how to deploy, roll back, read the logs and fix the three most likely things to go wrong, written so someone who isn't me can follow it.",
     deliver: ["CI/CD pipeline to your infrastructure", "App Store / Play Store submission", "A runbook and a handover call"],
   },
   {
     n: "05",
     title: "Operate",
     time: "Ongoing, if you want it",
-    body: "The part most engagements forget. Monitoring, backups, dependency updates, the occasional 2am incident. I can stay on retained hours, or hand over cleanly — everything is in your repos, your accounts, your infrastructure, with nothing that only lives in my head.",
+    body: "The part that usually gets forgotten: monitoring, backups, dependency updates, the occasional 2am incident. I can stay on retained hours, or hand over cleanly. Everything is in your repos, your accounts, your infrastructure, with nothing that only lives in my head.",
     deliver: ["Retained hours, or a clean handover", "Diagnostics you can run yourself", "Your code, your infrastructure, your keys"],
   },
 ];
@@ -60,7 +60,7 @@ export default function ProcessPage() {
         <Container>
           <Eyebrow className="mb-4">Process</Eyebrow>
           <Words as="h1" text="How a project runs with me." className="max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight text-ink md:text-6xl" />
-          <p className="rise rise-3 mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">Five stages. Each one ends with something you can hold in your hand — a document, a staging URL, a pipeline, a runbook — so you always know where you are.</p>
+          <p className="rise rise-3 mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">Five stages. Each one ends with a concrete deliverable (a document, a staging URL, a pipeline, a runbook), so you always know where the project stands.</p>
         </Container>
       </div>
 

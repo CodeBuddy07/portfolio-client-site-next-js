@@ -3,7 +3,7 @@ import { Contact } from "@/components/site/Contact";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Tell me what you're building or what needs to work better. I reply within 24 hours with a straight answer.",
+  description: "Tell me what you're building or what needs to work better. I usually reply the same day with a straight answer.",
 };
 
 export default function ContactPage() {

@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://ruhulcodes.com',
+  siteUrl: 'https://www.ruhulcodes.com',
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [
@@ -10,6 +10,6 @@ module.exports = {
         allow: '/',
       },
     ],
-    sitemap: 'https://ruhulcodes.com/sitemap.xml',
+    sitemap: 'https://www.ruhulcodes.com/sitemap.xml',
   },
 };

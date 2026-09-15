@@ -40,7 +40,7 @@ export function Nav() {
       )}
     >
       <Container className="flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-3" aria-label={`${site.name} — home`}>
+        <Link href="/" className="flex items-center gap-3" aria-label={`${site.name}, home`}>
           <Image src="/logo_white.png" alt="" width={22} height={22} priority className="h-[22px] w-auto" />
           <span className="text-sm font-semibold tracking-tight text-ink">{site.name}</span>
         </Link>
