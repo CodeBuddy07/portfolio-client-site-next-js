@@ -13,10 +13,12 @@ export const metadata: Metadata = {
 };
 
 const timeline = [
-  ["2023", "Started building for the web: HTML, CSS, then JavaScript and the first React apps. By June, first paid work: a salaried contract at Alpha Media, an IPTV business, maintaining their platform and building the IPTV Business Management System on top of it."],
+  ["2021", "Passed SSC in Thakurgaon with a 5.00 GPA, moved to Dhaka and joined Dhaka Polytechnic Institute for a diploma in computer science. Started learning to build for the web from the first year."],
+  ["2022", "Programming Hero's web development course, then the first self-initiated projects and a handful of small jobs for local businesses. HTML and CSS gave way to JavaScript, React and Node."],
+  ["2023", "First salaried work in June: a remote contract at Alpha Media, an IPTV business operating out of Dubai. Maintained their platform and built the IPTV Business Management System on top of it."],
   ["2024", "Finished the Alpha Media contract in February and went independent. A tradespeople marketplace, a healthcare e-commerce store, and a blood-donor network for Feni District. The last one is still running and is still the only bilingual donor platform the district has."],
-  ["2025", "Joined SparkTech Agency in June as a full-stack developer: NestJS, Prisma and PostgreSQL became the default, with React Native, AWS video delivery, Redis and BullMQ on production products. Shipped four React Native apps through App Store review, a VC modelling SaaS, an e-commerce store on Stripe. 72 pull requests reviewed and merged."],
-  ["2026", "Completed the CS diploma in May. SparkTech ended in June; formed CodeMines with former colleagues the same month. Multi-tenant retail POS SaaS with ORM-level tenant isolation. A wholesale ERP with integer money, FIFO costing and a double-entry ledger. A four-surface product suite with runbooks as GitHub Actions. Started a BSc in CSE at BUBT."],
+  ["2025", "Seventh semester. While classmates took internships, joined SparkTech Agency in June as a full-stack developer: NestJS, Prisma and PostgreSQL became the default, with React Native, AWS video delivery, Redis and BullMQ on production products. Shipped four React Native apps through App Store review, a VC modelling SaaS, an e-commerce store on Stripe. 72 pull requests reviewed and merged. Programming Hero Level 2 completed."],
+  ["2026", "Completed the diploma in May. Left SparkTech in June after a full year and formed CodeMines with former colleagues the following month. Multi-tenant retail POS SaaS with ORM-level tenant isolation. A wholesale ERP with integer money, FIFO costing and a double-entry ledger. A four-surface product suite with runbooks as GitHub Actions. Started a BSc in CSE at BUBT in September, alongside the work."],
 ];
 
 export default function AboutPage() {
@@ -40,7 +42,7 @@ export default function AboutPage() {
               <a href={site.studio.url} target="_blank" rel="noopener noreferrer" className="text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">
                 CodeMines
               </a>
-              , a small product studio in Dhaka. Before that: a year at SparkTech Agency, a stretch of independent product work, and eight months on contract keeping an IPTV business&apos;s systems running. Over the last three years I&apos;ve put {site.stats.commits.toLocaleString()} commits into {site.stats.repos} repositories. Most of them are products that real businesses run their day on: a multi-tenant point-of-sale SaaS, a wholesale ERP with real accounting underneath, a jobs marketplace, a shared-housing platform, and mobile apps that went through App Store and Play Store review.
+              , a small product studio in Dhaka. Before that: a year at SparkTech Agency, a stretch of independent product work, and eight months on a remote contract keeping a Dubai-based IPTV business&apos;s systems running. Over the last three years I&apos;ve put {site.stats.commits.toLocaleString()} commits into {site.stats.repos} repositories. Most of them are products that real businesses run their day on: a multi-tenant point-of-sale SaaS, a wholesale ERP with real accounting underneath, a jobs marketplace, a shared-housing platform, and mobile apps that went through App Store and Play Store review.
             </p>
             <p>
               I work across the whole stack in TypeScript: Next.js and React on the front, NestJS and Node behind it, PostgreSQL or MongoDB underneath, React Native when it needs to be in someone&apos;s pocket. I own the deployment too: Docker, nginx, GitHub Actions, a VPS when Vercel isn&apos;t the right answer. I&apos;d rather be the person who can take a product from a brief to a running system than the person who does one layer of it well.
@@ -93,7 +95,7 @@ export default function AboutPage() {
         </ol>
       </Section>
 
-      <Section eyebrow="Education" title="Credentials." lede="Diploma completed in May 2026; the degree runs alongside the work.">
+      <Section eyebrow="Education" title="Credentials." lede="Diploma completed in May 2026. The degree runs alongside the work.">
         <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-start">
           <ul className="divide-y divide-line rounded-2xl border border-line bg-surface">
             {education.map((e) => (

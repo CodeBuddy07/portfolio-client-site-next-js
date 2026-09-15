@@ -63,7 +63,7 @@ const alphaMedia: Role = {
   org: "Alpha Media",
   role: "Full Stack Developer (contract)",
   period: "Jun 2023 – Feb 2024",
-  where: "IPTV business · salaried contract",
+  where: "Remote · Dubai-based IPTV business",
   bullets: [
     "Maintained the company's existing systems and built new ones alongside them.",
     "Built the IPTV Business Management System: accounting, subscriptions, customer records and reporting (React, TanStack Query, Recharts; Express, TypeScript, MongoDB, Zod, JWT).",
@@ -80,7 +80,7 @@ export const skills = [
 
 export const education = [
   { school: "Bangladesh University of Business and Technology (BUBT)", award: "BSc in Computer Science and Engineering", period: "2026 – 2030 (expected)" },
-  { school: "Dhaka Polytechnic Institute", award: "Diploma in Computer Science and Technology", period: "Completed May 2026" },
+  { school: "Dhaka Polytechnic Institute", award: "Diploma in Computer Science and Technology", period: "2021 – 2026" },
   { school: "Thakurgaon Govt. Boys' High School", award: "Secondary School Certificate (Science), GPA 5.00 / 5.00", period: "2021" },
 ];
 
