@@ -101,7 +101,7 @@ export const testimonial = {
 // ---- One-page resume: the same facts, cut to what a first read needs. ----
 export const resumeDoc = {
   summary:
-    "Full stack developer who designs, builds and operates whole software products: multi-tenant SaaS, financial ERPs, real-time platforms and mobile apps. Three years across Alpha Media, SparkTech Agency and CodeMines, the studio I co-founded: 1,660 commits, 15 products in production, 5 apps on the App Store and Play Store. TypeScript end to end.",
+    "Full stack developer who designs, builds and operates whole software products: multi-tenant SaaS, financial ERPs, real-time platforms and mobile apps. Three years across Alpha Media, SparkTech Agency and CodeMines, the studio I co-founded: 1,660 commits, 17 products in production, 5 apps on the App Store and Play Store. TypeScript end to end.",
   experience: [
     { ...codemines, bullets: [codemines.bullets[1], codemines.bullets[2], codemines.bullets[3]] },
     { ...sparktech, bullets: [sparktech.bullets[1], sparktech.bullets[2], sparktech.bullets[3]] },

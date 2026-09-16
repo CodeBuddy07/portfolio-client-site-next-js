@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000">
+<defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1.2" fill="rgba(255,255,255,0.07)"/></pattern>
+<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8a8a94"/></marker></defs>
+<rect width="1600" height="1000" fill="#101013"/><rect width="1600" height="1000" fill="url(#g)"/>
+<text x="80" y="110" font-family="ui-monospace,Menlo,monospace" font-size="26" letter-spacing="6" fill="#8a8a94">TICKETING · KUTMASTERZ</text>
+<rect x="80" y="220" width="420" height="96" rx="18" fill="#17171b" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+<text x="290.0" y="264" text-anchor="middle" font-family="ui-sans-serif,Inter,system-ui" font-size="28" font-weight="600" fill="#f4f4f5">Storefront</text>
+<text x="290.0" y="296" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#8a8a94">events · checkout</text>
+<rect x="600" y="220" width="420" height="96" rx="18" fill="#17171b" stroke="#ef4444" stroke-width="2"/>
+<text x="810.0" y="264" text-anchor="middle" font-family="ui-sans-serif,Inter,system-ui" font-size="28" font-weight="600" fill="#f4f4f5">Express API</text>
+<text x="810.0" y="296" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#8a8a94">Zod · JWT · nodemailer</text>
+<rect x="1120" y="220" width="400" height="96" rx="18" fill="#17171b" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+<text x="1320.0" y="264" text-anchor="middle" font-family="ui-sans-serif,Inter,system-ui" font-size="28" font-weight="600" fill="#f4f4f5">Organizer dashboard</text>
+<text x="1320.0" y="296" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#8a8a94">sales · exports</text>
+<rect x="80" y="460" width="420" height="96" rx="18" fill="#17171b" stroke="#ef4444" stroke-width="2"/>
+<text x="290.0" y="504" text-anchor="middle" font-family="ui-sans-serif,Inter,system-ui" font-size="28" font-weight="600" fill="#f4f4f5">Ticket generator</text>
+<text x="290.0" y="536" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#8a8a94">unique QR each · 10k per run</text>
+<rect x="600" y="460" width="420" height="96" rx="18" fill="#17171b" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+<text x="810.0" y="518" text-anchor="middle" font-family="ui-sans-serif,Inter,system-ui" font-size="30" font-weight="600" fill="#f4f4f5">MongoDB</text>
+<rect x="1120" y="460" width="400" height="96" rx="18" fill="#17171b" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+<text x="1320.0" y="504" text-anchor="middle" font-family="ui-sans-serif,Inter,system-ui" font-size="28" font-weight="600" fill="#f4f4f5">Gate scanner</text>
+<text x="1320.0" y="536" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#8a8a94">camera QR · valid / used</text>
+<rect x="600" y="700" width="420" height="96" rx="18" fill="#17171b" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+<text x="810.0" y="744" text-anchor="middle" font-family="ui-sans-serif,Inter,system-ui" font-size="28" font-weight="600" fill="#f4f4f5">Email delivery</text>
+<text x="810.0" y="776" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="20" fill="#8a8a94">ticket PDF + QR to buyer</text>
+<path d="M500 268 L 600 268" fill="none" stroke="#8a8a94" stroke-width="2" marker-end="url(#a)"/>
+<path d="M1020 268 L 1120 268" fill="none" stroke="#8a8a94" stroke-width="2" marker-end="url(#a)"/>
+<path d="M810 316 C 810 388.0, 290 388.0, 290 460" fill="none" stroke="#8a8a94" stroke-width="2" marker-end="url(#a)"/>
+<path d="M810 316 C 810 388.0, 810 388.0, 810 460" fill="none" stroke="#8a8a94" stroke-width="2" marker-end="url(#a)"/>
+<path d="M810 316 C 810 388.0, 1320 388.0, 1320 460" fill="none" stroke="#8a8a94" stroke-width="2" marker-end="url(#a)"/>
+<path d="M810 556 C 810 628.0, 810 628.0, 810 700" fill="none" stroke="#8a8a94" stroke-width="2" marker-end="url(#a)"/>
+</svg>

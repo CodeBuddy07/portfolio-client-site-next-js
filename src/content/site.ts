@@ -21,7 +21,7 @@ export const site = {
   stats: {
     commits: 1660,
     repos: 81,
-    productsShipped: 15,
+    productsShipped: 17,
     storeApps: 5,
   },
 } as const;
