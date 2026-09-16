@@ -81,10 +81,10 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         </div>
 
         <ParallaxImage
-          src={p.image.src}
+          src={(p.cover ?? p.image).src}
           alt={`${p.name}, ${p.category}`}
           priority
-          fit={imageFit(p.image)}
+          fit={imageFit(p.cover ?? p.image)}
           amount={p.image.src.endsWith(".svg") ? 0 : 8}
           sizes="(min-width: 1152px) 1152px, 100vw"
           className="mt-14 aspect-[16/10] rounded-2xl border border-line bg-surface md:mt-16"

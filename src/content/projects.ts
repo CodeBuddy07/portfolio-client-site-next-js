@@ -20,6 +20,8 @@ export type Project = {
   /** "offline" hides the live link and shows a note instead of sending a client to a broken site. */
   liveStatus: "live" | "offline";
   image: { src: string; width: number; height: number };
+  /** Optional card artwork (16:10). When absent the card uses `image`. */
+  cover?: { src: string; width: number; height: number };
   featured: boolean;
   quote?: { text: string; from: string };
   /** Client code is private; the case study describes the engineering, not the codebase. */
@@ -313,6 +315,7 @@ export const projects: Project[] = [
     links: { live: "https://termsheetgenie.com/" },
     liveStatus: "live",
     image: { src: "/work/gallery/termsheetgenie-home.jpg", width: 1440, height: 900 },
+    cover: { src: "/work/covers/termsheetgenie.jpg", width: 1600, height: 1000 },
     gallery: [{ src: "/work/termsheetgenie.jpg", alt: "TermSheetGenie round simulation view" }],
     featured: true,
   },
@@ -346,8 +349,9 @@ export const projects: Project[] = [
     stack: ["TypeScript", "Next.js", "Node.js", "MongoDB", "Tailwind CSS"],
     links: { live: "https://fenibloodline.com/" },
     liveStatus: "live",
-    image: { src: "/work/feni-blood-line.webp", width: 1376, height: 768 },
-    gallery: [{ src: "/work/gallery/feni-home.jpg", alt: "Feni Blood Line homepage with live emergency requests" }],
+    image: { src: "/work/gallery/feni-home.jpg", width: 1440, height: 900 },
+    cover: { src: "/work/covers/feni.jpg", width: 1600, height: 1000 },
+    gallery: [{ src: "/work/feni-blood-line.webp", alt: "Feni Blood Line across desktop and mobile" }],
     featured: true,
   },
   {
@@ -380,6 +384,7 @@ export const projects: Project[] = [
     links: { live: "https://mealbox-client-red.vercel.app/" },
     liveStatus: "live",
     image: { src: "/work/gallery/mealbox-home.jpg", width: 1440, height: 900 },
+    cover: { src: "/work/covers/mealbox.jpg", width: 1600, height: 1000 },
     gallery: [{ src: "/work/mealbox.webp", alt: "MealBox meal detail" }],
     featured: true,
   },
@@ -598,6 +603,7 @@ export const projects: Project[] = [
     links: { live: "https://dollarcoin.org/" },
     liveStatus: "live",
     image: { src: "/work/gallery/dollarcoin-home.jpg", width: 1440, height: 900 },
+    cover: { src: "/work/covers/dollarcoin.jpg", width: 1600, height: 1000 },
     gallery: [{ src: "/work/dollarcoin.webp", alt: "DollarCoin brand mark" }],
     featured: false,
   },

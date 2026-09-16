@@ -12,7 +12,8 @@ export function imageFit(img: { width: number; height: number }): "cover" | "con
 
 export function ProjectCard({ project, priority = false, className, large = false }: { project: Project; priority?: boolean; className?: string; large?: boolean }) {
   const store = project.links.appStore ? "App Store" : project.links.playStore ? "Play Store" : project.confidential ? "Confidential" : null;
-  const fit = imageFit(project.image);
+  const art = project.cover ?? project.image;
+  const fit = imageFit(art);
   return (
     <Tilt className={cn("group h-full rounded-2xl", className)}>
       <Link
@@ -21,7 +22,7 @@ export function ProjectCard({ project, priority = false, className, large = fals
       >
         <div className={cn("relative overflow-hidden border-b border-line bg-surface-2", "aspect-[16/10]")}>
           <Image
-            src={project.image.src}
+            src={art.src}
             alt={`${project.name}, ${project.category}`}
             fill
             sizes={large ? "(min-width: 1024px) 1152px, 100vw" : "(min-width: 1024px) 560px, (min-width: 640px) 50vw, 100vw"}
