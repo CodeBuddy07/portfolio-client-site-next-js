@@ -7,7 +7,7 @@ const proof = [
   { value: site.stats.commits, suffix: "", label: "commits shipped since 2024" },
   { value: site.stats.productsShipped, suffix: "", label: "products in production" },
   { value: site.stats.storeApps, suffix: "", label: "apps on the App Store and Play Store" },
-  { value: 24, suffix: "h", label: "typical reply time · GMT+6" },
+  { value: 3, suffix: "", label: "years shipping products end to end" },
 ];
 
 export function Hero() {

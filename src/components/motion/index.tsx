@@ -213,7 +213,10 @@ export function Counter({ value, suffix = "", className, duration = 1.4 }: { val
     mv.jump(0);
     spring.jump(0);
     mv.set(value);
-  }, [inView, reduce, mv, spring, value]);
+    // If the spring is throttled (background tab, frozen rAF), settle on the real number anyway.
+    const settle = window.setTimeout(() => setDisplay(value), duration * 1000 + 400);
+    return () => window.clearTimeout(settle);
+  }, [inView, reduce, mv, spring, value, duration]);
   return (
     <span ref={ref} className={className}>
       {display.toLocaleString()}
